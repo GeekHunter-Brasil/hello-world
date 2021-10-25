@@ -156,6 +156,21 @@ Values that are defined in our theme come from our Design System. We should use 
 
 ## Tests
 
-TODO
+We use [Jest](https://jestjs.io/pt-BR/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) to write unit tests for our components.
+
+Also, we use [Cypress](https://www.cypress.io/) to write integration tests covering important application flows.
+
+### Make sure to test component logic
+
+When a component has logic inside it (e.g. rendering something based on a condition), this should be tested with unit tests.
+
+Example: Below, we should at least create a test passing a string and `undefined` to `title`.
+
+```tsx
+const Button = ({ title }: ButtonProps): React.ReactElement => (
+  <button>{title ? title : 'Foobar'}</button>
+);
+```
+
 
 [Back to top ⬆️](#pushpin-summary)

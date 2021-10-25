@@ -6,11 +6,9 @@
   Frontend Style Guide
 </h2>
 
-Welcome to our frontend style guide!
-
-Grab your cup of coffee (or tea) and read this with attention. ☕🍵
-
 ## Intro
+
+Welcome to our frontend style guide! Grab your cup of coffee (or tea) and read this with attention. ☕🍵
 
 The goal of this guide is to help our team to understand and follow our code style and best practices, maintaining a pattern in all repositories.
 

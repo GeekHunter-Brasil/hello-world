@@ -130,7 +130,27 @@ Using this pattern, we can use `graphql-codegen` to auto-generate code based on 
 
 ## Code Style
 
-TODO
+Here we define code style patterns that should be followed when writing code.
+
+It is a great idea to read the Airbnb guide before, since we use it as a base:
+
+- [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
+
+### Do not use values not present in the theme
+
+Values that are defined in our theme come from our Design System. We should use these values, and should not input manual values in our components.
+
+❌ Bad
+```tsx
+<Box backgroundColor="#9412DC" />
+```
+
+✅ Good
+```tsx
+<Box backgroundColor="primary.500" />
+```
+
+<br />
 
 [Back to top ⬆️](#pushpin-summary)
 

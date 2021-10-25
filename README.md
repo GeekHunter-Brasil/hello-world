@@ -3,9 +3,11 @@
 </p>
 
 <h2 align="center">
-  Frontend Style Guide
+  Hello World
 </h2>
 
-## Intro
+Welcome to GeekHunter docs!
 
-TODO =)
+Here we document our workflows, styleguides and patterns.
+
+# :pushpin: Summary

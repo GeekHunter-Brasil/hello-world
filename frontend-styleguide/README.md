@@ -132,9 +132,10 @@ Using this pattern, we can use `graphql-codegen` to auto-generate code based on 
 
 Here we define code style patterns that should be followed when writing code.
 
-It is a great idea to read the Airbnb guide before, since we use it as a base:
+It is a great idea to read the documents below, since we use them as a base:
 
 - [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
+- [Prettier.io](https://prettier.io/docs/en/index.html)
 
 ### Avoid using `React.FC`
 

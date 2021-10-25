@@ -87,7 +87,44 @@ As for component organization, we usually define all related files (e.g. tests, 
 
 ## GraphQL
 
-TODO
+We use GraphQL to communicate with our backend. In our frontend apps, we also use [GraphQL Code Generator](https://www.graphql-code-generator.com/) to automatically generate React code based on our query files.
+
+To do this, we organize all our query, mutations and subscriptions inside the `src/lib/graphql` folder. If needed, we can also create more folders to define contexts and properly organize our files:
+
+```
+📁 project/
+└──📁 src/
+   └──📁 lib/
+      └──📁 graphql/
+         └──📁 queries/
+            └──📁 candidates/             # Queries related to candidates
+            └──📁 companies/              # Queries related to companies
+         └──📁 mutations/
+            └──📁 ...
+         └──📁 subscriptions/
+            └──📁 ...
+```
+
+For specific query files, we usually use `export default` with a named query:
+
+```typescript
+import { gql } from '@apollo/client';
+
+export default gql`
+  query GetCandidate ($id: String!) {
+    getCandidate (id: $id) {
+      name
+      email
+    }
+  }
+`;
+```
+
+Using this pattern, we can use `graphql-codegen` to auto-generate code based on all files located in `src/lib/graphql`. This means that:
+
+- ✅ We don't need to write any code related to consuming and handling requests;
+- ✅ If anything changes in our backend (e.g. a field is removed), the frontend validation pipelines break (due to TypeScript errors);
+- ✅ If we forget to query a field and render this field, the frontend validation pipelines break (due to TypeScript errors);
 
 [Back to top ⬆️](#pushpin-summary)
 

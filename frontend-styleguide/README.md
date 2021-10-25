@@ -30,7 +30,7 @@ To test our application, we use [Jest](https://jestjs.io/pt-BR/), [React Testing
 
 Finally, to enforce code style in our repositories, we use [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/).
 
-It's a great idea to read the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) before continuing, since we use it as a base
+It's a great idea to read the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) before continuing, since we use it as a base.
 
 [Back to top ⬆️](#pushpin-summary)
 

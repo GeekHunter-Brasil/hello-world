@@ -2,9 +2,7 @@
   <img alt="logo" src="/docs/logo.png" width="200">
 </p>
 
-<h2 align="center">
-  Hello World
-</h2>
+# 😎 Hello World
 
 Welcome to GeekHunter docs!
 

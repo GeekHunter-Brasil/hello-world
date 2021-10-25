@@ -2,11 +2,7 @@
   <img alt="logo" src="/docs/logo.png" width="200">
 </p>
 
-<h2 align="center">
-  Frontend Style Guide
-</h2>
-
-## Intro
+# 🎨 Frontend Style Guide
 
 Welcome to our frontend style guide! Grab your cup of coffee (or tea) and read this with attention. ☕🍵
 

@@ -12,8 +12,6 @@ Welcome to our frontend style guide! Grab your cup of coffee (or tea) and read t
 
 The goal of this guide is to help our team to understand and follow our code style and best practices, maintaining a pattern in all repositories.
 
-We also use the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) as a base, so it is **highly recommended** reading it before you continue.
-
 `#letscode 😎👩‍💻👨‍💻`
 
 # :pushpin: Summary
@@ -26,7 +24,17 @@ We also use the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javasc
 
 ## Common Tools and Dependencies
 
-TODO
+Internally, we use [React](https://reactjs.org/) with [NextJS](https://nextjs.org/). All projects use [TypeScript](https://www.typescriptlang.org/).
+
+To communicate with our backend, we use [GraphQL](https://graphql.org/), along with [GraphQL Code Generator](https://www.graphql-code-generator.com/).
+
+To setup our components using our Design System, we use [Chakra UI](https://chakra-ui.com/).
+
+To test our application, we use [Jest](https://jestjs.io/pt-BR/), [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) and [Cypress](https://www.cypress.io/).
+
+Finally, to enforce code style in our repositories, we use [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/).
+
+It's a great idea to read the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) before continuing, since we use it as a base
 
 [Back to top ⬆️](#pushpin-summary)
 

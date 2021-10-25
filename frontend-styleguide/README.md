@@ -136,6 +136,34 @@ It is a great idea to read the Airbnb guide before, since we use it as a base:
 
 - [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
 
+### Avoid using `React.FC`
+
+Internally we avoid using `React.FC` due to some very rich discussions ([1](https://fettblog.eu/typescript-react-why-i-dont-use-react-fc/), [2](https://github.com/facebook/create-react-app/pull/8177), [3](https://dmitripavlutin.com/typescript-react-components/)).
+
+❌ Bad
+```tsx
+const Button: React.FC<ButtonProps> = (props) => {
+   ...
+};
+```
+
+✅ Good
+```tsx
+const Button = (props: ButtonProps): React.ReactElement => {
+   ...
+};
+```
+
+When declaring a component that has `children`, use a helper type:
+
+```tsx
+const Button = (props: PropsWithChildren<ButtonProps>): React.ReactElement => {
+   ...
+};
+```
+
+<br />
+
 ### Do not use values not present in the theme
 
 Values that are defined in our theme come from our Design System. We should use these values, and should not input manual values in our components.

@@ -183,6 +183,36 @@ Values that are defined in our theme come from our Design System. We should use 
 
 <br />
 
+### Avoid adding `geek` or `{projectName}` prefix
+
+When naming variables, it's a common practice to add `geek` or any other prefix related to the company or project to make that variable unique.
+
+It's a great idea to avoid doing this, since everything inside a `geek` repo belongs to `geek` - so it's redundant.
+
+❌ Bad
+```tsx
+export const colors: ThemeColors = {
+  geekPrimary: {
+    50: '#ffffff',
+    100: '#F0F0FF',
+    // ...
+  },
+};
+```
+
+✅ Good
+```tsx
+export const colors: ThemeColors = {
+  primary: {
+    50: '#ffffff',
+    100: '#F0F0FF',
+    // ...
+  },
+};
+```
+
+<br />
+
 [Back to top ⬆️](#pushpin-summary)
 
 ## Tests

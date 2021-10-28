@@ -174,14 +174,14 @@ Internally we avoid using `React.FC` due to some very rich discussions ([1](http
 ❌ Bad
 ```tsx
 const Button: React.FC<ButtonProps> = (props) => {
-   ...
+  // Implementation
 };
 ```
 
 ✅ Good
 ```tsx
 const Button = (props: ButtonProps): React.ReactElement => {
-   ...
+  // Implementation
 };
 ```
 
@@ -189,7 +189,7 @@ When declaring a component that has `children`, use a helper type:
 
 ```tsx
 const Button = (props: PropsWithChildren<ButtonProps>): React.ReactElement => {
-   ...
+  // Implementation
 };
 ```
 

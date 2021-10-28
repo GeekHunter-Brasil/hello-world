@@ -139,6 +139,34 @@ It is a great idea to read the documents below, since we use them as a base:
 - [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
 - [Prettier.io](https://prettier.io/docs/en/index.html)
 
+### When possible, write JSDocs 📃
+
+JSDocs are amazing! While they make a big difference on obvious components (e.g. `Button`), they are amazing to clarify and document utility functions, hooks, complex components and such.
+
+Check out these guides:
+- [JSDocs](https://jsdoc.app/)
+- [Document your Javascript code with JSDoc](https://dev.to/paulasantamaria/document-your-javascript-code-with-jsdoc-2fbf)
+
+❌ Bad
+```tsx
+const formatAge = (age: number): string => {
+  // Implementation
+}
+```
+
+✅ Good
+```tsx
+/**
+ * Formats an age (number) to a string description.
+ * @param age The person age.
+ */
+const formatAge = (age: number): string => {
+  // Implementation
+}
+```
+
+<br />
+
 ### Avoid using `React.FC`
 
 Internally we avoid using `React.FC` due to some very rich discussions ([1](https://fettblog.eu/typescript-react-why-i-dont-use-react-fc/), [2](https://github.com/facebook/create-react-app/pull/8177), [3](https://dmitripavlutin.com/typescript-react-components/)).

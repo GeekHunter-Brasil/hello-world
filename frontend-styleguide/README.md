@@ -261,5 +261,19 @@ const Button = ({ title }: ButtonProps): React.ReactElement => (
 );
 ```
 
+### Make sure to test utility functions
+
+When creating a new utility function, it's really important to test it. Testing utils is easy with unit tests, since they mainly deal with data or calling other functions.
+
+```tsx
+// formatName/index.ts
+const formatName = (first: string, second: string): string => `${first} ${second}`;
+
+// formatName/index.spec.ts
+it('Correctly formats the name', () => {
+  expect(formatName('Foo', 'Bar')).toBe('Foo Bar');
+});
+```
+
 
 [Back to top ⬆️](#pushpin-summary)

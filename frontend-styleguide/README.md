@@ -12,13 +12,13 @@ The goal of this guide is to help our team to understand and follow our code sty
 
 # :pushpin: Summary
 
-* [Common Tools and Dependencies](#common-tools-and-dependencies)
+* [Introduction](#introduction)
 * [Organization](#organization)
 * [GraphQL](#graphql)
 * [Code Style](#code-style)
 * [Tests](#tests)
 
-## Common Tools and Dependencies
+## Introduction
 
 Internally, we use [React](https://reactjs.org/) with [NextJS](https://nextjs.org/). All projects use [TypeScript](https://www.typescriptlang.org/).
 

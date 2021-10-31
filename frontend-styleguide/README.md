@@ -26,7 +26,7 @@ To communicate with our backend, we use [GraphQL](https://graphql.org/), along w
 
 To setup our components using our Design System, we use [Chakra UI](https://chakra-ui.com/).
 
-To test our application, we use [Jest](https://jestjs.io/pt-BR/), [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) and [Cypress](https://www.cypress.io/).
+To test our applications, we use [Jest](https://jestjs.io/pt-BR/), [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) and [Cypress](https://www.cypress.io/).
 
 Finally, to enforce code style in our repositories, we use [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/).
 

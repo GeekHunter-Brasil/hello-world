@@ -36,7 +36,12 @@ It's a great idea to read & follow these guides before continuing:
 
 ## Organization
 
-TODO
+We follow the standard Rails file organization pattern with a few tweaks, to organize our service and domains.
+
+It's a great idea to read these posts to get started with the basics:
+
+- [Ruby on Rails - Directory Structure](https://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm)
+- [Folder structure in Ruby on Rails](https://dev-yakuza.posstree.com/en/ruby-on-rails/folder-structure/)
 
 [Back to top ⬆️](#pushpin-summary)
 

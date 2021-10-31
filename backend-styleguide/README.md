@@ -20,7 +20,17 @@ The goal of this guide is to help our team to understand and follow our code sty
 
 ## Introduction
 
-TODO
+Internally, we mostly use [Ruby on Rails](https://rubyonrails.org/).
+
+Our applications usually provide a [GraphQL](https://graphql.org/) API with [GraphQL Ruby](https://graphql-ruby.org/w) in order to allow communication with other applications.
+
+To test our applications we implement TDD, using [RSpec](https://rspec.info/).
+
+It's a great idea to read & follow these guides before continuing:
+
+- [Rails Getting Started](https://guides.rubyonrails.org/getting_started.html)
+- [Learn Ruby on Rails - Full Course, by FreeCodeCamp](https://www.youtube.com/watch?v=fmyvWz5TUWg)
+- [Getting started with RSpec](https://rspec.info/)
 
 [Back to top ⬆️](#pushpin-summary)
 

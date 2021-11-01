@@ -32,6 +32,13 @@ It's a great idea to read & follow these guides before continuing:
 - [Learn Ruby on Rails - Full Course, by FreeCodeCamp](https://www.youtube.com/watch?v=fmyvWz5TUWg)
 - [Getting started with RSpec](https://rspec.info/)
 
+There are also some really important principles that should be followed when developing. These are:
+
+- [SOLID](https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898)
+- [DRY](https://medium.com/@nrk25693/dry-or-wet-and-why-867ac3096483)
+- [YAGNI](https://martinfowler.com/bliki/Yagni.html)
+- [KISS](https://www.interaction-design.org/literature/article/kiss-keep-it-simple-stupid-a-design-principle)
+
 [Back to top ⬆️](#pushpin-summary)
 
 ## Organization

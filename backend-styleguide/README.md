@@ -237,6 +237,44 @@ module Services::Books::BookManagerCreator
 end
 ```
 
+### Do not query data outside of the repository layer
+
+Often when retrieving data from the database, we do that whenever it's needed. This is considered to be a bad practice here, since any query should be extracted to the repository layer of the respective model.
+
+By doing it this way, we can write better, less repeated code that is also much easier to test (we only need to test the repository layer and call it later).
+
+For example, suppose we have a service to notify all active users of some new action or feature:
+
+❌ Bad
+```ruby
+module Services::NotifyAllActiveUsers
+  def call
+    users = User.find_by(status: :active)
+
+    # Implementation goes here
+  end
+end
+```
+
+✅ Good
+```ruby
+module Repositories::Users::Finder
+  # Note: This should be tested!
+  def active_users
+    User.find_by(status: :active)
+  end
+end
+
+module Services::NotifyAllActiveUsers
+  def call
+    users = Repositories::Users::Finder.active_users
+
+    # Implementation goes here
+  end
+end
+```
+
+
 ### Use strings to define enumerations
 
 We usually use [Enumerize](https://github.com/brainspec/enumerize) to create enumerations that integrate with our repository layer.

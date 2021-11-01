@@ -149,7 +149,10 @@ end
 
 ## Code Style
 
-TODO
+Code style is maintained by [Rubocop](https://docs.rubocop.org/).
+
+However, there are some important patterns to be followed.
+
 
 [Back to top ⬆️](#pushpin-summary)
 

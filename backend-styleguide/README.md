@@ -333,5 +333,64 @@ it 'correctly formats ages' do
 end
 ```
 
+### Isolate your tests, mocking what is not being tested
+
+If we're testing an specific application layer or functionality, we don't necessarily need to test everything when it comes to an unit test.
+
+Assuming other parts of the application are also tested using the same principle (they should be!), it becomes much easier to simply mock the dependency or assume it has been called when its result is not important to the test.
+
+Using an example service: it handles creating a hiring, but we don't need to test the functionality of the update job service, since it has its own tests.
+
+```ruby
+module Services::Hiring::HiringManagerCreator
+  def flow(params)
+    hiring = hiring_creator.create params
+
+    job_updater.update params
+
+    hiring
+  end
+
+  private
+
+  def job_updater
+    @job_updater ||= ::Services::Job::Update::JobUpdater.new
+  end
+
+  def hiring_creator
+    @hiring_creator ||= ::Services::Hiring::Create::HiringCreator.new
+  end
+end
+```
+
+❌ Bad
+```ruby
+context 'with valid params' do
+  it 'creates the hiring' do
+    # Code asserting if hiring is created
+  end
+
+  it 'updates the job' do
+    # Code asserting if job properties have changed
+    # Wrong! the service that updates jobs already tests this
+  end
+end
+```
+
+✅ Good
+```ruby
+let(:hiring_creator) { instance_double ::Services::Hiring::Create::HiringCreator }
+let(:job_updater) { instance_double ::Services::Job::Update::JobUpdater.new }
+
+context 'with valid params' do
+  it "should call the hiring creator 'create' with appropriate arguments" do
+    expect(hiring_creator).to have_received(:create).with(kind_of(Hash))
+  end
+
+  it "should call the job updater 'update' with appropriate arguments" do
+    expect(job_updater).to have_received(:update).with(kind_of(Hash))
+  end
+end
+```
 
 [Back to top ⬆️](#pushpin-summary)

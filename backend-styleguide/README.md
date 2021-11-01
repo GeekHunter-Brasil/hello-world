@@ -61,31 +61,6 @@ We usually break down our application between multiple layers. Here are some gre
 
 Here's a quick summary of some important points:
 
-### Controllers
-
-Controllers should only care how to parse & format requests and responses. They should not hold any application logic, instead calling services or other resources to do the job.
-
-❌ Bad
-```ruby
-def sell_book
-  @book = Book.find(params[:id])
-
-  if book.sold?
-    book.errors.add :base, "The book is already sold"
-  else
-    book.sell
-  end
-end
-```
-
-✅ Good
-```ruby
-def sell_book
-  @book = Book.find(params[:id])
-  BookSellingService.sell_book(@book)
-end
-```
-
 ### Services
 
 We use services to extract and isolate business rules within our problem domain. This is a great idea since it becomes much easier to test each service and rule.
@@ -152,6 +127,31 @@ end
 Code style is maintained by [Rubocop](https://docs.rubocop.org/).
 
 However, there are some important patterns to be followed.
+
+### Do not put logic into controllers
+
+Controllers should only care how to parse & format requests and responses. They should not hold any application logic, instead calling services or other resources to do the job.
+
+❌ Bad
+```ruby
+def sell_book
+  @book = Book.find(params[:id])
+
+  if book.sold?
+    book.errors.add :base, "The book is already sold"
+  else
+    book.sell
+  end
+end
+```
+
+✅ Good
+```ruby
+def sell_book
+  @book = Book.find(params[:id])
+  BookSellingService.sell_book(@book)
+end
+```
 
 ### Do not use ActiveRecord callbacks
 

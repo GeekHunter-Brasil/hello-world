@@ -106,15 +106,15 @@ For example, suppose we are creating a new hiring between a candidate and a comp
 ```ruby
 module Services::Hirings::CreateHiringService
   def call(params)
-    prepared_params = #<Code that prepares the params here>
+    prepared_params = # Code that prepares the params here
 
-    hiring = #<Code that creates the hiring here>
+    hiring = # Code that creates the hiring here
 
-    #<Code that updates the company here>
+    # Code that updates the company here
 
-    #<Code that sends emails here>
+    # Code that sends emails here
 
-    #<Code that tracks conversion here>
+    # Code that tracks conversion here
   end
 end
 ```

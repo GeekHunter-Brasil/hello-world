@@ -67,7 +67,7 @@ Code style is maintained by [Rubocop](https://docs.rubocop.org/).
 
 However, there are some important patterns to be followed.
 
-### 👉 Functional code, imperative shell
+### 👉 Functional core, imperative shell
 
 <img alt="functional-core-imperative-shell" src="/docs/functional-core-imperative-shell.png" width="200">
 

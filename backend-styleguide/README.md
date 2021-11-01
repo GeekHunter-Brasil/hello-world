@@ -2,7 +2,7 @@
   <img alt="logo" src="/docs/logo.png" width="200">
 </p>
 
-# 🎨 Backend Style Guide
+# 💻 Backend Style Guide
 
 Welcome to our backend style guide! Grab your cup of coffee (or tea) and read this with attention. ☕🍵
 

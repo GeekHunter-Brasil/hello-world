@@ -139,7 +139,7 @@ It is a great idea to read the documents below, since we use them as a base:
 - [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
 - [Prettier.io](https://prettier.io/docs/en/index.html)
 
-### When possible, write JSDocs 📃
+### 👉 When possible, write JSDocs 📃
 
 JSDocs are amazing! While they make a big difference on obvious components (e.g. `Button`), they are amazing to clarify and document utility functions, hooks, complex components and such.
 
@@ -167,7 +167,7 @@ const formatAge = (age: number): string => {
 
 <br />
 
-### Avoid using `React.FC`
+### 👉 Avoid using `React.FC`
 
 Internally we avoid using `React.FC` due to some very rich discussions ([1](https://fettblog.eu/typescript-react-why-i-dont-use-react-fc/), [2](https://github.com/facebook/create-react-app/pull/8177), [3](https://dmitripavlutin.com/typescript-react-components/)).
 
@@ -195,7 +195,7 @@ const Button = (props: PropsWithChildren<ButtonProps>): React.ReactElement => {
 
 <br />
 
-### Do not use values not present in the theme
+### 👉 Do not use values not present in the theme
 
 Values that are defined in our theme come from our Design System. We should use these values, and should not input manual values in our components.
 
@@ -211,7 +211,7 @@ Values that are defined in our theme come from our Design System. We should use 
 
 <br />
 
-### Avoid adding `geek` or `{projectName}` prefix
+### 👉 Avoid adding `geek` or `{projectName}` prefix
 
 When naming variables, it's a common practice to add `geek` or any other prefix related to the company or project to make that variable unique.
 
@@ -249,7 +249,7 @@ We use [Jest](https://jestjs.io/pt-BR/) and [React Testing Library](https://test
 
 Also, we use [Cypress](https://www.cypress.io/) to write integration tests covering important application flows.
 
-### Make sure to test component logic
+### 👉 Make sure to test component logic
 
 When a component has logic inside it (e.g. rendering something based on a condition), this should be tested with unit tests.
 
@@ -261,7 +261,7 @@ const Button = ({ title }: ButtonProps): React.ReactElement => (
 );
 ```
 
-### Make sure to test utility functions
+### 👉 Make sure to test utility functions
 
 When creating a new utility function, it's really important to test it. Testing utils is easy with unit tests, since they mainly deal with data or calling other functions.
 

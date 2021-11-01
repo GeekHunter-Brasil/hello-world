@@ -67,7 +67,7 @@ Code style is maintained by [Rubocop](https://docs.rubocop.org/).
 
 However, there are some important patterns to be followed.
 
-### Functional code, imperative shell
+### 👉 Functional code, imperative shell
 
 <img alt="functional-core-imperative-shell" src="/docs/functional-core-imperative-shell.png" width="200">
 
@@ -81,7 +81,7 @@ Here are some good reads on the topic:
 - [Functional Core, Imperative Shell by Destroy All Software](https://www.destroyallsoftware.com/screencasts/catalog/functional-core-imperative-shell)
 - [Functional Core/Imperative Shell by Brian Sung](https://medium.com/@dev.junehoe/functional-core-imperative-shell-a5d1696a4ccb)
 
-### Do not put logic into controllers
+### 👉 Do not put logic into controllers
 
 Controllers should only care how to parse & format requests and responses. They should not hold any application logic, instead calling services or other resources to do the job.
 
@@ -106,7 +106,7 @@ def sell_book
 end
 ```
 
-### Break down complex services into a manager service
+### 👉 Break down complex services into a manager service
 
 We use services to extract and isolate business rules within our problem domain. This is a great idea since it becomes much easier to test each service and rule.
 
@@ -184,7 +184,7 @@ module Services::Hirings::HiringManagerCreator
 end
 ```
 
-### Do not use ActiveRecord callbacks
+### 👉 Do not use ActiveRecord callbacks
 
 In order to keep our application organized and easy to test, we decided not to use callbacks. The logic here is simple: callbacks are heavily dependant on the application, and forbid us from taking other paths to solve our problems (e.g. updating data in batch, isolating domains in another application, updating our database).
 
@@ -237,7 +237,7 @@ module Services::Books::BookManagerCreator
 end
 ```
 
-### Do not query data outside of the repository layer
+### 👉 Do not query data outside of the repository layer
 
 Often when retrieving data from the database, we do that whenever it's needed. This is considered to be a bad practice here, since any query should be extracted to the repository layer of the respective model.
 
@@ -275,7 +275,7 @@ end
 ```
 
 
-### Use strings to define enumerations
+### 👉 Use strings to define enumerations
 
 We usually use [Enumerize](https://github.com/brainspec/enumerize) to create enumerations that integrate with our repository layer.
 
@@ -313,7 +313,7 @@ Tests are a **really, really important** part of our development. Internally, **
 
 There are also some good practices when it comes to testing to keep in mind.
 
-### Do not implement logic in tests
+### 👉 Do not implement logic in tests
 
 Test should only strive to replicate the scenario you are testing, and expect the results you already know you should have. We should absolutely not implement (or even worse, re-implement) logic into a test.
 
@@ -341,7 +341,7 @@ it 'correctly calculates the score' do
 end
 ```
 
-### Cover all code paths
+### 👉 Cover all code paths
 
 Taking [Cyclomatic Complexity](https://docs.codeclimate.com/docs/cyclomatic-complexity) into account, it's really important to cover all possible code paths.
 
@@ -371,7 +371,7 @@ it 'correctly formats ages' do
 end
 ```
 
-### Isolate your tests, mocking what is not being tested
+### 👉 Isolate your tests, mocking what is not being tested
 
 If we're testing an specific application layer or functionality, we don't necessarily need to test everything when it comes to an unit test.
 

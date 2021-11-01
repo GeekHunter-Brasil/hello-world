@@ -69,7 +69,7 @@ However, there are some important patterns to be followed.
 
 ### 👉 Functional core, imperative shell
 
-<img alt="functional-core-imperative-shell" src="/docs/functional-core-imperative-shell.png" width="200">
+<img alt="functional-core-imperative-shell" src="/docs/functional-core-imperative-shell.png" width="500">
 
 We should always strive to write an application consisting of a functional core, with an imperative shell.
 

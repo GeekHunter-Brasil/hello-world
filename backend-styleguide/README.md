@@ -223,6 +223,33 @@ module Services::Books::BookManagerCreator
 end
 ```
 
+### Use strings to define enumerations
+
+We usually use [Enumerize](https://github.com/brainspec/enumerize) to create enumerations that integrate with our repository layer.
+
+However, it is a great idea to define the values as strings instead of integers. This allows the data to be saved as strings in our database, which makes it much easier to be analyzed later by our data science team (removing the need to check the code to see what each number means).
+
+❌ Bad
+```ruby
+enumerize :gender, in: {
+  feminine: 0,
+  masculine: 1,
+  other: 2,
+  non_binary: 3,
+  prefer_not_answer: 4,
+}, scope: true
+```
+
+✅ Good
+```ruby
+enumerize :gender, in: %w[
+  feminine
+  masculine
+  other
+  non_binary
+  prefer_not_answer
+], scope: true
+```
 
 [Back to top ⬆️](#pushpin-summary)
 

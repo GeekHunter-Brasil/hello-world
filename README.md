@@ -4,7 +4,7 @@
 
 # 😎 Hello World
 
-Welcome to GeekHunter docs!
+Welcome to GeekHunter docs! Grab your cup of coffee (or tea) and read this with attention. ☕🍵
 
 Here we document our workflows, styleguides and patterns.
 

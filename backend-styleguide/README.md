@@ -255,8 +255,39 @@ enumerize :gender, in: %w[
 
 ## Tests
 
+<img alt="logo" src="/docs/no-test-no-beer.jpg" width="200">
+
 Tests are a **really, really important** part of our development. Internally, **we use TDD** and **tests are an implicit requirement for every single task**.
 
-<img alt="logo" src="/docs/no-test-no-beer.jpg" width="200">
+There are also some good practices when it comes to testing to keep in mind.
+
+### Do not implement logic in tests
+
+Test should only strive to replicate the scenario you are testing, and expect the results you already know you should have. We should absolutely not implement (or even worse, re-implement) logic into a test.
+
+Taking this function as an example:
+
+```ruby
+def calculate_score(a, b)
+  (a / b) + 5
+end
+```
+
+❌ Bad
+```ruby
+it 'correctly calculates the score' do
+  expected_value = (10 / 2) + 5 # <- look how we're re-implementing the function here 🤦
+
+  expect(calculate_score(10, 2)).to eq(expected_value)
+end
+```
+
+✅ Good
+```ruby
+it 'correctly calculates the score' do
+  expect(calculate_score(10, 2)).to eq(10) # <- we already know the value, so just compare it 😆
+end
+```
+
 
 [Back to top ⬆️](#pushpin-summary)

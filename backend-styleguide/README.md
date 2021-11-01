@@ -255,7 +255,7 @@ enumerize :gender, in: %w[
 
 ## Tests
 
-Tests are a **really, really important** part of our development.
+Tests are a **really, really important** part of our development. Internally, **we use TDD** and **tests are an implicit requirement for every single task**.
 
 <img alt="logo" src="/docs/no-test-no-beer.jpg" width="200">
 

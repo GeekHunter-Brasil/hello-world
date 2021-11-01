@@ -265,7 +265,7 @@ There are also some good practices when it comes to testing to keep in mind.
 
 Test should only strive to replicate the scenario you are testing, and expect the results you already know you should have. We should absolutely not implement (or even worse, re-implement) logic into a test.
 
-Taking this function as an example:
+Using this function as an example:
 
 ```ruby
 def calculate_score(a, b)
@@ -286,6 +286,36 @@ end
 ```ruby
 it 'correctly calculates the score' do
   expect(calculate_score(10, 2)).to eq(10) # <- we already know the value, so just compare it 😆
+end
+```
+
+### Cover all code paths
+
+Taking [Cyclomatic Complexity](https://docs.codeclimate.com/docs/cyclomatic-complexity) into account, it's really important to cover all possible code paths.
+
+Using this function as an example:
+
+```ruby
+def age_description(age)
+  return 'Senior' if age > 50
+
+  'Young'
+end
+```
+
+❌ Bad
+```ruby
+# WRONG! does not cover the Young result
+it 'correctly formats Senior age' do
+  expect(age_description(61)).to eq('Senior')
+end
+```
+
+✅ Good
+```ruby
+it 'correctly formats ages' do
+  expect(age_description(61)).to eq('Senior')
+  expect(age_description(19)).to eq('Young')
 end
 ```
 

@@ -153,6 +153,59 @@ Code style is maintained by [Rubocop](https://docs.rubocop.org/).
 
 However, there are some important patterns to be followed.
 
+### Do not use ActiveRecord callbacks
+
+In order to keep our application organized and easy to test, we decided not to use callbacks. The logic here is simple: callbacks are heavily dependant on the application, and forbid us from taking other paths to solve our problems (e.g. updating data in batch, isolating domains in another application, updating our database).
+
+Instead, one should create manager services to define exactly how the flow for a business rule should happen, and test it.
+
+For example, if we assume that we need to check a book title after creating it:
+
+❌ Bad
+```ruby
+# In our model:
+class Book < ApplicationRecord
+  def after_create
+    check_title
+  end
+
+  def check_title
+    # Implementation goes here
+  end
+end
+
+# Somewhere else, we create the record and hope that everything works 🙏💣
+Book.create!(params)
+```
+
+✅ Good
+```ruby
+module Services::Books::BookManagerCreator
+  def flow(params)
+    prepared_params = prepare_params(params)
+    book = create_book(params)
+
+    check_title(book)
+
+    book
+  end
+
+  private
+
+  def prepare_params(params)
+    # Implementation goes here
+  end
+
+  def create_book(params)
+    # Implementation goes here
+  end
+
+  def check_title(book)
+    # Implementation goes here
+  end
+end
+```
+
 
 [Back to top ⬆️](#pushpin-summary)
 

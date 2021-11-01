@@ -67,6 +67,20 @@ Code style is maintained by [Rubocop](https://docs.rubocop.org/).
 
 However, there are some important patterns to be followed.
 
+### Functional code, imperative shell
+
+<img alt="functional-core-imperative-shell" src="/docs/functional-core-imperative-shell.png" width="200">
+
+We should always strive to write an application consisting of a functional core, with an imperative shell.
+
+- The functional core should hold most of the complexity while ideally being stateless, meaning it generates state values and never calls the shell, which is stateful.
+- The imperative shell should be reactive and hold little complexity, only serving as a glue/plumbing for the application layers
+
+Here are some good reads on the topic:
+
+- [Functional Core, Imperative Shell by Destroy All Software](https://www.destroyallsoftware.com/screencasts/catalog/functional-core-imperative-shell)
+- [Functional Core/Imperative Shell by Brian Sung](https://medium.com/@dev.junehoe/functional-core-imperative-shell-a5d1696a4ccb)
+
 ### Do not put logic into controllers
 
 Controllers should only care how to parse & format requests and responses. They should not hold any application logic, instead calling services or other resources to do the job.

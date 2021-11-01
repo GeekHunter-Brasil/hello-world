@@ -255,6 +255,8 @@ enumerize :gender, in: %w[
 
 ## Tests
 
-TODO
+Tests are a **really, really important** part of our development.
+
+<img alt="logo" src="/docs/no-test-no-beer.jpg" width="200">
 
 [Back to top ⬆️](#pushpin-summary)

@@ -144,17 +144,20 @@ It is a great idea to read the documents below, since we use them as a base:
 JSDocs are amazing! While they make a big difference on obvious components (e.g. `Button`), they are amazing to clarify and document utility functions, hooks, complex components and such.
 
 Check out these guides:
+
 - [JSDocs](https://jsdoc.app/)
 - [Document your Javascript code with JSDoc](https://dev.to/paulasantamaria/document-your-javascript-code-with-jsdoc-2fbf)
 
 ❌ Bad
+
 ```tsx
 const formatAge = (age: number): string => {
   // Implementation
-}
+};
 ```
 
 ✅ Good
+
 ```tsx
 /**
  * Formats an age (number) to a string description.
@@ -162,7 +165,7 @@ const formatAge = (age: number): string => {
  */
 const formatAge = (age: number): string => {
   // Implementation
-}
+};
 ```
 
 <br />
@@ -172,6 +175,7 @@ const formatAge = (age: number): string => {
 Internally we avoid using `React.FC` due to some very rich discussions ([1](https://fettblog.eu/typescript-react-why-i-dont-use-react-fc/), [2](https://github.com/facebook/create-react-app/pull/8177), [3](https://dmitripavlutin.com/typescript-react-components/)).
 
 ❌ Bad
+
 ```tsx
 const Button: React.FC<ButtonProps> = (props) => {
   // Implementation
@@ -179,6 +183,7 @@ const Button: React.FC<ButtonProps> = (props) => {
 ```
 
 ✅ Good
+
 ```tsx
 const Button = (props: ButtonProps): React.ReactElement => {
   // Implementation
@@ -200,11 +205,13 @@ const Button = (props: PropsWithChildren<ButtonProps>): React.ReactElement => {
 Values that are defined in our theme come from our Design System. We should use these values, and should not input manual values in our components.
 
 ❌ Bad
+
 ```tsx
 <Box backgroundColor="#9412DC" />
 ```
 
 ✅ Good
+
 ```tsx
 <Box backgroundColor="primary.500" />
 ```
@@ -218,25 +225,57 @@ When naming variables, it's a common practice to add `geek` or any other prefix 
 It's a great idea to avoid doing this, since everything inside a `geek` repo belongs to `geek` - so it's redundant.
 
 ❌ Bad
+
 ```tsx
 export const colors: ThemeColors = {
   geekPrimary: {
-    50: '#ffffff',
-    100: '#F0F0FF',
+    50: "#ffffff",
+    100: "#F0F0FF",
     // ...
   },
 };
 ```
 
 ✅ Good
+
 ```tsx
 export const colors: ThemeColors = {
   primary: {
-    50: '#ffffff',
-    100: '#F0F0FF',
+    50: "#ffffff",
+    100: "#F0F0FF",
     // ...
   },
 };
+```
+
+<br />
+
+### 👉 Avoid using `export default`
+
+When exporting components, prefer to use the `export { Foo }` or `export class Foo` over `export default Foo` syntax.
+
+Doing so, we prevent the same component from having different names and improve the discoverability of the file.
+
+You can find other good reasons by adopting this syntax [here](https://basarat.gitbook.io/typescript/main-1/defaultisbad).
+
+❌ Bad
+
+```tsx
+class Foo {
+  ...
+};
+
+export default Foo;
+```
+
+✅ Good
+
+```tsx
+class Foo {
+  ...
+};
+
+export { Foo };
 ```
 
 <br />
@@ -274,6 +313,5 @@ it('Correctly formats the name', () => {
   expect(formatName('Foo', 'Bar')).toBe('Foo Bar');
 });
 ```
-
 
 [Back to top ⬆️](#pushpin-summary)

@@ -256,7 +256,7 @@ When exporting components, prefer to use the `export { Foo }` or `export class F
 
 Doing so, we prevent the same component from having different names and improve the discoverability of the file.
 
-You can find another good reasons by adopting this syntax [here](https://basarat.gitbook.io/typescript/main-1/defaultisbad)
+You can find other good reasons by adopting this syntax [here](https://basarat.gitbook.io/typescript/main-1/defaultisbad).
 
 ❌ Bad
 

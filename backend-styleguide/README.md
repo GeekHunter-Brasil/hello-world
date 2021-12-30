@@ -311,7 +311,10 @@ enumerize :gender, in: %w[
 
 Tests are a **really, really important** part of our development. Internally, **we use TDD** and **tests are an implicit requirement for every single task**.
 
-There are also some good practices when it comes to testing to keep in mind.
+Here's some good resources to understand tests / TDD:
+- [The 3 Types of Unit Test in TDD](https://www.youtube.com/watch?v=W40mpZP9xQQ)
+
+There are also some good practices when it comes to testing to keep in mind. These are:
 
 ### 👉 Do not implement logic in tests
 

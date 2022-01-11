@@ -280,6 +280,42 @@ export { Foo };
 
 <br />
 
+### 👉 Static objects should be declared outside of the function block
+
+This is the preferred way because otherwise the object will be recreated on every render, which is unnecessary.
+
+❌ Bad
+
+```tsx
+export const MyComponent = (): React.ReactElement => {
+  const hoverStyle = {
+    color: 'primary.50',
+    bgColor: 'errors.150',
+    borderColor: 'errors.150',
+  };
+
+  return (
+    <Link _hover={hoverStyle}>Blá</Link>
+  );
+}
+```
+
+✅ Good
+
+```tsx
+const hoverStyle = {
+    color: 'primary.50',
+    bgColor: 'errors.150',
+    borderColor: 'errors.150',
+  };
+
+export const MyComponent = (): React.ReactElement => (
+  <Link _hover={hoverStyle}>Blá</Link>
+);
+```
+
+<br />
+
 [Back to top ⬆️](#pushpin-summary)
 
 ## Tests

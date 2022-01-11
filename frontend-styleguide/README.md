@@ -304,10 +304,10 @@ export const MyComponent = (): React.ReactElement => {
 
 ```tsx
 const hoverStyle = {
-    color: 'primary.50',
-    bgColor: 'errors.150',
-    borderColor: 'errors.150',
-  };
+  color: 'primary.50',
+  bgColor: 'errors.150',
+  borderColor: 'errors.150',
+};
 
 export const MyComponent = (): React.ReactElement => (
   <Link _hover={hoverStyle}>Blá</Link>

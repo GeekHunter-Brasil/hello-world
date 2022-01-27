@@ -17,6 +17,7 @@ The goal of this guide is to help our team to understand and follow our code sty
 * [Application Layers](#application-layers)
 * [Code Style](#code-style)
 * [Tests](#tests)
+* [Translate](#translate)
 
 ## Introduction
 
@@ -432,6 +433,26 @@ context 'with valid params' do
     expect(job_updater).to have_received(:update).with(kind_of(Hash))
   end
 end
+```
+
+## Translate
+
+### 👉 Use I18n to translate
+
+When writing your programs avoid using hard coded strings that will be displayed to users, this allows support for multiple languages. The path with translated keys is <REP>/config/locales/<locale>
+
+❌ Bad
+```ruby
+  render json: {
+    message: 'Lorem Ipsum at message'
+  }, status: :ok
+```
+
+✅ Good
+```ruby
+  render json: {
+    message: I18n.t('<path_key_message>')
+  }, status: :ok
 ```
 
 [Back to top ⬆️](#pushpin-summary)

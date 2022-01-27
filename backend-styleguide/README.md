@@ -707,7 +707,7 @@ end
 
 #### 💾 Repository Layer
 
-Last but not least we have the Repository Layer, responsible for communicate with the database.
+Last but not least we have the Repository Layer, responsible for communicating with the database.
 
 In this layer we are looking for integration tests such as in the Entrypoint layer, because we want to truly communicate with the database.
 

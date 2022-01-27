@@ -390,14 +390,14 @@ end
 
 ### 👉 Each application layer has its own way of testing
 
-Let's assume that we want to test all the layers responsible to create a new hiring. We have 5 layers in this process:
+Let's assume that we want to test all the layers responsible to update a hiring. We have 5 layers in this process.
 
 #### 📨 Entrypoint Layer
 
-Here is where ours Controllers, Mutations, Workers, Rakes and so on, are defined. For this layer, we an integration test, going all the way to the database and returning the result. Here we want to assert 3 main things:
+Here is where our Controllers, Mutations, Workers, Rakes and so on, are defined. For this layer, we want an integration test, going all the way to the database and returning the result, asserting 3 main things:
 
-- If the manager was called correctly, with the expected parameters the expected number of times
-- If the input was correctly handle (e.g. if the hiring status was correctly updated)
+- If the manager was called correctly, with the expected parameters and the expected number of times
+- If the input was correctly handled (e.g. if the hiring status was correctly updated)
 - If the response is what we expected (e.g. response.body, response.status)
 
 Using an example of a Controller that handles the hiring update
@@ -490,9 +490,9 @@ end
 
 #### 🎛️ Manager Layer
 
-This layer it's our source of truth about business rules. The manager is responsible to call all the services required (included other managers) to complete the task.
+This layer it's our source of truth when talking about business rules. The manager is responsible to call all the services required (included other managers) to complete the a specific task.
 
-Here we will do a unit test so we don't necessarily need to test everything. Assuming other parts of the application are also tested (they should be!), it becomes much easier to simply mock the dependency or assume it has been called when its result is not important to the test.
+Here we want unit tests so we don't necessarily need to test everything. Assuming other parts of the application are also tested (they should be!), it becomes much easier to simply mock the dependency or assume it has been called when its result is not important to the test.
 
 Following our example, we have a manager responsible to update the hiring
 
@@ -707,7 +707,7 @@ end
 
 #### 💾 Repository Layer
 
-Last but no least we have the Repository Layer, responsible for communicate with the database.
+Last but not least we have the Repository Layer, responsible for communicate with the database.
 
 In this layer we are looking for integration tests such as in the Entrypoint layer, because we want to truly communicate with the database.
 

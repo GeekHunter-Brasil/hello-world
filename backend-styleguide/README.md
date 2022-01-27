@@ -439,7 +439,7 @@ end
 
 ### 👉 Use I18n to translate
 
-When writing your programs avoid using hard coded strings that will be displayed to users, this allows support for multiple languages. The path with translated keys is <REP>/config/locales/<locale>
+When writing your programs avoid using hard coded strings that will be displayed to users, this allows support for multiple languages. The path with translated keys is `<REP>/config/locales/<locale>`
 
 ❌ Bad
 ```ruby
@@ -453,6 +453,42 @@ When writing your programs avoid using hard coded strings that will be displayed
   render json: {
     message: I18n.t('<path_key_message>')
   }, status: :ok
+```
+
+### 👉 Directory Locales structure
+
+For a better organization of the yml files the ideal is to `mirror the folders`, thus not creating too big files, with this structure we obtain a better organization.
+
+to declare the yml, you must use the same name as the parent directory 'ex: directory/directory.yml',
+
+```
+📁 project/
+└──📁 config/
+   └──📁 locales/
+      └──📁 br/
+         └──📁 views/
+            └──📁 pages/
+               └──📁 directory/
+                  └──📝 directory.yml
+               └──📝 pages.yml
+      └──📝 pt-BR.yml
+      └──📝 en.yml
+```
+
+file `pt-BR.yml` contains constants and common terms application.
+```yml
+pt-BR:
+  cancel: Cancelar
+  confirm: Confirmar
+```
+
+file `directory.yml` respect folder structure.
+```yml
+pt-BR:
+  views:
+    pages:
+      directory:
+        message: 'Massum Ipsum Lorem'
 ```
 
 [Back to top ⬆️](#pushpin-summary)

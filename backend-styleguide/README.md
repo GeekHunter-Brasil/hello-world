@@ -488,7 +488,7 @@ context 'with valid params' do
 end
 ```
 
-#### Manager Layer
+#### 🎛️ Manager Layer
 
 This layer it's our source of truth about business rules. The manager is responsible to call all the services required (included other managers) to complete the task.
 
@@ -573,7 +573,7 @@ context 'with valid params' do
 end
 ```
 
-#### Service layer
+#### 🛠️ Service layer
 
 Using the same logic in the Manager layer, here will mock the dependencies and test if
 they were called appropriately.
@@ -644,7 +644,7 @@ context 'with valid params' do
 end
 ```
 
-#### Validator layer
+#### 🚫 Validator layer
 
 The validator layer is responsible to check the data that is been passed to the database.
 Here we want to assert if the validator is setting the errors properly according to the parameters validation rules.
@@ -705,7 +705,7 @@ context 'when params are invalid' do
 end
 ```
 
-#### Repository Layer
+#### 💾 Repository Layer
 
 Last but no least we have the Repository Layer, responsible for communicate with the database.
 

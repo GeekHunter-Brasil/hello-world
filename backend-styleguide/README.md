@@ -12,20 +12,12 @@ The goal of this guide is to help our team to understand and follow our code sty
 
 # :pushpin: Summary
 
-<<<<<<< HEAD
 * [Introduction](#introduction)
 * [Organization](#organization)
 * [Application Layers](#application-layers)
 * [Code Style](#code-style)
 * [Tests](#tests)
 * [Translate](#translate)
-=======
-- [Introduction](#introduction)
-- [Organization](#organization)
-- [Application Layers](#application-layers)
-- [Code Style](#code-style)
-- [Tests](#tests)
->>>>>>> 6126d4853d255f6b2afee8f229cde6de2b10991b
 
 ## Introduction
 

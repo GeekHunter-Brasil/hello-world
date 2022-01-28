@@ -830,4 +830,45 @@ pt-BR:
         message: 'Massum Ipsum Lorem'
 ```
 
+### 👉 Translate view
+
+We use definition "Lazy" Lookup to translate views. For more information [Lazy Lookup](https://guides.rubyonrails.org/i18n.html#lazy-lookup)
+
+example the `pages.index.title` values inside `app/views/pages/index.html.erb`
+```
+<%= t('.title') %>
+```
+
+Structe in yml file:
+
+```yml
+pt-BR:
+  pages:
+    index:
+      title: 'Boas-vindas'
+```
+
+In some cases, we may have phrases that repeat themselves. Thus, a standard structure can be created
+```
+<%= t('pages.default.title') %>
+```
+Structe in yml file:
+
+```yml
+pt-BR:
+  pages:
+    default:
+      title: 'Boas-vindas'
+```
+If necessary to use a param in view, use:
+
+```
+<%= t('.title', username: 'People') %>
+```
+
+yml file:
+```
+title: 'Boas-vindas %{username}'
+```
+
 [Back to top ⬆️](#pushpin-summary)

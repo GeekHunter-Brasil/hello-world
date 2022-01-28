@@ -12,12 +12,20 @@ The goal of this guide is to help our team to understand and follow our code sty
 
 # :pushpin: Summary
 
+<<<<<<< HEAD
 * [Introduction](#introduction)
 * [Organization](#organization)
 * [Application Layers](#application-layers)
 * [Code Style](#code-style)
 * [Tests](#tests)
 * [Translate](#translate)
+=======
+- [Introduction](#introduction)
+- [Organization](#organization)
+- [Application Layers](#application-layers)
+- [Code Style](#code-style)
+- [Tests](#tests)
+>>>>>>> 6126d4853d255f6b2afee8f229cde6de2b10991b
 
 ## Introduction
 
@@ -87,6 +95,7 @@ Here are some good reads on the topic:
 Controllers should only care how to parse & format requests and responses. They should not hold any application logic, instead calling services or other resources to do the job.
 
 ❌ Bad
+
 ```ruby
 def sell_book
   @book = Book.find(params[:id])
@@ -100,6 +109,7 @@ end
 ```
 
 ✅ Good
+
 ```ruby
 def sell_book
   @book = Book.find(params[:id])
@@ -118,6 +128,7 @@ It's a great idea to break it down the flow between multiple services (or method
 For example, suppose we are creating a new hiring between a candidate and a company. There are many rules and validations here, and many other things need to happen.
 
 ❌ Bad
+
 ```ruby
 module Services::Hirings::CreateHiringService
   def call(params)
@@ -135,6 +146,7 @@ end
 ```
 
 ✅ Good
+
 ```ruby
 module Services::Hirings::HiringManagerCreator
   def flow(params)
@@ -194,6 +206,7 @@ Instead, one should create manager services to define exactly how the flow for a
 For example, if we assume that we need to check a book title after creating it:
 
 ❌ Bad
+
 ```ruby
 # In our model:
 class Book < ApplicationRecord
@@ -211,6 +224,7 @@ Book.create!(params)
 ```
 
 ✅ Good
+
 ```ruby
 module Services::Books::BookManagerCreator
   def flow(params)
@@ -247,6 +261,7 @@ By doing it this way, we can write better, less repeated code that is also much 
 For example, suppose we have a service to notify all active users of some new action or feature:
 
 ❌ Bad
+
 ```ruby
 module Services::NotifyAllActiveUsers
   def call
@@ -258,6 +273,7 @@ end
 ```
 
 ✅ Good
+
 ```ruby
 module Repositories::Users::Finder
   # Note: This should be tested!
@@ -275,7 +291,6 @@ module Services::NotifyAllActiveUsers
 end
 ```
 
-
 ### 👉 Use strings to define enumerations
 
 We usually use [Enumerize](https://github.com/brainspec/enumerize) to create enumerations that integrate with our repository layer.
@@ -283,6 +298,7 @@ We usually use [Enumerize](https://github.com/brainspec/enumerize) to create enu
 However, it is a great idea to define the values as strings instead of integers. This allows the data to be saved as strings in our database, which makes it much easier to be analyzed later by our data science team (removing the need to check the code to see what each number means).
 
 ❌ Bad
+
 ```ruby
 enumerize :gender, in: {
   feminine: 0,
@@ -294,6 +310,7 @@ enumerize :gender, in: {
 ```
 
 ✅ Good
+
 ```ruby
 enumerize :gender, in: %w[
   feminine
@@ -313,6 +330,7 @@ enumerize :gender, in: %w[
 Tests are a **really, really important** part of our development. Internally, **we use TDD** and **tests are an implicit requirement for every single task**.
 
 Here's some good resources to understand tests / TDD:
+
 - [The 3 Types of Unit Test in TDD](https://www.youtube.com/watch?v=W40mpZP9xQQ)
 
 There are also some good practices when it comes to testing to keep in mind. These are:
@@ -330,6 +348,7 @@ end
 ```
 
 ❌ Bad
+
 ```ruby
 it 'correctly calculates the score' do
   expected_value = (10 / 2) + 5 # <- look how we're re-implementing the function here 🤦
@@ -339,6 +358,7 @@ end
 ```
 
 ✅ Good
+
 ```ruby
 it 'correctly calculates the score' do
   expect(calculate_score(10, 2)).to eq(10) # <- we already know the value, so just compare it 😆
@@ -360,6 +380,7 @@ end
 ```
 
 ❌ Bad
+
 ```ruby
 # WRONG! does not cover the Young result
 it 'correctly formats Senior age' do
@@ -368,6 +389,7 @@ end
 ```
 
 ✅ Good
+
 ```ruby
 it 'correctly formats ages' do
   expect(age_description(61)).to eq('Senior')
@@ -375,41 +397,146 @@ it 'correctly formats ages' do
 end
 ```
 
-### 👉 Isolate your tests, mocking what is not being tested
+### 👉 Each application layer has its own way of testing
 
-If we're testing an specific application layer or functionality, we don't necessarily need to test everything when it comes to an unit test.
+Let's assume that we want to test all the layers responsible to update a hiring. We have 5 layers in this process.
 
-Assuming other parts of the application are also tested using the same principle (they should be!), it becomes much easier to simply mock the dependency or assume it has been called when its result is not important to the test.
+#### 📨 Entrypoint Layer
 
-Using an example service: it handles creating a hiring, but we don't need to test the functionality of the update job service, since it has its own tests.
+Here is where our Controllers, Mutations, Workers, Rakes and so on, are defined. For this layer, we want an integration test, going all the way to the database and returning the result, asserting 3 main things:
+
+- If the manager was called correctly, with the expected parameters and the expected number of times
+- If the input was correctly handled (e.g. if the hiring status was correctly updated)
+- If the response is what we expected (e.g. response.body, response.status)
+
+Using an example of a Controller that handles the hiring update
 
 ```ruby
-module Services::Hiring::HiringManagerCreator
-  def flow(params)
-    hiring = hiring_creator.create params
+module Companies
+  class HiringsController
 
-    job_updater.update params
+  def update
+    hiring_manager_updater.update params do |callback|
+      callback.on_success do |updated_hiring|
+        render json: updated_hiring
+      end
 
-    hiring
+      callback.on_failed do |exception|
+        respond_to do |format|
+          @errors = exception&.errors
+          format.js { render json: @errors.full_messages.join('<br>'), status: 400 }
+        end
+      end
+    end
   end
 
   private
 
-  def job_updater
-    @job_updater ||= ::Services::Job::Update::JobUpdater.new
-  end
-
-  def hiring_creator
-    @hiring_creator ||= ::Services::Hiring::Create::HiringCreator.new
+  def hiring_manager_updater
+    @hiring_manager_updater ||= ::Services::Companies::Hirings::HiringManagerUpdater.new
   end
 end
 ```
 
 ❌ Bad
+
+```ruby
+let(:hiring_manager_updater) { instance_double ::Services::Companies::Hirings::HiringManagerUpdater }
+
+context 'with valid params' do
+  before do
+    put 'companies/hiring', params
+  end
+
+  it "should call the hiring manager updater with appropriate arguments the right number of times" do
+    expect(hiring_manager_updater).to have_received(:update).with(expected_params).exactly(1).times
+  end
+end
+```
+
+✅ Good
+
 ```ruby
 context 'with valid params' do
-  it 'creates the hiring' do
-    # Code asserting if hiring is created
+  let(:hiring) { create(:hiring, status: Hiring.status.waiting) }
+  let(:params) do
+    {
+      id: hiring.id,
+      status: Hiring.status.approved
+    }
+  end
+
+  let(:update_hiring) do
+    put 'companies/hiring', params: params
+  end
+
+  describe 'validate behavior' do
+    after do
+      update_hiring
+    end
+
+    it "should call the hiring manager updater with appropriate arguments the right number of times" do
+      expect_any_instance_of(::Services::Companies::Hirings::HiringManagerUpdate).to receive(:update).with(expected_params).exactly(1).times
+    end
+  end
+
+  describe 'validate logic' do
+    before do
+      update_hiring
+      hiring.reload
+    end
+
+    it 'should return 200 as status code' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'should update the hiring status' do
+      expect(hiring.status).to eq Hiring.status.approved.value
+    end
+  end
+end
+```
+
+#### 🎛️ Manager Layer
+
+This layer it's our source of truth when talking about business rules. The manager is responsible to call all the services required (included other managers) to complete the a specific task.
+
+Here we want unit tests so we don't necessarily need to test everything. Assuming other parts of the application are also tested (they should be!), it becomes much easier to simply mock the dependency or assume it has been called when its result is not important to the test.
+
+Following our example, we have a manager responsible to update the hiring
+
+```ruby
+module Services
+  module Hiring
+    class HiringManagerUpdater
+
+    def update(params)
+      hiring = hiring_updater.update(params)
+
+      job_updater.update(hiring.job_id, :new_hiring)
+
+      hiring
+    end
+
+    private
+
+    def hiring_updater
+      @hiring_updater ||= ::Services::Hiring::Update::HiringUpdater.new
+    end
+
+    def job_updater
+      @job_updater ||= ::Services::Job::Update::JobUpdater.new
+    end
+  end
+end
+```
+
+❌ Bad
+
+```ruby
+context 'with valid params' do
+  it 'updates the hiring' do
+    # Code asserting if hiring is updated
   end
 
   it 'updates the job' do
@@ -420,17 +547,237 @@ end
 ```
 
 ✅ Good
+
 ```ruby
-let(:hiring_creator) { instance_double ::Services::Hiring::Create::HiringCreator }
-let(:job_updater) { instance_double ::Services::Job::Update::JobUpdater.new }
+let(:hiring_updater) { instance_double ::Services::Hiring::Update::HiringUpdater }
+let(:job_updater) { instance_double ::Services::Job::Update::JobUpdater }
+
+let(:hiring) { double('hiring', id: 1) }
 
 context 'with valid params' do
-  it "should call the hiring creator 'create' with appropriate arguments" do
-    expect(hiring_creator).to have_received(:create).with(kind_of(Hash))
+  let(:params) do
+    {
+      id: hiring.id,
+      status: Hiring.status.approved
+    }
   end
 
-  it "should call the job updater 'update' with appropriate arguments" do
-    expect(job_updater).to have_received(:update).with(kind_of(Hash))
+  before do
+    allow(subject).to receive(:hiring_updater).and_return hiring_updater
+    allow(subject).to receive(:job_updater).and_return job_updater
+
+    allow(hiring_updater).to receive(:update).with(kind_of(Hash))
+    allow(job_updater).to receive(:update).with(kind_of(Hash), kind_of(Symbol))
+
+    subject.update(params)
+  end
+
+  it "should call the hiring updater with appropriate arguments the right number of times" do
+    expect(hiring_updater).to have_received(:update).with(expected_params).exactly(1).times
+  end
+
+  it "should call the job updater with appropriate arguments" do
+    expect(job_updater).to have_received(:update).with(expected_params).exactly(1).times
+  end
+end
+```
+
+#### 🛠️ Service layer
+
+Using the same logic in the Manager layer, here will mock the dependencies and test if
+they were called appropriately.
+
+```ruby
+  module Services
+    module Hiring
+      module Update
+        class HiringUpdater
+          include RepositoriesInjection
+
+          def update(params)
+            validate_params(params)
+            provide_hiring_repo.update(params)
+          end
+
+          private
+
+          def validate_params(params)
+            validator = Validators::Hiring::HiringUpdateValidator.new params, :update
+            raise Exceptions::RecordInvalid.new(errors: validator.errors) unless validator.valid?
+          end
+        end
+      end
+    end
+  end
+```
+
+❌ Bad
+
+```ruby
+context 'with valid params' do
+  it 'updates the hiring' do
+    # Code asserting if hiring is updated
+  end
+end
+```
+
+✅ Good
+
+```ruby
+let(:provide_hiring_repo) { instance_double Repositories::Hirings::DelegateRepository }
+let(:hiring_update_validator) { instance_double Validators::Hiring::HiringUpdateValidator }
+
+let(:hiring) { double('hiring', id: 1) }
+
+context 'with valid params' do
+  let(:params) do
+    {
+      id: hiring.id,
+      status: Hiring.status.approved
+    }
+  end
+
+  before do
+    allow(subject).to receive(:provide_hiring_repo).and_return provide_hiring_repo
+    allow(Validators::Hiring::HiringUpdateValidator).to receive(:new).with(kind_of(Hash), kind_of(Symbol)).and_return hiring_update_validator
+
+    allow(hiring_update_validator).to receive(:valid?).and_return true
+    allow(provide_hiring_repo).to receive(:update).with(kind_of(Hash))
+
+    subject.update(params)
+  end
+
+  it "should call the hiring repository with appropriate arguments the right number of times" do
+    expect(provide_hiring_repo).to have_received(:update).with(expected_params).exactly(1).times
+  end
+end
+```
+
+#### 🚫 Validator layer
+
+The validator layer is responsible to check the data that is been passed to the database.
+Here we want to assert if the validator is setting the errors properly according to the parameters validation rules.
+
+```ruby
+module Validators
+  module Hiring
+    class HiringUpdateValidator < Validator
+      def initialize(attrs = {}, scope = :update)
+        super attrs, scope
+      end
+
+      private
+
+      attr_reader :job_id, :candidate_id, :status
+
+      validates :job_id, :candidate_id, :status,
+                presence: true, allow_blank: false, if: -> { scope == :update }
+    end
+  end
+end
+```
+
+❌ Bad
+
+```ruby
+context 'with invalid params' do
+  it 'doest not update the hiring' do
+    # Code calling an updater with invalid params and assert that the hiring wasn't updated
+  end
+end
+```
+
+✅ Good
+
+```ruby
+let(:errors) { subject.errors }
+let(:params) { {} }
+
+subject { Validators::Hiring::HiringUpdateValidator.new params, :update }
+
+context 'when params are invalid' do
+  before do
+    subject.valid?
+  end
+
+  it ':blank should be added job_id' do
+    expect(errors.added?(:job_id, :blank)).to be_truthy
+  end
+
+  it ':blank should be added candidate_id' do
+    expect(errors.added?(:candidate_id, :blank)).to be_truthy
+  end
+
+  it ':blank should be added status' do
+    expect(errors.added?(:status, :blank)).to be_truthy
+  end
+end
+```
+
+#### 💾 Repository Layer
+
+Last but not least we have the Repository Layer, responsible for communicating with the database.
+
+In this layer we are looking for integration tests such as in the Entrypoint layer, because we want to truly communicate with the database.
+
+Let's assume that we want to update the status of all the hirings that came from a specify job. To do that first we need to find all the hirings that we want to update.
+
+```ruby
+module Repositories
+  module Hirings
+    class Finder
+      include Searchable
+
+      def find_all_by_job_id(job_id)
+        @repository.where(
+          job_id: job_id,
+        )
+      end
+    end
+  end
+end
+```
+
+❌ Bad
+
+```ruby
+subject { Repositories::Hirings::Finder.new Bid }
+
+context 'when exists hirings with given job_id' do
+  let(:job) { double(:job, id: 1) }
+  let(:other_job) { double(:job, id: 1) }
+
+  let(:first_hiring) { double(:hiring, job_id: job.id) }
+  let(:second_hiring) { double(:hiring, job_id: job.id) }
+  let(:other_hiring) { double(:hiring), job_id: other_job.id }
+
+  before do
+    allow(subject).to receive(:find_all_by_job_id).and_return [first_hiring, second_hiring]
+  end
+
+  it 'should return the expected hirings' do
+    result = subject.find_all_by_job_id(job.id)
+    expect(result).to [first_hiring, second_hiring]
+  end
+end
+```
+
+✅ Good
+
+```ruby
+subject { Repositories::Hirings::Finder.new Bid }
+
+context 'when exists hirings with given job_id' do
+  let(:job) { create(:job) }
+  let(:other_job) { create(:job) }
+
+  let(:first_hiring) { create(:hiring, job: job) }
+  let(:second_hiring) { create(:hiring, job: job) }
+  let(:other_hiring) { create(:hiring), job: other_job }
+
+  it 'should return the expected hirings' do
+    result = subject.find_all_by_job_id(job.id)
+    expect(result).to [first_hiring, second_hiring]
   end
 end
 ```

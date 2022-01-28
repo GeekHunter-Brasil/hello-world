@@ -12,11 +12,12 @@ The goal of this guide is to help our team to understand and follow our code sty
 
 # :pushpin: Summary
 
-- [Introduction](#introduction)
-- [Organization](#organization)
-- [Application Layers](#application-layers)
-- [Code Style](#code-style)
-- [Tests](#tests)
+* [Introduction](#introduction)
+* [Organization](#organization)
+* [Application Layers](#application-layers)
+* [Code Style](#code-style)
+* [Tests](#tests)
+* [Translate](#translate)
 
 ## Introduction
 
@@ -771,6 +772,103 @@ context 'when exists hirings with given job_id' do
     expect(result).to [first_hiring, second_hiring]
   end
 end
+```
+
+## Translate
+
+### 👉 Use I18n to translate
+
+When writing your programs avoid using hard coded strings that will be displayed to users, this allows support for multiple languages. The path with translated keys is `<REP>/config/locales/<locale>`
+
+❌ Bad
+```ruby
+  render json: {
+    message: 'Lorem Ipsum at message'
+  }, status: :ok
+```
+
+✅ Good
+```ruby
+  render json: {
+    message: I18n.t('<path_key_message>')
+  }, status: :ok
+```
+
+### 👉 Directory Locales structure
+
+For a better organization of the yml files the ideal is to `mirror the folders`, thus not creating too big files, with this structure we obtain a better organization.
+
+to declare the yml, you must use the same name as the parent directory 'ex: directory/directory.yml',
+
+```
+📁 project/
+└──📁 config/
+   └──📁 locales/
+      └──📁 br/
+         └──📁 views/
+            └──📁 pages/
+               └──📁 directory/
+                  └──📝 directory.yml
+               └──📝 pages.yml
+      └──📝 pt-BR.yml
+      └──📝 en.yml
+```
+
+file `pt-BR.yml` contains constants and common terms application.
+```yml
+pt-BR:
+  cancel: Cancelar
+  confirm: Confirmar
+```
+
+file `directory.yml` respect folder structure.
+```yml
+pt-BR:
+  views:
+    pages:
+      directory:
+        message: 'Massum Ipsum Lorem'
+```
+
+### 👉 Translate view
+
+We use definition "Lazy" Lookup to translate views. For more information [Lazy Lookup](https://guides.rubyonrails.org/i18n.html#lazy-lookup)
+
+example the `pages.index.title` values inside `app/views/pages/index.html.erb`
+```
+<%= t('.title') %>
+```
+
+Structe in yml file:
+
+```yml
+pt-BR:
+  pages:
+    index:
+      title: 'Boas-vindas'
+```
+
+In some cases, we may have phrases that repeat themselves. Thus, a standard structure can be created
+```
+<%= t('pages.default.title') %>
+```
+Structe in yml file:
+
+```yml
+pt-BR:
+  pages:
+    default:
+      title: 'Boas-vindas'
+```
+If necessary to use a param in view, use:
+
+```
+<%= t('.title', username: 'People') %>
+```
+
+yml file:
+```
+title: 'Boas-vindas %{username}'
 ```
 
 [Back to top ⬆️](#pushpin-summary)

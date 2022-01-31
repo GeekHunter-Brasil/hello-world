@@ -316,6 +316,48 @@ export const MyComponent = (): React.ReactElement => (
 
 <br />
 
+### 👉 Use `async` and `await` instead promises `then` and `catch`
+
+When using promises or async functions, it's a common pratice use the `then` and the `catch` functions.
+
+It's a great idea to use `async` and `await` instead this, since it's much shorter and helps reducing cognitive complexity.
+
+Check out these articles related to promises and async/await ([1](https://betterprogramming.pub/javascript-best-practices-promises-45928fbfebe2), [2](https://medium.com/front-end-weekly/javascript-best-practices-promises-6c4f78a12c29
+)).
+Check out these articles related to Apollo and GraphQL ([1](https://www.apollographql.com/blog/graphql/error-handling/full-stack-error-handling-with-graphql-apollo/
+), [2](https://www.apollographql.com/docs/react/data/error-handling/
+)).
+
+❌ Bad
+
+```tsx
+const tryExecuteAsync = () => {
+  exampleMethodAsync()
+  .then((result) => {
+    console.log(`executed successfully with result: ${result}.`);
+  })
+  .catch((err) => {
+    console.log(`failed to execute with error: ${err}.`);
+  });
+};
+```
+
+✅ Good
+
+```tsx
+const tryExecuteAsync = async () => {
+  try {
+    const result = await exampleMethodAsync();
+    console.log(`executed successfully with result: ${result}.`);
+  }
+  catch (err) {
+    console.log(`failed to execute with error: ${err}.`);
+  }
+};
+```
+
+<br />
+
 [Back to top ⬆️](#pushpin-summary)
 
 ## Tests

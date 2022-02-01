@@ -315,11 +315,11 @@ enumerize :gender, in: %w[
 
 ### 👉 Use comments to define tables and fields
 
-We use comments to define tables and fields. This is a good approach to help newcomers and others Geeks.
+We use comments to define tables and fields. This is a good approach to help newcomers and other Geeks.
 
-Don't put sensitive information, comments doesn't have any security mechanism and they are stored globally so any user connected to any database in cluster can see all comments for shared objects.
+Don't put sensitive information, comments don't have any security mechanism and they are stored globally so any user connected to any database in the cluster can see all comments for shared objects.
 
-Add rich information to the comment, just write the name of the field or table don't show what it is.
+Avoid adding obvious information. Good practices on code commenting also apply here!
 
 ❌ Bad
 
@@ -348,11 +348,11 @@ end
 class Person < ActiveRecord::Migration[5.0]
   def change
     create_table :person, comment: 'Stores primary person data' do |t|
-      t.references :address, index: false, foreign_key: true, comment: 'A reference for the address of this people'
+      t.references :address, index: false, foreign_key: true, comment: 'A reference for the address of this person'
 
-      t.string :phone_number, comment: 'The phone number of this people including country and area code'
+      t.string :phone_number, comment: 'The phone number of this person including country and area code'
 
-      t.string :name, comment: 'The complete name of this people'
+      t.string :name, comment: 'The complete name of this person'
 
       t.timestamps null: false
     end

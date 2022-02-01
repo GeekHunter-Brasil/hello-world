@@ -313,6 +313,53 @@ enumerize :gender, in: %w[
 ], scope: true
 ```
 
+### 👉 Use comments to define tables and fields
+
+We use comments to define tables and fields. This is a good approach to help newcomers and others Geeks.
+
+Don't put sensitive information, comments doesn't have any security mechanism and they are stored globally so any user connected to any database in cluster can see all comments for shared objects.
+
+Add rich information to the comment, just write the name of the field or table don't show what it is.
+
+❌ Bad
+
+```ruby
+# frozen_string_literal: true
+
+class Person < ActiveRecord::Migration[5.0]
+  def change
+    create_table :person, comment: 'A person' do |t|
+      t.references :address, index: false, foreign_key: true, comment: 'The address'
+
+      t.string :phone_number, comment: 'The phone'
+
+      t.string :name, comment: 'The name, like Joao Da Silva Mendes'
+
+      t.timestamps null: false
+    end
+  end
+end
+```
+
+✅ Good
+```ruby
+# frozen_string_literal: true
+
+class Person < ActiveRecord::Migration[5.0]
+  def change
+    create_table :person, comment: 'Stores primary person data' do |t|
+      t.references :address, index: false, foreign_key: true, comment: 'A reference for the address of this people'
+
+      t.string :phone_number, comment: 'The phone number of this people including country and area code'
+
+      t.string :name, comment: 'The complete name of this people'
+
+      t.timestamps null: false
+    end
+  end
+end
+```
+
 [Back to top ⬆️](#pushpin-summary)
 
 ## Tests

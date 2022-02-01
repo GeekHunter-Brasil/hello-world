@@ -697,31 +697,58 @@ end
 The validator layer is responsible to check the data that is been passed to the database.
 Here we want to assert if the validator is setting the errors properly according to the parameters validation rules.
 
+Always cover all edge cases for possible types, this can avoid a lot of validation problems which can occurs in others layers.
+
 ```ruby
 module Validators
-  module Hiring
-    class HiringUpdateValidator < Validator
+  module Candidate
+    class CandidateUpdateValidator < Validator
       def initialize(attrs = {}, scope = :update)
         super attrs, scope
       end
 
       private
 
-      attr_reader :job_id, :candidate_id, :status
+      attr_reader :available, :name
 
-      validates :job_id, :candidate_id, :status,
-                presence: true, allow_blank: false, if: -> { scope == :update }
+      validates :available, inclusion: [true, false], if: -> { scope == :update }
+      validates :name, presence: true, allow_blank: false, if: -> { scope == :update }
     end
   end
 end
 ```
-
 ❌ Bad
 
 ```ruby
-context 'with invalid params' do
-  it 'doest not update the hiring' do
-    # Code calling an updater with invalid params and assert that the hiring wasn't updated
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+describe Validators::Candidate::CandidateUpdateValidator, type: :validator do
+  let(:errors) { subject.errors }
+
+  subject { Validators::Candidate::CandidateUpdateValidator.new params, :update }
+
+  describe 'validates presence' do
+    before do
+      subject.valid?
+    end
+
+    context 'when params are invalid' do
+      let(:params) { {} }
+
+      it 'should add :inclusion to available' do
+        expect(errors.added?(:available, :inclusion)).to be_truthy
+      end
+    end
+
+    context 'when params are valid' do
+      let(:params) { { available: true } }
+
+      it 'should not add :inclusion to available' do
+        expect(errors.added?(:available, :inclusion)).to be_falsey
+      end
+    end
   end
 end
 ```
@@ -729,26 +756,58 @@ end
 ✅ Good
 
 ```ruby
-let(:errors) { subject.errors }
-let(:params) { {} }
+# frozen_string_literal: true
 
-subject { Validators::Hiring::HiringUpdateValidator.new params, :update }
+require 'rails_helper'
 
-context 'when params are invalid' do
-  before do
-    subject.valid?
-  end
+describe Validators::Candidate::CandidateUpdateValidator, type: :validator do
+  let(:errors) { subject.errors }
 
-  it ':blank should be added job_id' do
-    expect(errors.added?(:job_id, :blank)).to be_truthy
-  end
+  subject { Validators::Candidate::CandidateUpdateValidator.new params, :update }
 
-  it ':blank should be added candidate_id' do
-    expect(errors.added?(:candidate_id, :blank)).to be_truthy
-  end
+  describe 'validates presence' do
+    before do
+      subject.valid?
+    end
 
-  it ':blank should be added status' do
-    expect(errors.added?(:status, :blank)).to be_truthy
+    context 'when params are invalid' do
+      let(:params) { {} }
+
+      it 'should add :blank to name' do
+        expect(errors.added?(:name, :blank)).to be_truthy
+      end
+
+      it 'should add :inclusion to available' do
+        expect(errors.added?(:available, :inclusion)).to be_truthy
+      end
+    end
+
+    context 'when params are valid' do
+      context 'name' do
+        let(:params) { { name: 'Test Name' } }
+
+        it 'should not add :blank to name' do
+          expect(errors.added?(:name, :blank)).to be_falsey
+        end
+      end
+
+      context 'available' do
+        context "when has 'true' value" do
+          let(:params) { { available: true } }
+
+          it 'should not add :inclusion to available' do
+            expect(errors.added?(:available, :inclusion)).to be_falsey
+          end
+        end
+        context "when has 'false' value" do
+          let(:params) { { available: false } }
+
+          it 'should not add :inclusion to available' do
+            expect(errors.added?(:available, :inclusion)).to be_falsey
+          end
+        end
+      end
+    end
   end
 end
 ```

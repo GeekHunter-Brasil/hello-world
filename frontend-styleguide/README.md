@@ -358,12 +358,69 @@ const tryExecuteAsync = async () => {
 
 <br />
 
+### 👉 Use `UPPER_CASE` and `camelCase` to declare constants
+
+When declaring constants in different components or different folders, it is a good practice to standardize how we name them to improve the semantics of the code and regardless of where it is called, be easily recognized.
+
+Use `UPPER_CASE` to declare constants in `/lib/constants` or any constant that is deeply immutable:
+
+❌ Bad
+
+```typescript
+export const companiesLPHeaderLinks = [
+  ...
+];
+```
+
+✅ Good
+
+```typescript
+export const COMPANIES_LP_HEADERS_LINKS = [
+  ...
+];
+```
+
+Use `camelCase` to declare exported variables inside components, and `TitleCase` for types and interfaces:
+
+❌ Bad
+
+```typescript
+[...]
+import FieldTitle from 'components/atoms/form/fieldTitle';
+import getErrorMessage from 'lib/utils/getErrorMessage';
+
+// Interface and constant
+import { variantsAvailable, FieldVariants } from './variants';
+
+export interface FieldProps extends Omit<InputProps, 'h' | 'w'> {
+variant?: variantsAvailable;
+label?: string;
+[...]
+```
+
+✅ Good
+
+```typescript
+[...]
+import FieldTitle from 'components/atoms/form/fieldTitle';
+import getErrorMessage from 'lib/utils/getErrorMessage';
+
+// Interface and constant
+import { VariantsAvailable, fieldVariants } from './variants';
+
+export interface FieldProps extends Omit<InputProps, 'h' | 'w'> {
+variant?: VariantsAvailable;
+label?: string;
+[...]
+```
+
+<br />
+
 [Back to top ⬆️](#pushpin-summary)
 
 ## Tests
 
 We use [Jest](https://jestjs.io/pt-BR/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) to write unit tests for our components.
-
 
 ### 👉 Make sure to test component logic
 

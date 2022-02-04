@@ -12,11 +12,11 @@ The goal of this guide is to help our team to understand and follow our code sty
 
 # :pushpin: Summary
 
-* [Introduction](#introduction)
-* [Organization](#organization)
-* [GraphQL](#graphql)
-* [Code Style](#code-style)
-* [Tests](#tests)
+- [Introduction](#introduction)
+- [Organization](#organization)
+- [GraphQL](#graphql)
+- [Code Style](#code-style)
+- [Tests](#tests)
 
 ## Introduction
 
@@ -110,11 +110,11 @@ To do this, we organize all our query, mutations and subscriptions inside the `s
 For specific query files, we usually use `export default` with a named query:
 
 ```typescript
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export default gql`
-  query GetCandidate ($id: String!) {
-    getCandidate (id: $id) {
+  query GetCandidate($id: String!) {
+    getCandidate(id: $id) {
       name
       email
     }
@@ -289,24 +289,22 @@ This is the preferred way because otherwise the object will be recreated on ever
 ```tsx
 export const MyComponent = (): React.ReactElement => {
   const hoverStyle = {
-    color: 'primary.50',
-    bgColor: 'errors.150',
-    borderColor: 'errors.150',
+    color: "primary.50",
+    bgColor: "errors.150",
+    borderColor: "errors.150",
   };
 
-  return (
-    <Link _hover={hoverStyle}>Blá</Link>
-  );
-}
+  return <Link _hover={hoverStyle}>Blá</Link>;
+};
 ```
 
 ✅ Good
 
 ```tsx
 const hoverStyle = {
-  color: 'primary.50',
-  bgColor: 'errors.150',
-  borderColor: 'errors.150',
+  color: "primary.50",
+  bgColor: "errors.150",
+  borderColor: "errors.150",
 };
 
 export const MyComponent = (): React.ReactElement => (
@@ -322,23 +320,20 @@ When using promises or async functions, it's a common pratice use the `then` and
 
 It's a great idea to use `async` and `await` instead this, since it's much shorter and helps reducing cognitive complexity.
 
-Check out these articles related to promises and async/await ([1](https://betterprogramming.pub/javascript-best-practices-promises-45928fbfebe2), [2](https://medium.com/front-end-weekly/javascript-best-practices-promises-6c4f78a12c29
-)).
-Check out these articles related to Apollo and GraphQL ([1](https://www.apollographql.com/blog/graphql/error-handling/full-stack-error-handling-with-graphql-apollo/
-), [2](https://www.apollographql.com/docs/react/data/error-handling/
-)).
+Check out these articles related to promises and async/await ([1](https://betterprogramming.pub/javascript-best-practices-promises-45928fbfebe2), [2](https://medium.com/front-end-weekly/javascript-best-practices-promises-6c4f78a12c29)).
+Check out these articles related to Apollo and GraphQL ([1](https://www.apollographql.com/blog/graphql/error-handling/full-stack-error-handling-with-graphql-apollo/), [2](https://www.apollographql.com/docs/react/data/error-handling/)).
 
 ❌ Bad
 
 ```tsx
 const tryExecuteAsync = () => {
   exampleMethodAsync()
-  .then((result) => {
-    console.log(`executed successfully with result: ${result}.`);
-  })
-  .catch((err) => {
-    console.log(`failed to execute with error: ${err}.`);
-  });
+    .then((result) => {
+      console.log(`executed successfully with result: ${result}.`);
+    })
+    .catch((err) => {
+      console.log(`failed to execute with error: ${err}.`);
+    });
 };
 ```
 
@@ -349,8 +344,7 @@ const tryExecuteAsync = async () => {
   try {
     const result = await exampleMethodAsync();
     console.log(`executed successfully with result: ${result}.`);
-  }
-  catch (err) {
+  } catch (err) {
     console.log(`failed to execute with error: ${err}.`);
   }
 };
@@ -416,6 +410,50 @@ label?: string;
 
 <br />
 
+### 👉 Use theme tokens for typography
+
+When styling, make sure to use the theme tokens provided by Chakra UI to prevent an unorganized code. You can check the default theme typography [here](https://chakra-ui.com/docs/theming/theme#typography).
+
+❌ Bad
+
+```tsx
+export const MyComponent = (): React.ReactElement => {
+  return (
+    <Flex>
+      <Box mb="1rem">
+        <Heading p="0.5rem" fontSize="0.75rem">
+          Title
+        </Heading>
+      </Box>
+      <Box>
+        <Text fontSize="0.25rem">SubTitle</Text>
+      </Box>
+    </Flex>
+  );
+};
+```
+
+✅ Good
+
+```tsx
+export const MyComponent = (): React.ReactElement => {
+  return (
+    <Flex>
+      <Box mb={4}>
+        <Heading p={2} fontSize={3}>
+          Title
+        </Heading>
+      </Box>
+      <Box>
+        <Text fontSize={1}>SubTitle</Text>
+      </Box>
+    </Flex>
+  );
+};
+```
+
+<br />
+
 [Back to top ⬆️](#pushpin-summary)
 
 ## Tests
@@ -430,7 +468,7 @@ Example: Below, we should at least create a test passing a string and `undefined
 
 ```tsx
 const Button = ({ title }: ButtonProps): React.ReactElement => (
-  <button>{title ? title : 'Foobar'}</button>
+  <button>{title ? title : "Foobar"}</button>
 );
 ```
 
@@ -440,11 +478,12 @@ When creating a new utility function, it's really important to test it. Testing 
 
 ```tsx
 // formatName/index.ts
-const formatName = (first: string, second: string): string => `${first} ${second}`;
+const formatName = (first: string, second: string): string =>
+  `${first} ${second}`;
 
 // formatName/index.spec.ts
-it('Correctly formats the name', () => {
-  expect(formatName('Foo', 'Bar')).toBe('Foo Bar');
+it("Correctly formats the name", () => {
+  expect(formatName("Foo", "Bar")).toBe("Foo Bar");
 });
 ```
 

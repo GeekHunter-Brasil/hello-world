@@ -421,12 +421,12 @@ export const MyComponent = (): React.ReactElement => {
   return (
     <Flex>
       <Box mb="1rem">
-        <Heading p="0.5rem" fontSize="0.75rem">
+        <Heading p="0.5rem" fontSize="1rem">
           Title
         </Heading>
       </Box>
       <Box>
-        <Text fontSize="0.25rem">SubTitle</Text>
+        <Text fontSize="0.75rem">SubTitle</Text>
       </Box>
     </Flex>
   );
@@ -440,12 +440,12 @@ export const MyComponent = (): React.ReactElement => {
   return (
     <Flex>
       <Box mb={4}>
-        <Heading p={2} fontSize={3}>
+        <Heading p={2} fontSize="md">
           Title
         </Heading>
       </Box>
       <Box>
-        <Text fontSize={1}>SubTitle</Text>
+        <Text fontSize="xs">SubTitle</Text>
       </Box>
     </Flex>
   );

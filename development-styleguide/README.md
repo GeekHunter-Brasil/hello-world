@@ -6,8 +6,8 @@
 
 Welcome to our development style guide!
 
-The goal of this guide is to help our team to understand and follow our development style and best practices of the Geek Developer.
-This style guide is a living document that will be updated as we continue to develop our code.
+- The goal of this guide is to help our team to understand and follow our development style and best practices of the Geek Developer.
+- This style guide is a living document that will be updated as we continue to develop our code.
 
 
 `#letscode 😎👩‍💻👨‍💻`
@@ -25,6 +25,8 @@ This style guide is a living document that will be updated as we continue to dev
 - When dealing with a legacy codebase you may feel in need to refactor it or you may also feel in need to improve the codebase to make it more maintainable, 
 and therefore, you will need to apply [Agile](https://blog.trello.com/microproductivity-break-tasks-into-smaller-steps) and [Solid](https://en.wikipedia.org/wiki/Single-responsibility_principle) principles to do so. 
 
+[Back to top ⬆️](#pushpin-summary)
+
 
 ## Communication
 
@@ -38,6 +40,8 @@ and therefore, you will need to apply [Agile](https://blog.trello.com/microprodu
 
 - Use the repositories Issues tab to create issues related to that project and further a task related to that issue and then a PR related to the task is a good cycle of improvement.
 
+[Back to top ⬆️](#pushpin-summary)
+
 
 ## Code Style
 
@@ -50,7 +54,5 @@ and therefore, you will need to apply [Agile](https://blog.trello.com/microprodu
     - Etc
 - In a small PR the reviewer has a bigger chance of noticing/pointing out changes in files/lines that are clearly out of scope.
 - Read [this article](https://essenceofcode.com/2019/10/29/the-art-of-small-pull-requests/) for more info about the art of small pull requests
-
-[Back to top ⬆️](#pushpin-summary)
 
 [Back to top ⬆️](#pushpin-summary)

@@ -20,7 +20,7 @@ Welcome to our development style guide!
 ## Introduction
 
 - As we are growing as a team, focused on being a <b>reference</b> in software development, we need to be able to communicate sync and async in a way that is easy to understand for everyone. We use [Slack](https://slack.com/intl/pt-br/) as our sync communication tool and [GitHub](https://github.com/GeekHunter-Brasil) as our async communication tool.
-- We also feel in need to stablish a common language to share our knowledge and experience in the development process as much as a common way to report issues, bugs, performance issues and improvements proposals in architecture or infra. That language is [English](https://en.wikipedia.org/wiki/English_language).
+- We also feel the need to establish a common language to share our knowledge and experience in the development process as much as a common way to report issues, bugs, performance issues, and improvements proposals in architecture or infrastructure. That language is [English](https://en.wikipedia.org/wiki/English_language).
 - Talking about code, the rastreability of the code is important to us, we need to be able to easly understand the reasos why a piece of code is there. See this reference about [Semantic Commits](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)
 - When dealing with a legacy codebase you may feel in need to refactor it or you may also feel in need to improve the codebase to make it more maintainable, 
 and therefore, you will need to apply [Agile](https://blog.trello.com/microproductivity-break-tasks-into-smaller-steps) and [Solid](https://en.wikipedia.org/wiki/Single-responsibility_principle) principles to do so. 

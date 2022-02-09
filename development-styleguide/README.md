@@ -34,7 +34,7 @@ and therefore, you will need to apply [Agile](https://blog.trello.com/microprodu
 - Document/communicate in English helps us to better consume/colaborate with tech community as a whole.
 - Another reason to use English as official language for PRs/CRs is that it avoids unnecessary translations of db fields and/or terms.
 - Whenever you feel the need to start a discussion or anything similar, prefer structured communications like Github Issues instead Slack.
-- If you belive you need the acknowledgement of the whole chapter about something you have to say or do, on behalf or for the charpter, consider opening a Issue.
+- If you believe you need the acknowledgment of the whole chapter about something you have to say or do, on behalf of the chapter, consider opening an Issue.
 - It will make far more easy to newcomers to reach this topics and issues that may, in sometime, be their issues.
 - It also improves a lot our documentation about our own development as a reference software engineer team.
 

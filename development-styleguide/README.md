@@ -35,7 +35,7 @@ and therefore, you will need to apply [Agile](https://blog.trello.com/microprodu
 - Another reason to use English as official language for PRs/CRs is that it avoids unnecessary translations of db fields and/or terms.
 - Whenever you feel the need to start a discussion or anything similar, prefer structured communications like Github Issues instead Slack.
 - If you believe you need the acknowledgment of the whole chapter about something you have to say or do, on behalf of the chapter, consider opening an Issue.
-- It will make far more easy to newcomers to reach this topics and issues that may, in sometime, be their issues.
+- It will make it far easier for newcomers to reach these topics and issues that may, in some time, be their issues.
 - It also improves a lot our documentation about our own development as a reference software engineer team.
 
 - Use the repositories Issues tab to create issues related to that project and further a task related to that issue and then a PR related to the task is a good cycle of improvement.

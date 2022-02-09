@@ -45,7 +45,7 @@ and therefore, you will need to apply [Agile](https://blog.trello.com/microprodu
 
 ## Code Style
 
-- It's a good approach to do not change files not related to you PR. If some adjustment is needed, then another PR should be made with another meaningfull commits. This extends from the single responsibility principle.
+- It's a good approach to not change files not related to your PR. If some adjustment is needed, then another PR should be made with other meaningful commits. This extends from the single responsibility principle.
 - PRs should have one and only one objective. A PR can do either of these things, but not both:
     - Refactor existing code to format it
     - Add a new feature

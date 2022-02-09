@@ -31,7 +31,7 @@ and therefore, you will need to apply [Agile](https://blog.trello.com/microprodu
 ## Communication
 
 - It's easier to keep the main language in English for async communication since our code is 100% English - that means less context switching and more efficiency. 
-- Document/communicate in English helps us to better consume/colaborate with tech community as a whole.
+- Document/communicate in English helps us to better consume/collaborate with the tech community as a whole.
 - Another reason to use English as official language for PRs/CRs is that it avoids unnecessary translations of db fields and/or terms.
 - Whenever you feel the need to start a discussion or anything similar, prefer structured communications like Github Issues instead Slack.
 - If you believe you need the acknowledgment of the whole chapter about something you have to say or do, on behalf of the chapter, consider opening an Issue.

@@ -27,7 +27,7 @@ Here we document our workflows, styleguides and patterns.
 - Refactoring code is important, but the focus always needs to be on the task
   - Fixing code outside of it can generate value but can compromise your schedule related to what you expected to deliver initially.
 - Start double, deliver solo: always open tasks in pair, building the test scenario until the problem is clear to be played in solo mode.
-  - In this way, ensuring that the planning is “real” or correcting the same.
+  - This way we can ensure that we're actually solving the problems meant to be solved in the task, while also validating if the task itself makes sense.
 
 - When the brain gives Timeout, raise HelpException;
 

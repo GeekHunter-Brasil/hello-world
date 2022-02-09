@@ -25,7 +25,7 @@ Here we document our workflows, styleguides and patterns.
 - TDD is an implicit requirement of any code intervention;
 - The sprint is always the guide, tasks outside of it should be the exception (“Top! Tell our PM to prioritize for us!”)
 - Refactoring code is important, but the focus always needs to be on the task
-  - fixing code outside of it can generate value but can compromise your schedule related to what you expected to deliver initially.
+  - Fixing code outside of it can generate value but can compromise your schedule related to what you expected to deliver initially.
 - Start double, deliver solo: always open tasks in pair, building the test scenario until the problem is clear to be played in solo mode.
   - In this way, ensuring that the planning is “real” or correcting the same.
 

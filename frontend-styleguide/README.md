@@ -17,6 +17,7 @@ The goal of this guide is to help our team to understand and follow our code sty
 - [GraphQL](#graphql)
 - [Code Style](#code-style)
 - [Tests](#tests)
+- [Translate](#translate)
 
 ## Introduction
 
@@ -485,6 +486,72 @@ const formatName = (first: string, second: string): string =>
 it("Correctly formats the name", () => {
   expect(formatName("Foo", "Bar")).toBe("Foo Bar");
 });
+```
+
+[Back to top ⬆️](#pushpin-summary)
+
+
+## Translate
+
+### 👉 Use I18n to translate
+
+Our plataform has support for internationalized (i18n). First step is configurated [nextJs](https://nextjs.org/docs/advanced-features/i18n-routing) to support locales on the routes.
+
+Second step, is configure lib [next-translate](https://github.com/vinissimus/next-translate), the plugin is used to render keys into the pages on application.
+
+file `next.config.js`
+```js
+const nextTranslate = require('next-translate');
+
+module.exports = nextTranslate({
+  i18n: {
+    locales: ['pt-BR', 'en'],
+    defaultLocale: 'pt-BR',
+  },
+});
+```
+
+### 👉 Directory Locales structure
+
+When organizing locale files you must insert each file into the translation folder, thus not creating too big files, with this structure we obtain a better organization.
+
+```
+📁 locales/
+└──📁 pt-BR/
+   └──📝 page_1.yml
+   └──📝 page_2.yml
+└──📁 en/
+   └──📝 page_1.yml
+   └──📝 page_2.yml
+```
+
+Each file inside contains its keys at the same level, there is no need to chain keys .
+
+ex: `locales/pt-BR/page_1.yml`.
+```yml
+example: Olá mundo
+```
+
+ex: `locales/en/page_1.yml`.
+```yml
+example: Hello world
+```
+### 👉 Translate page
+
+Use the translations in the page:
+
+```tsx
+import useTranslation from 'next-translate/useTranslation';
+
+const Page = (): React.ReactElement => {
+  const { t } = useTranslation('page_1');
+
+  return (
+    <div>{t('example')}</div>
+  )
+}
+
+export default Page;
 ```
 
 [Back to top ⬆️](#pushpin-summary)

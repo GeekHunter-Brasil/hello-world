@@ -17,6 +17,7 @@ The goal of this guide is to help our team to understand and follow our code sty
 - [GraphQL](#graphql)
 - [Code Style](#code-style)
 - [Tests](#tests)
+- [Translate](#translate)
 
 ## Introduction
 
@@ -485,6 +486,77 @@ const formatName = (first: string, second: string): string =>
 it("Correctly formats the name", () => {
   expect(formatName("Foo", "Bar")).toBe("Foo Bar");
 });
+```
+
+[Back to top ⬆️](#pushpin-summary)
+
+
+## Translate
+
+### 👉 Use I18n to translate
+
+Our plataform has support for internationalization (i18n). We use [Next.Js](https://nextjs.org/docs/advanced-features/i18n-routing) built-in i18n and [next-translate](https://github.com/vinissimus/next-translate) to support rendering tokens on pages.
+
+For each page created, it is necessary to update the pages key in the i18n.js file `i18n.js`:
+
+```js
+module.exports = {
+  locales: ['pt-BR', 'en'],
+  defaultLocale: 'pt-BR',
+  loadLocaleFrom: (lang, ns) =>
+    import(`./src/pages/locales/${lang}/${ns}.yaml`).then((m) => m.default),
+  pages: {
+    '/page_1': ['page_1'],
+    '/page_2': ['page_2']
+  },
+};
+```
+
+### 👉 Directory Locales structure
+
+When organizing locale files you must insert each file into the translation folder grouped by pages, thus not creating large files. With this structure, we obtain a better organization.
+
+```
+📁 locales/
+└──📁 pt-BR/
+   └──📝 page_1.yaml
+   └──📝 page_2.yaml
+└──📁 en/
+   └──📝 page_1.yaml
+   └──📝 page_2.yaml
+```
+
+Each file inside contains its keys at the same level, there is no need to chain keys.
+
+ex: `locales/pt-BR/page_1.yaml`.
+```yml
+example: Olá mundo
+```
+
+ex: `locales/en/page_1.yaml`.
+```yml
+example: Hello world
+```
+
+### 👉 Translate page
+
+Use the translations on the page:
+
+```tsx
+import useTranslation from 'next-translate/useTranslation';
+
+export const Page = (): React.ReactElement => {
+  const { t } = useTranslation('page_1');
+
+  return (
+    <div>{t('example')}</div>
+  )
+}
+```
+
+```
+  ⚠️ If the key is not found, next-translate prints the key`s names instead of the content.
+  In the previous example, show example instead of Hello World.
 ```
 
 [Back to top ⬆️](#pushpin-summary)

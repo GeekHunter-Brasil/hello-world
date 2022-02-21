@@ -455,6 +455,35 @@ export const MyComponent = (): React.ReactElement => {
 
 <br />
 
+### 👉 Static assets should be referenced by using `import`
+
+When using static assets it should be referenced in the code by using `import` instead of reference by `string`.
+
+This method makes the code more robust because ESLint will validate it.
+
+❌ Bad
+
+```tsx
+{ src: '/companies/zup-color-new.png', alt: 'Zup', w: [85], h: [41] },
+```
+
+✅ Good
+
+```tsx
+import Carousel1 from '@public/companies/carousel1.webp';
+
+...
+panels: [
+      {
+        title: '📝 01. Cadastre-se',
+        panelData: {
+          imgSrc: Carousel1,
+          imgAlt: 'Homem em reunião com CS da geekhunter',
+...
+```
+
+<br />
+
 [Back to top ⬆️](#pushpin-summary)
 
 ## Tests

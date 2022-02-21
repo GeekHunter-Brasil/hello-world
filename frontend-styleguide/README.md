@@ -411,9 +411,11 @@ label?: string;
 
 <br />
 
-### 👉 Use theme tokens for typography
+### 👉 Use theme tokens instead of hardcoded values
 
-When styling, make sure to use the theme tokens provided by Chakra UI to prevent an unorganized code. You can check the default theme typography [here](https://chakra-ui.com/docs/theming/theme#typography).
+When styling, make sure to use the theme tokens provided by Chakra UI to prevent an unorganized code. You can check the default theme tokens [here](https://chakra-ui.com/docs/theming/theme).
+
+For a quick example, you should use `md` or `10` instead of `"135px"` or `0.5rem`.
 
 ❌ Bad
 

@@ -415,7 +415,7 @@ label?: string;
 
 When styling, make sure to use the theme tokens provided by Chakra UI to prevent an unorganized code. You can check the default theme tokens [here](https://chakra-ui.com/docs/theming/theme).
 
-For a quick example, you should use `md` or `10` instead of `"135px"` or `0.5rem`.
+For a quick example, you should use `'md'` or `{10}` instead of `"135px"` or `"0.5rem"`. Also, note: Use curly braces for numeric constants instead single quotes.
 
 ❌ Bad
 

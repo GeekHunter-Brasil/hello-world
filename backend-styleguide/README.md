@@ -313,6 +313,40 @@ enumerize :gender, in: %w[
 ], scope: true
 ```
 
+### 👉 When use Enum in Graphql Types get from model
+
+❌ Bad
+
+```ruby
+module Types
+  module Enums
+    module Candidate
+      class SituationEnumType < Types::BaseEnum
+        value 'registered', 'When the user just register to the platform.',
+              value: 0
+        value 'register_complete', 'When the user is registered and with his profile complete.',
+              value: 1
+        value 'waiting_approval', 'When the user has passed a required test and are waiting to be approved and available to the companies.',
+              value: 2
+      end
+    end
+  end
+end
+```
+
+✅ Good
+
+```ruby
+module Types
+  module Enums
+    module Candidate
+      class SituationEnumType < Types::BaseEnum
+        ::Candidate.situation.values.each { |situation| value(situation, value: situation.to_s) }
+      end
+    end
+  end
+end
+```
 ### 👉 Use comments to define tables and fields
 
 We use comments to define tables and fields. This is a good approach to help newcomers and other Geeks.

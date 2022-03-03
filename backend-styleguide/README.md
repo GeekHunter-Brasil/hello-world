@@ -313,7 +313,7 @@ enumerize :gender, in: %w[
 ], scope: true
 ```
 
-### 👉 When use Enum in Graphql Types get from model
+### 👉 Declaring GraphQL enums with enumerize
 
 We use the [enumerize](https://github.com/brainspec/enumerize) gem to handle creating enums in our models and databases.
 

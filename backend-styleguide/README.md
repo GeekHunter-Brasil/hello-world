@@ -324,7 +324,7 @@ module Types
       class SituationEnumType < Types::BaseEnum
         value 'registered', 'When the user has just registered on the platform.',
               value: 0
-        value 'register_complete', 'When the user is registered and with his profile complete.',
+        value 'register_complete', 'When the user is registered and with his profile is complete.',
               value: 1
         value 'waiting_approval', 'When the user has passed a required test and are waiting to be approved and available to the companies.',
               value: 2

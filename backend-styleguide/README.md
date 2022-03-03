@@ -315,6 +315,10 @@ enumerize :gender, in: %w[
 
 ### 👉 When use Enum in Graphql Types get from model
 
+We use the [enumerize](https://github.com/brainspec/enumerize) gem to handle creating enums in our models and databases.
+
+They should be used to specify GraphQL enums.
+
 ❌ Bad
 
 ```ruby

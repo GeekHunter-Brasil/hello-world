@@ -313,6 +313,44 @@ enumerize :gender, in: %w[
 ], scope: true
 ```
 
+### 👉 Declaring GraphQL enums with enumerize
+
+We use the [enumerize](https://github.com/brainspec/enumerize) gem to handle creating enums in our models and databases.
+
+They should be used to specify GraphQL enums.
+
+❌ Bad
+
+```ruby
+module Types
+  module Enums
+    module Candidate
+      class SituationEnumType < Types::BaseEnum
+        value 'registered', 'When the user has just registered on the platform.',
+              value: 0
+        value 'register_complete', 'When the user is registered and with his profile is complete.',
+              value: 1
+        value 'waiting_approval', 'When the user has passed a required test and is waiting to be approved and available to the companies.',
+              value: 2
+      end
+    end
+  end
+end
+```
+
+✅ Good
+
+```ruby
+module Types
+  module Enums
+    module Candidate
+      class SituationEnumType < Types::BaseEnum
+        ::Candidate.situation.values.each { |situation| value(situation, value: situation.to_s) }
+      end
+    end
+  end
+end
+```
 ### 👉 Use comments to define tables and fields
 
 We use comments to define tables and fields. This is a good approach to help newcomers and other Geeks.

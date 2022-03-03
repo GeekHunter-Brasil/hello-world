@@ -322,7 +322,7 @@ module Types
   module Enums
     module Candidate
       class SituationEnumType < Types::BaseEnum
-        value 'registered', 'When the user just register to the platform.',
+        value 'registered', 'When the user has just registered on the platform.',
               value: 0
         value 'register_complete', 'When the user is registered and with his profile complete.',
               value: 1

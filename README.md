@@ -8,12 +8,15 @@ Welcome to GeekHunter docs! Grab your cup of coffee (or tea) and read this with 
 
 Here we document our workflows, styleguides and patterns.
 
-# :pushpin: Summary
+# :pushpin: Technical Documentation
 
 * [Frontend Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/frontend-styleguide)
 * [Backend Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/backend-styleguide)
 * [Development Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/development-styleguide)
 
+# :pushpin: Career Documentation
+
+* [Your Career at GeekHunter](https://github.com/GeekHunter-Brasil/hello-world/tree/master/career)
 
 # The Geek Manifest
 
@@ -29,4 +32,3 @@ Here we document our workflows, styleguides and patterns.
 - Start double, deliver solo: always open tasks in pair, building the test scenario until the problem is clear to be played in solo mode.
   - This way we can ensure that we're actually solving the problems meant to be solved in the task, while also validating if the task itself makes sense.
 - When the brain gives Timeout, raise HelpException;
-

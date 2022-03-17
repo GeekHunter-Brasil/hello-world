@@ -33,7 +33,11 @@ Here are some suggested reads about the topic:
 
 # 🏹 Career Paths
 
-TODO
+In short, there are a few career paths you can follow between your cycles.
+
+Depending on your personal preference and skills developed, you'll eventually choose to drive your career to a specialist or management path.
+
+<img alt="geekhunter-career-path" src="/docs/geekhunter-career-path.jpg" width="2000">
 
 # 🏋️ Expectations
 

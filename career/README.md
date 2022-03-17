@@ -48,3 +48,5 @@ Each job above has their own sets of expectations. We usually break down the exp
 - Soft skills (abstract and social skills that you'll be using daily too);
 
 Also, the expectations for each job are usually defined according to its seniority.
+
+* [Software Development Analyst](https://github.com/GeekHunter-Brasil/hello-world/tree/master/career/expectations/software-development-analyst)

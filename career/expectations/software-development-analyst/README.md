@@ -18,7 +18,7 @@ this person will be working in a squad with 2 ~ 3 other developers, data scienti
 What do we expect from a software development analyst at GeekHunter?
 
 
-## Junior Software Development Analyst
+## 🐣 Junior Software Development Analyst
 
 ### Experience
 
@@ -34,7 +34,7 @@ TODO
 
 ---
 
-## Software Development Analyst
+## 🐤 Software Development Analyst
 
 ### Experience
 
@@ -50,7 +50,7 @@ TODO
 
 ---
 
-## Senior Software Development Analyst
+## 🐓 Senior Software Development Analyst
 
 ### Experience
 

@@ -41,4 +41,10 @@ Depending on your personal preference and skills developed, you'll eventually ch
 
 # 🏋️ Expectations
 
-TODO
+Each job above has their own sets of expectations. We usually break down the expectations between three main pillars:
+
+- Overall experience (what you've been up to, things you've experienced and done);
+- Hard skills (technical skills that you'll be using daily to fulfill the job);
+- Soft skills (abstract and social skills that you'll be using daily too);
+
+Also, the expectations for each job are usually defined according to its seniority.

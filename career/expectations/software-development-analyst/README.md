@@ -20,16 +20,46 @@ What do we expect from a software development analyst at GeekHunter?
 
 ## Junior Software Development Analyst
 
+### Experience
+
+TODO
+
+### Hard Skills
+
+TODO
+
+### Soft Skills
+
 TODO
 
 ---
 
 ## Software Development Analyst
 
+### Experience
+
+TODO
+
+### Hard Skills
+
+TODO
+
+### Soft Skills
+
 TODO
 
 ---
 
 ## Senior Software Development Analyst
+
+### Experience
+
+TODO
+
+### Hard Skills
+
+TODO
+
+### Soft Skills
 
 TODO

@@ -32,8 +32,6 @@ TODO
 
 TODO
 
----
-
 ## 🐤 Software Development Analyst
 
 ### Experience
@@ -47,8 +45,6 @@ TODO
 ### Soft Skills
 
 TODO
-
----
 
 ## 🐓 Senior Software Development Analyst
 

@@ -53,7 +53,14 @@ What do we expect from a software development analyst at GeekHunter?
 
 ### Experience
 
-TODO
+- **Adds value to the team**. Is capable of delivering their work efficiently, without being blocked too often.
+- Has development experience in production software. This includes creating new features, fixing bugs (sometimes urgently 🧯🔥), refactoring code, etc.
+- Has experience with Agile Culture. **Has already worked in agile teams using methodologies such as Scrum, Kanban, ShapeUp or others**. Knows what is continuous improvement and acts accordingly.
+- **Often reviews other people's codes via a code review process**. Is capable of pointing out problems or improvements.
+- Asks for help whenever they are feeling blocked, not productive or doesn't know what to do.
+- Usually codes "by example" (e.g. copying code), **but knows what they are doing and is usually capable of learning on the fly**.
+- Knows a bit about continuous delivery and why that's important, but **often creates large PRs or pieces of code that are hard to review and ship efficiently**.
+- Is proactive about starting new tasks. Usually does not need someone else to tell them what to do, as long as there are tasks that conform to our DoR (Definition of Ready).
 
 ### Hard Skills
 

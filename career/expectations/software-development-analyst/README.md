@@ -33,7 +33,15 @@ What do we expect from a software development analyst at GeekHunter?
 
 ### Hard Skills
 
-TODO
+- **Knows at least a bit of the tech stack that we use** (Ruby on Rails, React, Next.js, TypeScript, Python, GraphQL and others). Will eventually have blocks and doubts on how to develop with those technologies.
+- Knows at least a bit about automated tests, and at least understands their importance. Is capable of writing a test with the help of another developer.
+- Usually can't do TDD daily, but knows what it is.
+- Knows at least about git, but can't follow processes such as gitflow.
+- Doesn't know much about database technologies, and usually has a hard time to write a SQL query.
+- Knows about Object Oriented Programming, but has difficulty implementing it daily.
+- Usually **doesn't know much about software architecture**. Has a had time following our current pattern (e.g. clean or hexagonal architecture).
+- Doesn't know how to design an application according to its needs (a monolith, micro-services, serveless, etc). **Usually tries to implement a complex model where it's not needed and ends up hurting productivity**.
+- **Doesn't know how to debug code**. Usually has a difficult time trying to understand why something doesn't work.
 
 ### Soft Skills
 

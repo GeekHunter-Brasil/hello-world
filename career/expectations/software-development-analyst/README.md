@@ -22,7 +22,14 @@ What do we expect from a software development analyst at GeekHunter?
 
 ### Experience
 
-TODO
+- **Usually goes with the current hype.** Always wants to try out new frameworks or languages but doesn't know how to balance this with the daily routine. Usually, this ends up hurting the productivity for himself or the team.
+- Knows at least a bit about software development (a few months to one year), preferably in production environments. Has already worked in new features, bugfixes, etc.
+- Knows at least a bit about agile culture, has a slight idea of what are key terms such as Scrum or Kanban
+- Does not review code for other collaborators. Usually finds it difficult to analyze external code and find problems in it.
+- Is able to identify whenever is blocked, not being productive or knowing what to do next. Asks for help in these cases.
+- Usually codes "by example" (e.g. copying code), **does not understand how that code works**.
+- Requires more attention, since usually gets blocked often.
+- Is not proactive with new tasks. Usually needs someone else to tell them what to do.
 
 ### Hard Skills
 

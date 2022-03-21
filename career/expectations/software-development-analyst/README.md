@@ -90,7 +90,18 @@ What do we expect from a software development analyst at GeekHunter?
 
 ### Experience
 
-TODO
+- **Multiplies value on the team**. Is capable of delivering their work efficiently, but there is a key difference here: this person is often looking at the team's productivity, suggesting improvements and using their experience to multiply our productivity.
+- Has a solid experience in software development for a considerable time (e.g. more than five years) in production, preferably having worked with critical software where it's really expensive to be offline.
+- Is capable of producing code according to our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world) and improving upon it (making new suggestions and such).
+- Has experience with Agile Culture. **Has already worked in high-performance agile teams using methodologies such as Scrum, Kanban, ShapeUp or others**.
+- Has experience teaching other software analysts as a mentor. Uses this experience in daily routines (e.g. Code Review, Pair Programming, etc) to teach and improve other team member's technical abilities.
+- **Has a vision that is naturally oriented to results**. Understands that what matters the most is delivering value to our end customer, and prioritizes their actions to achieve this.
+- Sometimes codes "by example" (e.g. copying code), **but knows what they are doing and is capable of learning on the fly**. Understands what is the best path to learn something they don't know already.
+- Has experience in continuous delivery and understands that the most important part about building a software is to do it via small steps, always focusing on learning more about the problem itself.
+- Is fully capable of learning new technologies and languages *on demand*, since it's easy to pivot their fundamental knowledge to a new scenario.
+- **Is able to communicate their decisions (technical or not) clearly and without room for doubts, along with the criteria used in each decision**.
+- Is proactive about starting new tasks. Usually tells other people what to do, since they have a solid vision of what our goals are at any given time (and is aligned with our PM/POs).
+- Has a clear vision about the risks involved in software development, suggests tasks to mitigate these risks when necessary.
 
 ### Hard Skills
 

@@ -123,4 +123,8 @@ What do we expect from a software development analyst at GeekHunter?
 
 ### Soft Skills
 
-TODO
+- Is able to keep their presence in synchronous (e.g. squad rituals such as dailies, plannings, reviews; pair programmings) and asynchronous moments (e.g. discussions on Slack or Basecamp).
+- Is really motivated to learn more and develop their skills.
+- **Has experience in leadership positions, mentoring other people** (usually in technical aspects).
+- Understands their own strong or weak points, and sees something they want to prioritize in their career. The leadership process here is usually easier, since **this person is able to develop their skills with a high level of autonomy**.
+- Has emotional resilience to go through challenging scenarios, to receive valuable feedbacks and use all of that information to grow as a person and not let it impact their performance.

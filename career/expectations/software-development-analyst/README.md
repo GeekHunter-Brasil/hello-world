@@ -92,7 +92,6 @@ What do we expect from a software development analyst at GeekHunter?
 
 - **Multiplies value on the team**. Is capable of delivering their work efficiently, but there is a key difference here: this person is often looking at the team's productivity, suggesting improvements and using their experience to multiply our productivity.
 - Has a solid experience in software development for a considerable time (e.g. more than five years) in production, preferably having worked with critical software where it's really expensive to be offline.
-- Is capable of producing code according to our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world) and improving upon it (making new suggestions and such).
 - Has experience with Agile Culture. **Has already worked in high-performance agile teams using methodologies such as Scrum, Kanban, ShapeUp or others**.
 - Has experience teaching other software analysts as a mentor. Uses this experience in daily routines (e.g. Code Review, Pair Programming, etc) to teach and improve other team member's technical abilities.
 - **Has a vision that is naturally oriented to results**. Understands that what matters the most is delivering value to our end customer, and prioritizes their actions to achieve this.
@@ -105,7 +104,22 @@ What do we expect from a software development analyst at GeekHunter?
 
 ### Hard Skills
 
-TODO
+- **Is fluent in most part of the tech stack that we use** (Ruby on Rails, React, Next.js, TypeScript, Python, GraphQL and others).
+- **Is fluent in TDD, understands the importance of it and propagates it to the team**.
+- Is capable of writing tests that isolate application layers in a meaningful way (both on backend and frontend), adding value to our test pyramid.
+- Is capable of producing code according to our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world) and improving upon it (making new suggestions and such).
+- Is fluent with common database technologies. Is capable of solving complex performance of distribution problems (e.g. optimizing a slow query by re-implementing it or changing the database structure).
+- Has solid experience with other database technologies (e.g. non-relational databases, graph databases, etc). Knows how and when to apply those options in daily tasks.
+- Is fluent in git. Can solve just about any problem that may arise in a repo.
+- Is fluent in Object Oriented Programming, knows the key points to it and is able to produce high-quality OOP code.
+- Has solid experience with Functional Programming, knows advantages and disadvantages to each paradigm.
+- Has solid experience with concepts such as data immutability, pure functions, reactivity.
+- **Has solid experience in software architecture**. Is able to implement common patterns in a disorganized repository.
+- Has solid experience in application design and is capable of choosing a good design according to the complexity or challenge (e.g. monoliths, micro-services, serveless, etc).
+- **Is fluent in debugging code** and can debug just about any problem that may arise, deeply understanding what is happening and what the problem is.
+- **Is fluent at debugging external code** (such as a dependency), and can easily fix it via a pull request or using an isolated version if needed.
+- Is capable of solving any problem that doesn't need R&D (Research & Development) efficiently.
+- Is capable of working in problems that need R&D conducting the research in an effective way, prioritizing the use of their own time in the best way.
 
 ### Soft Skills
 

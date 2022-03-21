@@ -35,6 +35,7 @@ What do we expect from a software development analyst at GeekHunter?
 
 - **Knows at least a bit of the tech stack that we use** (Ruby on Rails, React, Next.js, TypeScript, Python, GraphQL and others). Will eventually have blocks and doubts on how to develop with those technologies.
 - Knows at least a bit about automated tests, and at least understands their importance. Is capable of writing a test with the help of another developer.
+- Usually has a difficult time to produce code that respects our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world).
 - Usually can't do TDD daily, but knows what it is.
 - Knows at least about git, but can't follow processes such as gitflow.
 - Doesn't know much about database technologies, and usually has a hard time to write a SQL query.
@@ -66,6 +67,7 @@ What do we expect from a software development analyst at GeekHunter?
 
 - **Is experienced in most part of the tech stack that we use** (Ruby on Rails, React, Next.js, TypeScript, Python, GraphQL and others). May have occasional blocks, but is able to develop efficiently.
 - **Is capable of using TDD daily, and understands the importance of it**.
+- Is capable of producing code according to our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world).
 - Has experience with common database technologies. Knows what are relational models, tables, views, indices, and other terms. Is capable of writing a performant SQL query.
 - Has experience in git, **is able to deal with merge conflicts**.
 - Is fluent in Object Oriented Programming, knows the key points to it and is able to produce high-quality OOP code.

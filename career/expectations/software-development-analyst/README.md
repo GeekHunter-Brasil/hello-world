@@ -40,7 +40,7 @@ What do we expect from a software development analyst at GeekHunter?
 - Knows at least a bit about git, but can't follow processes such as gitflow.
 - Doesn't know much about database technologies, and usually has a hard time to write a SQL query.
 - Knows about Object Oriented Programming, but has difficulty implementing it daily.
-- Usually **doesn't know much about software architecture**. Has a had time following our current pattern (e.g. clean or hexagonal architecture).
+- Usually **doesn't know much about software architecture**. Has a hard time following our current pattern (e.g. clean or hexagonal architecture).
 - Doesn't know how to design an application according to its needs (a monolith, micro-services, serveless, etc). **Usually tries to implement a complex model where it's not needed and ends up hurting productivity**.
 - **Doesn't know how to debug code**. Usually has a difficult time trying to understand why something doesn't work.
 

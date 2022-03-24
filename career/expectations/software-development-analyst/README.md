@@ -110,7 +110,7 @@ What do we expect from a software development analyst at GeekHunter?
 - Is capable of writing code according to our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world) and improving upon it (making new suggestions and such).
 - Is fluent with common database technologies. Is capable of solving complex performance and/or modeling problems (e.g. optimizing a slow query by re-implementing it or changing the database structure).
 - Has solid experience with other database technologies (e.g. non-relational databases, graph databases, etc). Knows how and when to apply those options in daily tasks.
-- Is fluent in git. Can solve just about any problem that may arise in a repo and is capable of using different strategies to improve the development flow (ex: use squash and rebase to preserve a linear history)
+- Is fluent in git. Can solve just about any problem that may arise in a repo and is capable of using different strategies to improve the development flow (e.g. use squash and rebase to preserve a linear history)
 - Is fluent in Object Oriented Programming, knows the key points to it and is able to write high-quality OOP code.
 - Has solid experience with Functional Programming, knows advantages and disadvantages to each paradigm.
 - Has solid experience with concepts such as data immutability, pure functions, reactivity.

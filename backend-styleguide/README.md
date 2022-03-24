@@ -942,7 +942,7 @@ When writing your programs avoid using hard coded strings that will be displayed
 
 For a better organization of the yml files the ideal is to `mirror the folders`, thus not creating too big files, with this structure we obtain a better organization.
 
-to declare the yml, you must use the same name as the parent directory 'ex: directory/directory.yml',
+to declare the yml, you must use the same name as the parent directory 'e.g. directory/directory.yml',
 
 ```
 📁 project/

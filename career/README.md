@@ -33,9 +33,9 @@ Here are some suggested reads about the topic:
 
 # 🏹 Career Paths
 
-In short, there are a few career paths you can follow between your cycles.
+In short, there are a few career paths you can follow between cycles.
 
-Depending on your personal preference and skills developed, you'll eventually choose to drive your career to a specialist or management path.
+Depending on your personal preference and developed skills, you'll eventually choose to drive your career to either a specialist or a management path.
 
 <img alt="geekhunter-career-path" src="/docs/geekhunter-career-path.jpg" width="2000">
 

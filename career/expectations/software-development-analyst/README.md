@@ -7,7 +7,7 @@
 A software development analyst usually has one purpose at GeekHunter: to solve problems (mostly) using technology and to use their skills to help our collaborators
 and users in their daily routine.
 
-Thus, a software development analyst is usually assigned into a squad (with a well defined purpose) and is responsible for value delivery in ou product.
+Thus, a software development analyst is usually assigned into a squad (with a well defined purpose) and is responsible for value delivery in our product.
 
 It's not expected that a software development analyst will work "alone", but that can happen in extreme cases - so autonomy and self management are important skills. Usually,
 this person will be working in a squad with 2 ~ 3 other developers, data scientists, product designers, etc.
@@ -23,11 +23,11 @@ What do we expect from a software development analyst at GeekHunter?
 ### Experience
 
 - **Usually goes with the current hype.** Always wants to try out new frameworks or languages but doesn't know how to balance this with the daily routine. Usually, this ends up hurting the productivity for himself or the team.
-- Knows at least a bit about software development (a few months to one year), preferably in production environments. Has already worked in new features, bugfixes, etc.
+- Knows at least a bit about software development (a few months to one year of experience), preferably in production environments. Has already worked in new features, bugfixes, etc.
 - Knows at least a bit about agile culture, has a slight idea of what are key terms such as Scrum or Kanban
-- Does not review code for other collaborators. Usually finds it difficult to analyze external code and find problems in it.
+- Does not review code for other collaborators. Usually finds it difficult to analyze external code and to find problems in it.
 - Asks for help whenever they are feeling blocked, not productive or doesn't know what to do.
-- Usually codes "by example" (e.g. copying code), **does not understand how that code works**.
+- Usually codes "by example" (e.g. copying code), and **does not understand how that code works**.
 - Requires more attention, since usually gets blocked often.
 - Is not proactive with new tasks. Usually needs someone else to tell them what to do.
 
@@ -35,9 +35,9 @@ What do we expect from a software development analyst at GeekHunter?
 
 - **Knows at least a bit of the tech stack that we use** (Ruby on Rails, React, Next.js, TypeScript, Python, GraphQL and others). Will eventually have blocks and doubts on how to develop with those technologies.
 - Knows at least a bit about automated tests, and at least understands their importance. Is capable of writing a test with the help of another developer.
-- Usually has a difficult time to produce code that respects our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world).
+- Usually has a difficult time to write code that respects our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world).
 - Usually can't do TDD daily, but knows what it is.
-- Knows at least about git, but can't follow processes such as gitflow.
+- Knows at least a bit about git, but can't follow processes such as gitflow.
 - Doesn't know much about database technologies, and usually has a hard time to write a SQL query.
 - Knows about Object Oriented Programming, but has difficulty implementing it daily.
 - Usually **doesn't know much about software architecture**. Has a had time following our current pattern (e.g. clean or hexagonal architecture).
@@ -48,15 +48,15 @@ What do we expect from a software development analyst at GeekHunter?
 
 - Is able to keep their presence in synchronous (e.g. squad rituals such as dailies, plannings, reviews; pair programmings) and asynchronous moments (e.g. discussions on Slack or Basecamp).
 - Is really motivated to learn more and develop their skills.
-- Usually doesn't understand their own strong or weak points, or how to proceed in their career. Needs an active leadership helping them to progress.
+- Usually doesn't understand their own strong or weak points, or how to advance in their career. Needs an active leadership helping them to progress.
 
 ## 🐤 Software Development Analyst
 
 ### Experience
 
 - **Adds value to the team**. Is capable of delivering their work efficiently, without being blocked too often.
-- Has development experience in production software. This includes creating new features, fixing bugs (sometimes urgently 🧯🔥), refactoring code, etc.
-- Has experience with Agile Culture. **Has already worked in agile teams using methodologies such as Scrum, Kanban, ShapeUp or others**. Knows what is continuous improvement and acts accordingly.
+- Has development experience in production software. This includes creating new features, fixing bugs (sometimes hotfixes 🧯🔥), refactoring code, etc.
+- Has experience with Agile Culture. **Has already worked in agile teams using methodologies such as Scrum, Kanban, ShapeUp or others**. Knows what continuous improvement is and acts accordingly.
 - **Often reviews other people's codes via a code review process**. Is capable of pointing out problems or improvements.
 - Asks for help whenever they are feeling blocked, not productive or doesn't know what to do.
 - Usually codes "by example" (e.g. copying code), **but knows what they are doing and is usually capable of learning on the fly**.
@@ -65,14 +65,14 @@ What do we expect from a software development analyst at GeekHunter?
 
 ### Hard Skills
 
-- **Is experienced in most part of the tech stack that we use** (Ruby on Rails, React, Next.js, TypeScript, Python, GraphQL and others). May have occasional blocks, but is able to develop efficiently.
+- **Is experienced in most of the tech stack that we use** (Ruby on Rails, React, Next.js, TypeScript, Python, GraphQL and others). May have occasional blocks, but is able to develop efficiently.
 - **Is capable of using TDD daily, and understands the importance of it**.
-- Is capable of producing code according to our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world).
-- Has experience with common database technologies. Knows what are relational models, tables, views, indices, and other terms. Is capable of writing a performant SQL query.
-- Has experience in git, **is able to deal with merge conflicts**.
-- Is fluent in Object Oriented Programming, knows the key points to it and is able to produce high-quality OOP code.
+- Is capable of writing code according to our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world).
+- Has experience with common database technologies. Knows relational models, tables, views, indices, and other terms. Is capable of writing a performant SQL query.
+- Has experience in git, and **is able to deal with merge conflicts**.
+- Is fluent in Object Oriented Programming, knows the key points to it and is able to write high-quality OOP code.
 - Knows what is Functional Programming, knows advantages and disadvantages to each paradigm.
-- Understands concepts such as data immutability, pure functions, reactivity.
+- Understands concepts such as data immutability, pure functions, and reactivity.
 - **Understands concepts about software architecture, and knows how to follow common patterns** such as Clean Architecture, Hexagonal Architecture and others. Knows about their advantages and disadvantages.
 - Understands how to design applications and is capable of choosing a good design according to the complexity or challenge (e.g. monoliths, micro-services, serveless, etc).
 - **Knows how to debug code**. Is capable of debugging their own code, manipulating the memory and instructions to reproduce a specific context.
@@ -104,14 +104,14 @@ What do we expect from a software development analyst at GeekHunter?
 
 ### Hard Skills
 
-- **Is fluent in most part of the tech stack that we use** (Ruby on Rails, React, Next.js, TypeScript, Python, GraphQL and others).
+- **Is fluent in most of the tech stack that we use** (Ruby on Rails, React, Next.js, TypeScript, Python, GraphQL and others).
 - **Is fluent in TDD, understands the importance of it and propagates it to the team**.
 - Is capable of writing tests that isolate application layers in a meaningful way (both on backend and frontend), adding value to our test pyramid.
-- Is capable of producing code according to our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world) and improving upon it (making new suggestions and such).
-- Is fluent with common database technologies. Is capable of solving complex performance of distribution problems (e.g. optimizing a slow query by re-implementing it or changing the database structure).
+- Is capable of writing code according to our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world) and improving upon it (making new suggestions and such).
+- Is fluent with common database technologies. Is capable of solving complex performance and/or modeling problems (e.g. optimizing a slow query by re-implementing it or changing the database structure).
 - Has solid experience with other database technologies (e.g. non-relational databases, graph databases, etc). Knows how and when to apply those options in daily tasks.
-- Is fluent in git. Can solve just about any problem that may arise in a repo.
-- Is fluent in Object Oriented Programming, knows the key points to it and is able to produce high-quality OOP code.
+- Is fluent in git. Can solve just about any problem that may arise in a repo and is capable of using different strategies to improve the development flow (ex: use squash and rebase to preserve a linear history)
+- Is fluent in Object Oriented Programming, knows the key points to it and is able to write high-quality OOP code.
 - Has solid experience with Functional Programming, knows advantages and disadvantages to each paradigm.
 - Has solid experience with concepts such as data immutability, pure functions, reactivity.
 - **Has solid experience in software architecture**. Is able to implement common patterns in a disorganized repository.

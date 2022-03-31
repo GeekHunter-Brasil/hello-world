@@ -13,7 +13,7 @@ Here we document our workflows, styleguides and patterns.
 * [Frontend Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/frontend-styleguide)
 * [Backend Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/backend-styleguide)
 * [Development Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/development-styleguide)
-
+* [Testing Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/testing-styleguide)
 
 # The Geek Manifest
 

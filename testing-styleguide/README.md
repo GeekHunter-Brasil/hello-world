@@ -46,6 +46,8 @@ We have a few concepts to keep in mind when it comes to testing.
 - Black-box testing: a method of testing in which we assert the behavior/functionality of an entity without taking into account one's internal details, i.e implementation. 
 - White-box testing: a method of testing in which we test the internal structures of an entity as opposed to its funcionality.
 
+[Back to top ⬆️](#pushpin-summary)
+
 ## Strategies
 
 We lay down here some strategies that we adopt at Geek to which we pay great attention.  
@@ -62,11 +64,27 @@ Also, it's worth noting that doing TDD will help build the basis of out test pyr
 
 ### BDD
 
+Behavior Driven Design fills the void we sometimes have between the acceptance criteria we have for a given task and the expectations we write for our code. In BDD, when building the specifications, the start point is the acceptance criteria of a task. Next, we use a language (usually supported by a DSL) that connects the test case with the product need. Therefore, doing BDD requires we think about test from the very beggining, i.e from the refinement phase of a user story.
+
+On the practical sections, we will see examples of implementing BDD for a given task. Check out [this post](https://blog.geekhunter.com.br/a-juncao-do-behavior-driven-development-e-metodologia-agil/#:~:text=BDD%20%C3%A9%20uma%20metodologia%20de,e%20%E2%80%9Ccrit%C3%A9rios%20de%20aceita%C3%A7%C3%A3o%E2%80%9D) in our blog for a very good discussion on BDD and Agile culture.
+
 ### Do not reimplement logic
+
+When writting black-box testing, make sure not to reimplement logic. If we are doing TDD right, the chances of reimplementing logic are dramatically reduced since we start first with the specification and then we move to the implementation. However, we often have to cope with legacy code that is not tested. In those cases, pay attention to write your test without mimicking the logic itself.
+
+Take a look [at this video](https://www.youtube.com/watch?v=W40mpZP9xQQ&t=918s) that addresses this and other common mistakes when doing TDD.
 
 ### Non-decreasing Code Coverage
 
+In order to increase code quality overtime, it's very useful to enforce a non-decreasing policy in our CI/CD pipelines. With that in mind, we don't allow code to be merged in the main branches if the overall code coverage decreases. Therefore, make sure you cover all code paths in your specification file. 
+
+It's worth noting that too many code paths to cover may indicate a function that can be simplified and broken down. Take a look at [this definition](https://docs.codeclimate.com/docs/cyclomatic-complexity) to help guide on that regard.
+
 ### Do not refactor code unless tested
+
+By refactoring, we mean the act of changing the implementation of an entity without changing its external behavior/functionality. Therefore, by definition, any black-box testing that is written for that entity should keep passing. That means we can, and should, see tests as a guardrail that will prevent us from making mistakes during refactoring. 
+
+Therefore, do not refactor code unless tested; otherwise you risk introducing bugs to the codebase that may not be caught by someone else in Code Review.
 
 [Back to top ⬆️](#pushpin-summary)
 

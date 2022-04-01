@@ -13,7 +13,7 @@
 
 Welcome to our testing style guide!
 
-The goal of this guide is to help our team to think about tests, write them, and review someone else's code taking them into account. In order to to that, we introduce some definitions and best practices on testing, along with pratical tips.
+The goal of this guide is to help our team to think about tests, write them, and review someone else's code taking them into account. In order to do that, we introduce some definitions and best practices on testing, along with pratical tips.
 
 `#letscode 😎👩‍💻👨‍💻`
 
@@ -50,7 +50,7 @@ We have a few concepts to keep in mind when it comes to testing.
 
 ## Strategies
 
-We lay down here some strategies that we adopt at Geek to which we pay great attention.  
+We lay down here some strategies that we adopt at Geek and to which we pay great attention. Fundamentally, they guide us while we write tests.
 
 ### TDD
 
@@ -58,13 +58,13 @@ Quoting the Geek Manifest:
 
 `"TDD is an implicit requirement of any code intervention"`
 
-We can even say Test Driven Development is more than just a requirement, it is a way of thinking our software. On the more granular level of black-box testing, we first write our specification file that describes how a piece of code should behave, i.e what the functionality we expect from it. Then, we move to the next phase of writing the code to implement it. This is a simple concept, but not trivial to implement. It requires a good understand of our architecture, our dependency paths and the programming paradigm we are using (OOP for most part) beforehand. On the pratical sections, we will see examples of how to do it in Rails and React using the libs we have.
+We can even say Test Driven Development is more than just a requirement: it is a way of thinking our software. On the more granular level of black-box testing, we first write our specification file that describes how a piece of code should behave, i.e the functionality we expect from it. Then, we move to the next phase of writing the code to implement it. This is a simple concept, but not trivial to implement. It requires a good understand of our architecture, our dependency paths, the programming paradigm we are using (OOP for most part), and specificities of the frameworks we adopt. All of that beforehand. On the pratical sections, we will see examples of how to do it in Rails and React using the libs we have.
 
 Also, it's worth noting that doing TDD will help build the basis of out test pyramid: if for every piece of code we write we have a underlying test to support it, the basis of the pyramid will increase effortlessly.
 
 ### BDD
 
-Behavior Driven Design fills the void we sometimes have between the acceptance criteria we have for a given task and the expectations we write for our code. In BDD, when building the specifications, the start point is the acceptance criteria of a task. Next, we use a language (usually supported by a DSL) that connects the test case with the product need. Therefore, doing BDD requires we think about test from the very beggining, i.e from the refinement phase of a user story.
+Behavior Driven Design fills the void we sometimes have between the acceptance criteria of a given task and the expectations we write for our code. In BDD, when building the specifications, the start point is the acceptance criteria of a task. Next, we use a language (usually supported by a DSL) that connects the test case with the product need. Therefore, doing BDD requires we think about test from the very beggining, i.e from the refinement phase of a user story.
 
 On the practical sections, we will see examples of implementing BDD for a given task. Check out [this post](https://blog.geekhunter.com.br/a-juncao-do-behavior-driven-development-e-metodologia-agil/#:~:text=BDD%20%C3%A9%20uma%20metodologia%20de,e%20%E2%80%9Ccrit%C3%A9rios%20de%20aceita%C3%A7%C3%A3o%E2%80%9D) in our blog for a very good discussion on BDD and Agile culture.
 
@@ -82,9 +82,9 @@ It's worth noting that too many code paths to cover may indicate a function that
 
 ### Do not refactor code unless tested
 
-By refactoring, we mean the act of changing the implementation of an entity without changing its external behavior/functionality. Therefore, by definition, any black-box testing that is written for that entity should keep passing. That means we can, and should, see tests as a guardrail that will prevent us from making mistakes during refactoring. 
+By refactoring, we mean the act of changing the implementation of an entity without changing its external behavior/functionality. Therefore, by definition, any black-box testing that is written for that entity should continue to pass. That means we can, and should, see tests as a guardrail that will prevent us from making mistakes during refactoring. 
 
-Therefore, do not refactor code unless tested; otherwise you risk introducing bugs to the codebase that may not be caught by someone else in Code Review.
+Therefore, do not refactor code unless tested; otherwise you risk introducing bugs to the codebase that may not be caught by someone else in a Code Review.
 
 [Back to top ⬆️](#pushpin-summary)
 

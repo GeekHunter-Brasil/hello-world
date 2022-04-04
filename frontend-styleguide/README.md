@@ -260,13 +260,13 @@ We can import only the components from react that we are using
 ❌ Bad
 
 ```tsx
-import React from 'react'
+import React from "react";
 
-export const Component = () => React.ReactElement => {
-  const [state, setState] = React.useState('')
+export const Component = (): React.ReactElement => {
+  const [state, setState] = React.useState("");
 
-  return <div>Component</div>
-}
+  return <div>Component</div>;
+};
 ```
 
 ✅ Good
@@ -274,7 +274,7 @@ export const Component = () => React.ReactElement => {
 ```tsx
 import { ReactElement, useState } from "react";
 
-export const Component = () => (ReactElement) => {
+export const Component = (): ReactElement => {
   const [state, setState] = useState("");
 
   return <div>Component</div>;

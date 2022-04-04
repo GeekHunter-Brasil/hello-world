@@ -251,6 +251,38 @@ export const colors: ThemeColors = {
 
 <br />
 
+### 👉 Avoid import React in jsx files
+
+Since [React 17](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) we no longer need to import React in jsx files.
+
+We can import only the components from react that we are using
+
+❌ Bad
+
+```tsx
+import React from 'react'
+
+export const Component = () => React.ReactElement => {
+  const [state, setState] = React.useState('')
+
+  return <div>Component</div>
+}
+```
+
+✅ Good
+
+```tsx
+import { ReactElement, useState } from "react";
+
+export const Component = () => (ReactElement) => {
+  const [state, setState] = useState("");
+
+  return <div>Component</div>;
+};
+```
+
+<br />
+
 ### 👉 Avoid using `export default`
 
 When exporting components, prefer to use the `export { Foo }` or `export class Foo` over `export default Foo` syntax.
@@ -521,7 +553,6 @@ it("Correctly formats the name", () => {
 
 [Back to top ⬆️](#pushpin-summary)
 
-
 ## Translate
 
 ### 👉 Use I18n to translate
@@ -532,13 +563,13 @@ For each page created, it is necessary to update the pages key in the i18n.js fi
 
 ```js
 module.exports = {
-  locales: ['pt-BR', 'en'],
-  defaultLocale: 'pt-BR',
+  locales: ["pt-BR", "en"],
+  defaultLocale: "pt-BR",
   loadLocaleFrom: (lang, ns) =>
     import(`./src/pages/locales/${lang}/${ns}.yaml`).then((m) => m.default),
   pages: {
-    '/page_1': ['page_1'],
-    '/page_2': ['page_2']
+    "/page_1": ["page_1"],
+    "/page_2": ["page_2"],
   },
 };
 ```
@@ -560,11 +591,13 @@ When organizing locale files you must insert each file into the translation fold
 Each file inside contains its keys at the same level, there is no need to chain keys.
 
 ex: `locales/pt-BR/page_1.yaml`.
+
 ```yml
 example: Olá mundo
 ```
 
 ex: `locales/en/page_1.yaml`.
+
 ```yml
 example: Hello world
 ```
@@ -574,15 +607,13 @@ example: Hello world
 Use the translations on the page:
 
 ```tsx
-import useTranslation from 'next-translate/useTranslation';
+import useTranslation from "next-translate/useTranslation";
 
 export const Page = (): React.ReactElement => {
-  const { t } = useTranslation('page_1');
+  const { t } = useTranslation("page_1");
 
-  return (
-    <div>{t('example')}</div>
-  )
-}
+  return <div>{t("example")}</div>;
+};
 ```
 
 ```

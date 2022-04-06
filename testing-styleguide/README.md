@@ -74,7 +74,7 @@ Take a look [at this video](https://www.youtube.com/watch?v=W40mpZP9xQQ&t=918s) 
 
 ### Non-decreasing Code Coverage
 
-In order to increase code quality overtime, it's very useful to enforce a non-decreasing policy in our CI/CD pipelines. With that in mind, we don't allow code to be merged in the main branches if the overall code coverage decreases by a safe margin. Here, we enforce a more permissive policy as we give a % drop in the coverage to account for legacy code. Additionaly, we look at the branches coverage as the criteria taken into account as it helps us focus on non trivial code we want to test instead of enforcing a 100% line coverage. Therefore, make sure you cover all possible code paths in your specification file.
+In order to increase code quality overtime, it's very useful to enforce a non-decreasing policy in our CI/CD pipelines. With that in mind, we don't allow code to be merged in the main branches if the overall code coverage decreases. Additionaly, we look at the branches coverage as the criteria taken into account as it helps us focus on non trivial code we want to test instead of enforcing a 100% line coverage. Therefore, make sure you cover all possible code paths in your specification file.
 
 It's worth noting that too many code paths to cover may indicate a method that can be simplified and broken down. Take a look at [this definition](https://docs.codeclimate.com/docs/cyclomatic-complexity) to help guide on that regard and [this introduction](https://www.atlassian.com/continuous-delivery/software-testing/code-coverage) to code coverage.
 

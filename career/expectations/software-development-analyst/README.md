@@ -9,8 +9,8 @@ and users in their daily routine.
 
 Thus, a software development analyst is usually assigned into a squad (with a well defined purpose) and is responsible for value delivery in our product.
 
-It's not expected that a software development analyst will work "alone", but that can happen in extreme cases - so autonomy and self management are important skills. Usually,
-this person will be working in a squad with 2 ~ 3 other developers, data scientists, product designers, etc.
+It's not expected that a software development analyst will work "alone", but that can happen in edge cases - so autonomy and self management are important skills. Usually,
+this person will be working within a squad with 2 ~ 3 other developers, data scientists, product designers, etc.
 
 
 # Expectations
@@ -24,16 +24,16 @@ What do we expect from a software development analyst at GeekHunter?
 
 - **Usually goes with the current hype.** Always wants to try out new frameworks or languages but doesn't know how to balance this with the daily routine. Usually, this ends up hurting the productivity for himself or the team.
 - Knows at least a bit about software development (a few months to one year of experience), preferably in production environments. Has already worked in new features, bugfixes, etc.
-- Knows at least a bit about agile culture, has a slight idea of what are key terms such as Scrum or Kanban
+- Knows at least a bit about agile culture, has a slight idea of key practices such as Scrum or Kanban
 - Does not review code for other collaborators. Usually finds it difficult to analyze external code and to find problems in it.
 - Asks for help whenever they are feeling blocked, not productive or doesn't know what to do.
 - Usually codes "by example" (e.g. copying code), and **does not understand how that code works**.
-- Requires more attention, since usually gets blocked often.
+- Requires more attention and support, since he usually gets blocked often.
 - Is not proactive with new tasks. Usually needs someone else to tell them what to do.
 
 ### Hard Skills
 
-- **Knows at least a bit of the tech stack that we use** (Ruby on Rails, React, Next.js, TypeScript, Python, GraphQL and others). Will eventually have blocks and doubts on how to develop with those technologies.
+- **Knows at least a bit of the tech stack that we use** (Ruby on Rails, React, Next.js, TypeScript, Python, GraphQL and others). Will eventually get blocked and have questions on how to develop with those technologies.
 - Knows at least a bit about automated tests, and at least understands their importance. Is capable of writing a test with the help of another developer.
 - Usually has a difficult time to write code that respects our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world).
 - Usually can't do TDD daily, but knows what it is.
@@ -48,7 +48,7 @@ What do we expect from a software development analyst at GeekHunter?
 
 - Is able to keep their presence in synchronous (e.g. squad rituals such as dailies, plannings, reviews; pair programmings) and asynchronous moments (e.g. discussions on Slack or Basecamp).
 - Is really motivated to learn more and develop their skills.
-- Usually doesn't understand their own strong or weak points, or how to advance in their career. Needs an active leadership helping them to progress.
+- Usually doesn't understand their own strengths and weaknesses, or how to advance in their career. Needs an active leadership helping them to progress.
 
 ## 🐤 Software Development Analyst
 
@@ -83,7 +83,7 @@ What do we expect from a software development analyst at GeekHunter?
 
 - Is able to keep their presence in synchronous (e.g. squad rituals such as dailies, plannings, reviews; pair programmings) and asynchronous moments (e.g. discussions on Slack or Basecamp).
 - Is really motivated to learn more and develop their skills.
-- Usually understands their own strong or weak points, and sees something they want to prioritize in their career. The leadership process here is usually easier, since this person is able to develop their skills with some level of autonomy.
+- Usually understands their own strengths and weaknesses, and sees something they want to prioritize in their career. The leadership process here is usually easier, since this person is able to develop their skills with some level of autonomy.
 - Has emotional resilience to go through challenging scenarios, to receive valuable feedbacks and use all of that information to grow as a person.
 
 ## 🐓 Senior Software Development Analyst
@@ -116,7 +116,7 @@ What do we expect from a software development analyst at GeekHunter?
 - Has solid experience with concepts such as data immutability, pure functions, reactivity.
 - **Has solid experience in software architecture**. Is able to implement common patterns in a disorganized repository.
 - Has solid experience in application design and is capable of choosing a good design according to the complexity or challenge (e.g. monoliths, micro-services, serveless, etc).
-- **Is fluent in debugging code** and can debug just about any problem that may arise, deeply understanding what is happening and what the problem is.
+- **Is fluent in debugging code** and can debug just about any problem that may arise, deeply understanding what is happening and what the problem is, be it an overflow, memory bound, cpu bound or IO bound problem. Understands how distributed computing works, how networks affect running software and how to identify and fix bottlenecks.
 - **Is fluent at debugging external code** (such as a dependency), and can easily fix it via a pull request or using an isolated version if needed.
 - Is capable of solving any problem that doesn't need R&D (Research & Development) efficiently.
 - Is capable of working in problems that need R&D conducting the research in an effective way, prioritizing the use of their own time in the best way.
@@ -126,5 +126,5 @@ What do we expect from a software development analyst at GeekHunter?
 - Is able to keep their presence in synchronous (e.g. squad rituals such as dailies, plannings, reviews; pair programmings) and asynchronous moments (e.g. discussions on Slack or Basecamp).
 - Is really motivated to learn more and develop their skills.
 - **Has experience in leadership positions, mentoring other people** (usually in technical aspects).
-- Understands their own strong or weak points, and sees something they want to prioritize in their career. The leadership process here is usually easier, since **this person is able to develop their skills with a high level of autonomy**.
+- Understands their own strengths and weaknesses, and sees something they want to prioritize in their career. The leadership process here is usually easier, since **this person is able to develop their skills with a high level of autonomy**.
 - Has emotional resilience to go through challenging scenarios, to receive valuable feedbacks and use all of that information to grow as a person and not let it impact their performance.

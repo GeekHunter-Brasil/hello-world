@@ -24,7 +24,6 @@ The goal of this guide is to help our team to think about tests, write them, and
 * [Strategies](#strategies)
 * [In practice: Rails](#in-practice-rails)
 * [In practice: React](#in-practice-react)
-* [In practice: Beyond](#in-practice-beyond)
 
 ## Introduction
 
@@ -35,6 +34,7 @@ There're many arguments on why to test software. We highlight a few:
 - good test strategies are KEY to increase codebase quality overtime; and a high-quality codebase is KEY to a high-quality product
 - a good set of practises DECREASES cognitive effort in write/review phases; and less effort in write/review BUYS us time and energy to focus on delivering value to customers
 - test is cheaper than bugfix; and SCALES better
+- meaningful testing ENCOURAGES us to think about useful design patterns 
 
 [Back to top ⬆️](#pushpin-summary)
 
@@ -54,7 +54,7 @@ Quoting the Geek Manifest:
 
 `"TDD is an implicit requirement of any code intervention"`
 
-We can even say Test Driven Development is more than just a requirement: it is a way of thinking our software. On the more granular level of black-box testing, we first write our specification file that describes how a piece of code should behave, i.e the functionality we expect from it. Then, we move to the next phase of writing the code to implement it. It requires a good understanding of our architecture, our dependency chain, the programming paradigm we are using (OOP for most part), and specificities of the frameworks we adopt. All of that beforehand. Besides, we always have choices to make when it comes to whether or not we mock dependencies. On the pratical sections, we will see examples of how to do it in our stack and what kind of choices made sense for us. Those choices translated to a guideline that we at Geek follow when writing our tests.
+We can even say Test Driven Development is more than just a requirement: it is a way of thinking our software. On the more granular level of black-box testing, we first write our specification file that describes how a piece of code should behave, i.e the functionality we expect from it. Then, we move to the next phase of writing the code to implement it. It requires a good understanding of our design patterns, our dependency chain, the programming paradigm we are using (OOP for most part), and specificities of the frameworks we adopt. All of that beforehand. Besides, we always have choices to make when it comes to whether or not we mock dependencies. On the pratical sections, we will see examples of how to do it in our stack and what kind of choices made sense for us. Those choices translated to a guideline that we at Geek follow when writing our tests.
 
 Also, it's worth noting that doing TDD helps building the basis of our test pyramid: if for every piece of code we write we have an underlying test to support it, the basis of the pyramid will increase effortlessly.
 
@@ -76,11 +76,11 @@ Take a look [at this video](https://www.youtube.com/watch?v=W40mpZP9xQQ&t=918s) 
 
 In order to increase code quality overtime, it's very useful to enforce a non-decreasing policy in our CI/CD pipelines. With that in mind, we don't allow code to be merged in the main branches if the overall code coverage decreases. Additionaly, we look at the branches coverage as the criteria taken into account as it helps us focus on non trivial code we want to test instead of enforcing a 100% line coverage. Therefore, make sure you cover all possible code paths in your specification file.
 
-It's worth noting that too many code paths to cover may indicate a method that can be simplified and broken down. Take a look at [this definition](https://docs.codeclimate.com/docs/cyclomatic-complexity) to help guide on that regard and [this introduction](https://www.atlassian.com/continuous-delivery/software-testing/code-coverage) to code coverage.
+It's worth noting that too many code paths to cover may indicate a method that can be simplified and broken down. Take a look at [this definition](https://docs.codeclimate.com/docs/cyclomatic-complexity) to help guide on that regard and at [this introduction](https://www.atlassian.com/continuous-delivery/software-testing/code-coverage) to code coverage as well.
 
 ### Do not refactor code unless tested
 
-By refactoring, we mean the act of changing the implementation of an entity without changing its external behavior/functionality. Therefore, by definition, any black-box testing that is written for that entity should continue to pass. That means we can, and should, see tests as a guardrail that will prevent us from making mistakes during refactoring.
+By refactoring, we mean the act of changing the implementation of a subject without changing its external behavior/functionality. Therefore, by definition, any black-box testing that is written for that entity should continue to pass. That means we can, and should, see tests as a guardrail that will prevent us from making mistakes during refactoring.
 
 Therefore, do not refactor code unless tested; otherwise you risk introducing bugs to the codebase that may not be caught by someone else in a Code Review.
 
@@ -88,67 +88,36 @@ Therefore, do not refactor code unless tested; otherwise you risk introducing bu
 
 ## In practice: Rails
 
-### Design Principles and Patterns
+Our Rails application is structured in a layered architecture: we start at the entrypoints (controllers, mutations, etc), passing by managers (where business rules are defined), then services, validators and up to a respository layer. This approach makes our application more manageable with well defined responsabilities to each abstraction. Besides, and not by chance, this simplifies the task of writing tests in different granularities.
 
-Our Rails application is structured in a layered architecture: we start at the entrypoints, passing by managers, services, validators and up a respository layer. This approach makes our application more manageable with well defined responsabilities to each abstraction. Besides, and not by chance, this makes the task of writing tests in different granularities much easier as we rely on a Dependency Rule approach.
+We show here a guideline for writing tests in each one of those layers.
 
-Image below show what kind of tests we target on each layer.
+### 📨 Entrypoint Layer
 
-IMAGE
+Here is where our Controllers, Mutations, Workers, Rakes and so on, are defined. For this layer, we want an integration test going all the way to the database and external APIs. In each integration test, we find useful to test side effects, internal transformations, and the response itself. With that in mind, three main things are asserted in an entrypoint test:
 
-### Guideline
+- That the inner layer (manager) is called correctly, with the expected set of parameters
+- That the input is correctly handled (e.g. that an ActiveModel attribute is correctly updated at the database level)
+- That the response is the expected (e.g. response.body, response.status, etc)
 
-With that in mind, we show here our guidelines to help you to write tests for each one of those layers.
+Note here we usually hit a testing database with a set of transactions, and assert changes in the ActiveRecord itself. In addition to that, external APIs can be mocked with their expect behavior for a given scenario.
 
-#### 📨 Entrypoint Layer
-
-Here is where our Controllers, Mutations, Workers, Rakes and so on, are defined. For this layer, we want an integration test, going all the way to the database and APIs, asserting 3 main things:
-
-- If the inner layer (manager) was called correctly, with the expected parameters and the expected number of times
-- If the input was correctly handled (e.g. if the hiring status was correctly updated)
-- If the response is what we expected (e.g. response.body, response.status)
-
-Using an example of a Controller that handles the hiring update
-
-```ruby
-module Companies
-  class HiringsController
-
-  def update
-    hiring_manager_updater.update params do |callback|
-      callback.on_success do |updated_hiring|
-        render json: updated_hiring
-      end
-
-      callback.on_failed do |exception|
-        respond_to do |format|
-          @errors = exception&.errors
-          format.js { render json: @errors.full_messages.join('<br>'), status: 400 }
-        end
-      end
-    end
-  end
-
-  private
-
-  def hiring_manager_updater
-    @hiring_manager_updater ||= ::Services::Companies::Hirings::HiringManagerUpdater.new
-  end
-end
-```
+Let's use a Controller that handles a Hiring update as example. It gets a hash with the updated hiring values and let's imagine we are interested in the response status code being 200 if all goes well with the updated hiring hash in a json format. We also expect our controller to call a manager in order to perform the task in hand: here we name it `HiringManagerUpdater.update`.
 
 ❌ Bad
 
 ```ruby
+# !! Do not replace the manager with a fake implementation
 let(:hiring_manager_updater) { instance_double ::Services::Companies::Hirings::HiringManagerUpdater }
 
-context 'with valid params' do
+context 'when controller is called with valid params' do
   before do
-    put 'companies/hiring', params
+    put 'companies/hiring', params: params
   end
 
-  it "should call the hiring manager updater with appropriate arguments the right number of times" do
-    expect(hiring_manager_updater).to have_received(:update).with(expected_params).exactly(1).times
+  it "should call the hiring manager updater with appropriate arguments" do
+    # !! Do not assert interactions with the stubbed manager
+    expect(hiring_manager_updater).to have_received(:update).with(expected_params)
   end
 end
 ```
@@ -156,91 +125,71 @@ end
 ✅ Good
 
 ```ruby
-context 'with valid params' do
+context 'when controller is called with valid params' do
+  # Use FactoryBot.create to create an instance of your data object and persist it to the testing database
   let(:hiring) { create(:hiring, status: Hiring.status.waiting) }
   let(:params) do
     {
-      id: hiring.id,
-      status: Hiring.status.approved
+      hiring: {
+        id: hiring.id,
+        status: Hiring.status.approved
+      }
     }
   end
-
+  # Describe the expected set of (transformed) parameters your manager needs to properly work
+  let(:manager_params) do
+    ActionController::Parameters.new( params.map { |k,v| [k, v.to_s] }.to_h )
+      .require(:hiring).permit(:id, :status)
+  end
   let(:update_hiring) do
     put 'companies/hiring', params: params
   end
 
-  describe 'validate behavior' do
-    after do
-      update_hiring
-    end
-
-    it "should call the hiring manager updater with appropriate arguments the right number of times" do
-      expect_any_instance_of(::Services::Companies::Hirings::HiringManagerUpdate).to receive(:update).with(expected_params).exactly(1).times
-    end
+  before do
+    # Only allow calls to HiringManagerUpdater.create that happen with the expected set of parameters
+    allow_any_instance_of(::Services::Companies::Hirings::HiringManagerUpdater).to receive(:update).with(manager_params).and_call_original
+    update_hiring
+    # Reload your ActiveModel object to reflect changes performed by the subject under test
+    hiring.reload
   end
 
-  describe 'validate logic' do
-    before do
-      update_hiring
-      hiring.reload
-    end
-
-    it 'should return 200 as status code' do
-      expect(response).to have_http_status(200)
-    end
-
-    it 'should update the hiring status' do
-      expect(hiring.status).to eq Hiring.status.approved.value
-    end
+  it 'should update the hiring status' do
+    # Assert status has changed 
+    expect(hiring.status).to eq Hiring.status.approved.value
+  end
+  it 'should return a response with status code 200 and content_type application/json' do
+    # Assert response code is 200
+    expect(response).to have_http_status(200)
+    # Assert response content type is 'application/json'
+    expect(response.content_type).to be == 'application/json'
   end
 end
 ```
+
+Note we apply a whitebox approach to this test as we opt to verify the inner integration with the manager. This means we should know what the manager needs in order to perform its job, so slighly compromising in the classic TDD approach of not taking the controller implementation into account. In the following layers, we will be conducting Unit Tests and mocking inner calls in order to isolate our subjects under tests. In all these tests, keep in mind we are using a more mocking approach to TDD where we take into account implementation details (i.e. we know who is going to be called and how) instead of a more classic black-box testing. Both are good, but we feel using a mocking approach help us to faster implement and test our Domain, which historically is the place we tend to apply more changes given the nature of our product.
+
+Finally, a point about `Rspec.allow_any_instance_of`: when dealing with legacy code, the instance of the manager might not be injected during the test. So `allow_any_instance_of` comes in handy to allow us to verify that any instance of a manager was properly called. However, if you do have access to an instance of your manager (by injection) then you use `Rspec.allow` instead.
 
 #### 🎛️ Manager Layer
 
-This layer it's our source of truth when talking about business rules. The manager is responsible to call all the services required (included other managers) to complete the a specific task.
+This layer is the source of truth when talking about business rules. The manager is responsible to call all services that are required to complete a specific task.
 
-Here we want unit tests so we don't necessarily need to test everything. Assuming other parts of the application are also tested (they should be!), it becomes much easier to simply mock the dependency or assume it has been called when its result is not important to the test.
+Here we want unit tests to help us quickly and reliably test more scenarios and edge cases than we do at an entrypoint layer. So we don't necessarily test everything, and assuming other parts of the application are also tested (they should be!), it becomes much easier to simply mock the dependencies and asser their calls.
 
-Following our example, we have a manager responsible to update the hiring
-
-```ruby
-module Services
-  module Hiring
-    class HiringManagerUpdater
-
-    def update(params)
-      hiring = hiring_updater.update(params)
-
-      job_updater.update(hiring.job_id, :new_hiring)
-
-      hiring
-    end
-
-    private
-
-    def hiring_updater
-      @hiring_updater ||= ::Services::Hiring::Update::HiringUpdater.new
-    end
-
-    def job_updater
-      @job_updater ||= ::Services::Job::Update::JobUpdater.new
-    end
-  end
-end
-```
+Following our example, let's say the manager needs to do two operations: update the Hiring status and, as a side effect, update the underlying Job. So we know it has to call at least two methods in two different services, named `HiringUpdater.update` and `JobUpdater.update`. `HiringUpdater.update` receives a hash with a hiring key, the attributes to update and returns the updated Hiring; `JobUpdater.update` receives the `job_id` related to the Hiring. Let's also not forget that we expect our manager to return the updated Hiring, as we see in the Controller layer.
 
 ❌ Bad
 
 ```ruby
-context 'with valid params' do
-  it 'updates the hiring' do
-    # Code asserting if hiring is updated
+context 'when manager is called valid params' do
+  it 'should update the hiring' do
+    # ... code asserting hiring is updated
+    # !! The service that updates hirings already tests this
   end
 
-  it 'updates the job' do
-    # Code asserting if job properties have changed
-    # Wrong! the service that updates jobs already tests this
+  it 'should update the job' do
+    # ... code asserting job properties have changed
+    # !! The service that updates jobs already tests this
   end
 end
 ```
@@ -248,74 +197,71 @@ end
 ✅ Good
 
 ```ruby
+# Use Rspec.instance_double to be able to mock the dependencies
 let(:hiring_updater) { instance_double ::Services::Hiring::Update::HiringUpdater }
 let(:job_updater) { instance_double ::Services::Job::Update::JobUpdater }
 
-let(:hiring) { double('hiring', id: 1) }
+# Use FactoryBot.build_stubbed to generate your data
+let(:hiring) { build_stubbed(:hiring) }
 
-context 'with valid params' do
+context 'when manager is called valid params' do
   let(:params) do
     {
       id: hiring.id,
       status: Hiring.status.approved
     }
   end
+  let(:updated_hiring) do
+    hiring.update(status: Hiring.status.approved)
+    hiring
+  end
 
   before do
+    # Replace HiringUpdater and JobUpdater in the subject under test
     allow(subject).to receive(:hiring_updater).and_return hiring_updater
     allow(subject).to receive(:job_updater).and_return job_updater
 
-    allow(hiring_updater).to receive(:update).with(kind_of(Hash))
-    allow(job_updater).to receive(:update).with(kind_of(Hash), kind_of(Symbol))
+    # Only allow calls to update that happen with the expected set of parameters
+    allow(hiring_updater).to receive(:update).with(params).and_return updated_hiring
+    allow(job_updater).to receive(:update).with(updated_hiring.job_id)
 
-    subject.update(params)
+    @result = subject.update(params)
   end
 
   it "should call the hiring updater with appropriate arguments the right number of times" do
-    expect(hiring_updater).to have_received(:update).with(expected_params).exactly(1).times
+    # Assert that HiringUpdater.update has been called once
+    expect(hiring_updater).to have_received(:update).once
   end
 
-  it "should call the job updater with appropriate arguments" do
-    expect(job_updater).to have_received(:update).with(expected_params).exactly(1).times
+  it "should call the job updater with appropriate arguments the right number of times" do
+    # Assert that JobUpdater.update has been called once
+    expect(job_updater).to have_received(:update).once
   end
+
+  it "should return the updated Hiring" do
+    # Assert the return is the expected
+    expect(@result.status).to eq(Hiring.status.approved)
+  end
+
+  # ... remaining test scenarios
 end
 ```
 
+A point about performance: sometimes we want to use Factories to faster, and more reliably, build our data. Whenever possible, use stubbed methods such as `FactoryBot.build_stubbed`. Methods like `FactoryBot.create` update the test database, which is very useful in integration tests but is also a very expensive operation; in scale, hitting the database in manager layer considerably slows down the test pipeline. If the manager is not supposed to directly access an ActiveRecord, avoid using create methods.
+
 #### 🛠️ Service layer
 
-Using the same logic in the Manager layer, here will mock the dependencies and test if
-they were called appropriately.
+Using the same logic as in the Manager layer, we mock the dependencies and test if they are called appropriately.
 
-```ruby
-  module Services
-    module Hiring
-      module Update
-        class HiringUpdater
-          include RepositoriesInjection
-
-          def update(params)
-            validate_params(params)
-            provide_hiring_repo.update(params)
-          end
-
-          private
-
-          def validate_params(params)
-            validator = Validators::Hiring::HiringUpdateValidator.new params, :update
-            raise Exceptions::RecordInvalid.new(errors: validator.errors) unless validator.valid?
-          end
-        end
-      end
-    end
-  end
-```
+Let's follow the example of the `HiringUpdater`. In order to update the ActiveModel records, it needs to first validate the parameters received from the manager via a `HiringUpdateValidator`. Then it either raises an Exception if parameters are invalid or proceeds to call a `DelegateRepository` in order to effectively persist the updates to the database. After updating, it returns the updated Hiring.
 
 ❌ Bad
 
 ```ruby
-context 'with valid params' do
+context 'when service is called with valid params' do
   it 'updates the hiring' do
-    # Code asserting if hiring is updated
+    # ... code asserting if hiring is updated
+    # !! The repository that updates jobs already tests this
   end
 end
 ```
@@ -326,9 +272,9 @@ end
 let(:provide_hiring_repo) { instance_double Repositories::Hirings::DelegateRepository }
 let(:hiring_update_validator) { instance_double Validators::Hiring::HiringUpdateValidator }
 
-let(:hiring) { double('hiring', id: 1) }
+let(:hiring) { build_stubbed(:hiring) }
 
-context 'with valid params' do
+context 'when service is called with valid params' do
   let(:params) do
     {
       id: hiring.id,
@@ -349,15 +295,27 @@ context 'with valid params' do
   it "should call the hiring repository with appropriate arguments the right number of times" do
     expect(provide_hiring_repo).to have_received(:update).with(expected_params).exactly(1).times
   end
+
+  it 'should call validator' do
+  end
+
+  it 'should call repository' do
+  end
+
+  it 'should return XX' do
+  end
+
 end
 ```
+
+Here, the same performance consideration applies: prefer `FactoryBot.build_stubbed` over `FactoryBot.create` whenever possible.
 
 #### 🚫 Validator layer
 
 The validator layer is responsible to check the data that is been passed to the database.
 Here we want to assert if the validator is setting the errors properly according to the parameters validation rules.
 
-Always cover all edge cases for possible types, this can avoid a lot of validation problems which can occurs in others layers.
+Always cover all edge cases for possible types as this can avoid a lot of validation problems, which won't be necessarily tested in outer players.
 
 ```ruby
 module Validators
@@ -471,7 +429,6 @@ describe Validators::Candidate::CandidateUpdateValidator, type: :validator do
   end
 end
 ```
-
 #### 💾 Repository Layer
 
 Last but not least we have the Repository Layer, responsible for communicating with the database.
@@ -543,18 +500,6 @@ end
 [Back to top ⬆️](#pushpin-summary)
 
 ## In practice: React
-
-### Prerequisites and Architecture
-
-TBD
-
-### Test Guideline
-
-TBD
-
-[Back to top ⬆️](#pushpin-summary)
-
-## In practice: Beyond
 
 TBD
 

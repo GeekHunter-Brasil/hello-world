@@ -551,6 +551,305 @@ it("Correctly formats the name", () => {
 });
 ```
 
+# :pushpin: Atomic Design Testing
+
+- [Atoms](#atoms)
+  - Snapshots
+- [Molecules](#molecules)
+  - Snapshots (mocked)
+  - Integration tests
+- [Organisms](#organisms)
+  - Snapshots (sometimes mocked)
+  - Integration tests
+- [Utils, hooks, shared...](#utils-hooks-shared)
+  - Unit tests
+
+# Atoms
+
+## 👉 Snapshot tests
+
+> 💡 Snapshot tests are a very useful tool whenever you want to make sure your UI does not change unexpectedly.
+
+Snapshot testing is a pretty controversial, some people love it and others hate it, and honestly I understand both. Among the main complaints about snapshot testing are:
+
+1. Go against TDD
+2. They are hard to maintain in large teams
+3. They are general, we often just re-generate the snapshot without debugging the error
+
+Are any of these points wrong? It depends.
+
+If we look at a standard component structure divided by modules, the snapshot testing approach may not make sense, because we have large components like e.g. registration form, header, comments that need larger tests like integration tests in addition to unit tests
+
+Now, if we look at atomic design, an atom should be a stylized html tag and just that, the smallest part of an organism without any kind of logic. In other words, we need to validate that it is just rendering the content and styles correctly, exactly what a snapshot test does.
+
+### 👎 Without snapshot tests:
+
+```typescript
+it("should render the component correctly", () => {
+  const { getByTestId } = render(<Button variant="outline">Teste</Button>);
+
+  expect(getByTestId("button")).toBeInTheDocument();
+  expect(getByTestId("button")).toHaveStyle("background-color: transparent");
+});
+```
+
+### 👍 With snapshot tests:
+
+```typescript
+it("Renders correctly button props as solid", () => {
+  const tree = renderer.create(<Button variant="solid">Teste</Button>).toJSON();
+
+  expect(tree).toMatchSnapshot();
+});
+```
+
+With snapshot we are testing all passed properties, and if any property changes, the test will inform us, leaving it up to the dev in action and the devs in code review to review this change to avoid future problems. Since we use a third-party library (**Chakra ui**) there is no need to test property rendering, as all components are already tested before they are released.
+
+🤔 About TDD, the point that snap tests are done after the component has been developed is extremely valid, but again outside the context of atomic design, in my opinion. Generally, when we create a component in an atomic design framework, we start by creating a large component (Organism, which can be tested in many ways) and split it into small molecules and small atoms (which are already working in an organism context) and just need to check if their styles are working. From the moment an atom has logic that needs to be tested, something is not right.
+
+[Back to atomic desing testing ⬆️](#pushpin-atomic-design-testing)
+
+# Molecules
+
+## 👉 Testing snapshots? Again? Yes, but different.
+
+It may seem strange to use snapshot tests again on molecules if the molecules are made of atoms already tested with this tool, but the purpose here is different. On the atoms we want to test if the style of the components, classes and attributes are correct. On molecules, made up exclusively of atoms, we don't need to revalidate the styles, classes and attributes, we just need to know if the molecule is correctly calling its atoms, and if one is changed by removing or adding a new atom, the snapshot will indicate this change, this is why we use shallow rendering (or as we call it, mock snapshot)
+
+### 👉 Normal rendering
+
+```typescript
+exports[`Renders correctly button props as outline 1`] = `
+<button
+  className="chakra-button css-7u2sko"
+  data-testid="button"
+  type="button"
+>
+  Teste
+</button>
+`;
+```
+
+### 👉 Shallow rendering
+
+```typescript
+exports[`MaskedField molecule  Renders correctly outline field props 1`] = `
+<FormControl
+  position="relative"
+  width="100%"
+>
+  <FieldTitle
+    isRequired={true}
+    label="Qual a URL do seu perfil do LinkedIn?"
+  />
+  <InputGroup
+    flexDirection="column"
+  >
+    <InputLeftElement
+      cursor="default"
+      height="40px"
+    >
+      <Icon
+        as={[Function]}
+        color="text.100"
+        h={5}
+        mx={4}
+        w={5}
+      />
+    </InputLeftElement>
+    <Input
+      _focus={
+        Object {
+          "bgColor": "secondary.50",
+          "borderColor": "secondary.50",
+          "boxShadow": "none",
+        }
+      }
+      _hover={
+        Object {
+          "borderColor": "secondary.50",
+        }
+      }
+      as={[Function]}
+      beforeMaskedValueChange={[Function]}
+      bgColor="background.900"
+      borderColor="background.900"
+      borderRadius={4}
+      color="text.100"
+      data-testid="masked-input"
+      fontSize="14px"
+      fontWeight="400"
+      formatChars={
+        Object {
+          "*": ".",
+          "9": "[0-9]",
+          "x": "[аa-zà-úÀ-ÚüÜA-Z0-9%-]",
+          "z": "[A-Za-zà-úÀ-Ú]",
+        }
+      }
+      height="40px"
+      inputRef={null}
+      mask="https://www.linkedin.com/in/********************************************************************************************"
+      maskChar={null}
+      paddingRight="12px"
+      placeholder="https://www.linkedin.com/in/<seu_linkedin>"
+      py={2}
+      type="text"
+      width="100%"
+    />
+  </InputGroup>
+  <FormHelperText
+    color="text.200"
+    data-testid="help-text"
+    fontSize="0.9rem"
+    fontStyle="italic"
+  >
+    Digite a url do seu perfil
+  </FormHelperText>
+</FormControl>
+`;
+```
+
+## 👉 Ok, why the integration test?
+
+We know that the molecule is unchanged and is calling its atoms correctly, now we need to see if this set of atoms is actually working as we expect, literally to test its integration. With this we test the purpose of that component with jest, for example:
+
+```typescript
+// more code...
+
+const field = getByTestId("masked-input");
+
+fireEvent.focus(field);
+
+expect(field).toHaveValue("https://www.linkedin.com/in/");
+
+fireEvent.change(field, {
+  target: { value: "https://www.linkedin.com/in/danisanc" },
+});
+
+expect(field).toHaveValue("https://www.linkedin.com/in/danisanc");
+
+fireEvent.change(field, {
+  target: { value: "www.linkedin.com/mwlite/in/" },
+});
+
+expect(field).toHaveValue("https://www.linkedin.com/in/");
+
+fireEvent.emptied(field);
+
+expect(field).toHaveValue("https://www.linkedin.com/in/");
+```
+
+[Back to atomic desing testing ⬆️](#pushpin-atomic-design-testing)
+
+# Organisms
+
+## 👉 Snapshots, but with twist
+
+For organisms we decided to keep using snapshots, because we saw in snapshots an easier way to get any layout break.
+Doing only integration tests we won't cover the cases when a style prop like margin or padding, passed down to a child component, has changed.
+
+So, we are keeping the snapshots, but we can't always use shallow snapshots here.
+If we need a mocked provider or if we have to mock a mutation from Apollo for our form submit, for instance, the shallow render will break. In this case we will use a standard render, like this:
+
+```
+const { container } = render(<RegisterStepLinkedin />);
+expect(container).toMatchSnapshot();
+```
+
+The rule of thumb is always goes for a shallow render in organisms snapshots, if you can't do it, then use the standard way.
+
+And yes, if we are using standard render, when a child component snapshot breaks, it will also break the organism snapshot. This is a drawback we are fine with.
+
+**It's important to note that all the broken snapshots should be updated in the same PR.**
+
+## 👉 Integration tests
+
+If the organism doesn't have a form to submit, then we do the same way as we did with the molecules integration tests, but to be able to do the integration tests using React Testing Library and React Hook Form, we needed to make some changes:
+
+1. We needed a `form` tag, so we updated our `FormContainer` component to a form
+
+```
+export const FormContainer = ({
+  children,
+  ...props
+}: PropsWithChildren): ReactElement => (
+  <Box
+    as='form'
+    bgColor='background.700'
+...
+```
+
+2. We needed the FormContainer to have the `onSubmit` function, for instance:
+   `<FormContainer onSubmit={methods.handleSubmit(onSubmit)}>`
+
+3. We needed the form submit button to have a `type='submit'`
+4. In order to find the inputs using the react testing library we needed to add an `aria-label` to them. For the inputs the value of the `aria-label` should be the same as the input label and for the buttons it should be the same as the button text. Doing it this way we keep the aria-label accessibility purpose too.
+
+With all of this checked we can create our integration tests.
+
+**It's worth to remember that we should test every scenario in the form: warnings messages, errors message, field validation (we already have yup validation to tell us the cases we need to test!!)**
+
+## 👉 Best practices for integration tests with React Hook Form
+
+- Use `userEvent` to simulate user typing, clicks and etc
+- To find the inputs use `screen.getByRole`
+- To find other elements in the DOM (like errors messages) use `screen.getByText`
+- To test the errors messages that should be displayed, if it's always the same message we can use `findAllByRole('alert')` e validate the number of errors expected, but if there are multiple error messages (different yup validations) for a field we should create a test for each one and validate de error text using `screen.getByText`.
+
+```
+      const alert = await screen.findAllByRole('alert');
+      expect(alert).toHaveLength(2);
+
+      const error = screen.getByText(/Insira uma URL válida/i);
+      expect(error).toBeInTheDocument();
+
+```
+
+In the example above we should have 2 alerts in the DOM one is a warning message with always the same text and the other one is the linkedin validation error for a invalid URL.
+We could also have another validation error message when the linkedin field is empty, which we should check for in another test.
+
+- To test the form submit we should use `toHaveBeenCalledWith` with the values we filled the inputs with.
+
+```
+ waitFor(() => {
+      expect(mockMutate).toHaveBeenCalledWith({
+        variables: {
+          searchStatus: 'searching_for_a_job_right_now',
+          linkedInUrl: 'https://www.linkedin.com/in/johndoe',
+          acceptLinkedinImport: undefined,
+        },
+      });
+    });
+
+```
+
+[Back to atomic desing testing ⬆️](#pushpin-atomic-design-testing)
+
+# Utils, hooks, shared...
+
+## Unit tests
+
+We have no secrets around here, do we? Hooks, utils, or shared functions are usually simple functions with one or a few input values and one or a few output values, and all you need to do is unit test to see if the internal processing of that data is working as it should
+
+I could give several examples of complex tests here, but I think that with the basics we already understand. In theory, hooks, utils, and shared functions are fractions of code that we extract and separate so they can be reused in other parts of the application without code redundancy, like this simple sum function:
+
+```typescript
+function sum(a, b) {
+  return a + b;
+}
+```
+
+Which can be tested with a simple:
+
+```typescript
+const result = sum(1, 2);
+expect(result).to.equal(3);
+```
+
+Regardless of the complexity of the tests, the idea will always be the same, passing the expected values on the input should test the expected value on the output.
+
+[Back to atomic desing testing ⬆️](#pushpin-atomic-design-testing)
+
 [Back to top ⬆️](#pushpin-summary)
 
 ## Translate

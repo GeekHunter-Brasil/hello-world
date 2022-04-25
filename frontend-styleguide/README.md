@@ -751,7 +751,7 @@ Doing only integration tests we won't cover the cases when a style prop like mar
 So, we are keeping the snapshots, but we can't always use shallow snapshots here.
 If we need a mocked provider or if we have to mock a mutation from Apollo for our form submit, for instance, the shallow render will break. In this case we will use a standard render, like this:
 
-```
+```typescript
 const { container } = render(<RegisterStepLinkedin />);
 expect(container).toMatchSnapshot();
 ```

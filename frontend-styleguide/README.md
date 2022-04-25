@@ -743,7 +743,7 @@ expect(field).toHaveValue("https://www.linkedin.com/in/");
 
 # Organisms
 
-## 👉 Snapshots, but with twist
+## 👉 Snapshots, but with a twist
 
 For organisms we decided to keep using snapshots, because we saw in snapshots an easier way to get any layout break.
 Doing only integration tests we won't cover the cases when a style prop like margin or padding, passed down to a child component, has changed.
@@ -768,7 +768,7 @@ If the organism doesn't have a form to submit, then we do the same way as we did
 
 1. We needed a `form` tag, so we updated our `FormContainer` component to a form
 
-```
+```typescript
 export const FormContainer = ({
   children,
   ...props
@@ -796,13 +796,12 @@ With all of this checked we can create our integration tests.
 - To find other elements in the DOM (like errors messages) use `screen.getByText`
 - To test the errors messages that should be displayed, if it's always the same message we can use `findAllByRole('alert')` e validate the number of errors expected, but if there are multiple error messages (different yup validations) for a field we should create a test for each one and validate de error text using `screen.getByText`.
 
-```
-      const alert = await screen.findAllByRole('alert');
-      expect(alert).toHaveLength(2);
+```typescript
+const alert = await screen.findAllByRole("alert");
+expect(alert).toHaveLength(2);
 
-      const error = screen.getByText(/Insira uma URL válida/i);
-      expect(error).toBeInTheDocument();
-
+const error = screen.getByText(/Insira uma URL válida/i);
+expect(error).toBeInTheDocument();
 ```
 
 In the example above we should have 2 alerts in the DOM one is a warning message with always the same text and the other one is the linkedin validation error for a invalid URL.

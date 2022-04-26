@@ -809,17 +809,16 @@ We could also have another validation error message when the linkedin field is e
 
 - To test the form submit we should use `toHaveBeenCalledWith` with the values we filled the inputs with.
 
-```
- waitFor(() => {
-      expect(mockMutate).toHaveBeenCalledWith({
-        variables: {
-          searchStatus: 'searching_for_a_job_right_now',
-          linkedInUrl: 'https://www.linkedin.com/in/johndoe',
-          acceptLinkedinImport: undefined,
-        },
-      });
-    });
-
+```typescript
+waitFor(() => {
+  expect(mockMutate).toHaveBeenCalledWith({
+    variables: {
+      searchStatus: "searching_for_a_job_right_now",
+      linkedInUrl: "https://www.linkedin.com/in/johndoe",
+      acceptLinkedinImport: undefined,
+    },
+  });
+});
 ```
 
 [Back to atomic desing testing ⬆️](#pushpin-atomic-design-testing)

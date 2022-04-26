@@ -97,7 +97,7 @@ We show here a guideline for writing tests in each one of those layers.
 Here is where our Controllers, Mutations, Workers, Rakes and so on, are defined. For this layer, we want an integration test going all the way to the database and external APIs. In each integration test, we find useful to test side effects, internal transformations, and the response itself. With that in mind, three main things are asserted in an entrypoint test:
 
 - That the inner layer (manager) is called correctly, with the expected set of parameters
-- That the input is correctly handled (e.g. that an ActiveModel attribute is correctly updated at the database level)
+- That the input is correctly handled (e.g. that an ActiveRecord attribute is correctly updated at the database level)
 - That the response is the expected (e.g. response.body, response.status, etc)
 
 Note here we usually hit a testing database with a set of transactions, and assert changes in the ActiveRecord itself. In addition to that, external APIs can be mocked with their expect behavior for a given scenario.
@@ -148,8 +148,10 @@ context 'when controller is called with valid params' do
   before do
     # Only allow calls to HiringManagerUpdater.create that happen with the expected set of parameters
     allow_any_instance_of(::Services::Companies::Hirings::HiringManagerUpdater).to receive(:update).with(manager_params).and_call_original
+    # If you don't expect exceptions to be rescued in this context, add this line
+    allow(::Services::Logger::ExceptionLoggerService).to receive(:call).and_raise('Oups. No exception should have been seen!')
     update_hiring
-    # Reload your ActiveModel object to reflect changes performed by the subject under test
+    # Reload your ActiveRecord object to reflect changes performed by the subject under test
     hiring.reload
   end
 
@@ -168,13 +170,15 @@ end
 
 Note we apply a whitebox approach to this test as we opt to verify the inner integration with the manager. This means we should know what the manager needs in order to perform its job, so slighly compromising in the classic TDD approach of not taking the controller implementation into account. In the following layers, we will be conducting Unit Tests and mocking inner calls in order to isolate our subjects under tests. In all these tests, keep in mind we are using a more mocking approach to TDD where we take into account implementation details (i.e. we know who is going to be called and how) instead of a more classic black-box testing. Both are good, but we feel using a mocking approach help us to faster implement and test our Domain, which historically is the place we tend to apply more changes given the nature of our product.
 
-Finally, a point about `Rspec.allow_any_instance_of`: when dealing with legacy code, the instance of the manager might not be injected during the test. So `allow_any_instance_of` comes in handy to allow us to verify that any instance of a manager was properly called. However, if you do have access to an instance of your manager (by injection) then you use `Rspec.allow` instead.
+A point about `Rspec.allow_any_instance_of`: when dealing with legacy code, the instance of the manager might not be injected during the test. So `allow_any_instance_of` comes in handy to allow us to verify that any instance of a manager was properly called. However, if you do have access to an instance of your manager (by injection) then you use `Rspec.allow` instead.
+
+Finally, a point about exception handling: in the 'happy path' context, your code might not be supposed to rescue any exception. In those cases, it's very useful to mock your Exception Handling Service, using `Rspec.and_raise`, to raise a test exception in case it's ever called. This will make sure you surface exceptions caught in the process and also have the whole error stack on your test output.
 
 #### 🎛️ Manager Layer
 
 This layer is the source of truth when talking about business rules. The manager is responsible to call all services that are required to complete a specific task.
 
-Here we want unit tests to help us quickly and reliably test more scenarios and edge cases than we do at an entrypoint layer. So we don't necessarily test everything, and assuming other parts of the application are also tested (they should be!), it becomes much easier to simply mock the dependencies and asser their calls.
+Here we want unit tests to help us quickly and reliably test more scenarios and edge cases than we do at an entrypoint layer. So we don't necessarily test everything, and assuming other parts of the application are also tested (they should be!), it becomes much easier to simply mock the dependencies and assert their calls.
 
 Following our example, let's say the manager needs to do two operations: update the Hiring status and, as a side effect, update the underlying Job. So we know it has to call at least two methods in two different services, named `HiringUpdater.update` and `JobUpdater.update`. `HiringUpdater.update` receives a hash with a hiring key, the attributes to update and returns the updated Hiring; `JobUpdater.update` receives the `job_id` related to the Hiring. Let's also not forget that we expect our manager to return the updated Hiring, as we see in the Controller layer.
 
@@ -253,7 +257,7 @@ A point about performance: sometimes we want to use Factories to faster, and mor
 
 Using the same logic as in the Manager layer, we mock the dependencies and test if they are called appropriately.
 
-Let's follow the example of the `HiringUpdater`. In order to update the ActiveModel records, it needs to first validate the parameters received from the manager via a `HiringUpdateValidator`. Then it either raises an Exception if parameters are invalid or proceeds to call a `DelegateRepository` in order to effectively persist the updates to the database. After updating, it returns the updated Hiring.
+Let's follow the example of the `HiringUpdater`. In order to update the ActiveRecord records, it needs to first validate the parameters received from the manager via a `HiringUpdateValidator`. Then it either raises an Exception if parameters are invalid or proceeds to call a `DelegateRepository` in order to effectively persist the updates to the database. After updating, it returns the updated Hiring.
 
 ❌ Bad
 
@@ -294,15 +298,6 @@ context 'when service is called with valid params' do
 
   it "should call the hiring repository with appropriate arguments the right number of times" do
     expect(provide_hiring_repo).to have_received(:update).with(expected_params).exactly(1).times
-  end
-
-  it 'should call validator' do
-  end
-
-  it 'should call repository' do
-  end
-
-  it 'should return XX' do
   end
 
 end
@@ -496,11 +491,5 @@ context 'when exists hirings with given job_id' do
   end
 end
 ```
-
-[Back to top ⬆️](#pushpin-summary)
-
-## In practice: React
-
-TBD
 
 [Back to top ⬆️](#pushpin-summary)

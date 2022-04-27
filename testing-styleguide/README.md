@@ -27,6 +27,7 @@ The goal of this guide is to help our team to think about tests, write them, and
 
 ## Introduction
 
+<img alt="no-test-no-beer" src="/docs/no-test-no-beer.jpg" width="200">
 Software testing is a very important aspect of our daily job at Geek: it's fundamental to our goal of delivering high-value products through high-quality software.
 
 There're many arguments on why to test software. We highlight a few:

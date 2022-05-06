@@ -175,7 +175,15 @@ A point about `Rspec.allow_any_instance_of`: when dealing with legacy code, the 
 
 Finally, a point about exception handling: in the 'happy path' context, your code might not be supposed to rescue any exception. In those cases, it's very useful to mock your Exception Handling Service, using `Rspec.and_raise`, to raise a test exception in case it's ever called. This will make sure you surface exceptions caught in the process and also have the whole error stack on your test output.
 
-### 🎛️ Manager Layer
+Just a "pretend" example:
+
+```ruby
+it 'raises error when email is invalid' do
+  params[:email] = 'invalidemail'
+  expect { update_user(params) }.to raise_error(UserInvalidEmailException)
+end
+
+#### 🎛️ Manager Layer
 
 This layer is the source of truth when talking about business rules. The manager is responsible to call all services that are required to complete a specific task.
 
@@ -186,7 +194,7 @@ Following our example, let's say the manager needs to do two operations: update 
 ❌ Bad
 
 ```ruby
-context 'when manager is called valid params' do
+context 'when manager is called with valid params' do
   it 'should update the hiring' do
     # ... code asserting hiring is updated
     # !! The service that updates hirings already tests this
@@ -209,7 +217,7 @@ let(:job_updater) { instance_double ::Services::Job::Update::JobUpdater }
 # Use FactoryBot.build_stubbed to generate your data
 let(:hiring) { build_stubbed(:hiring) }
 
-context 'when manager is called valid params' do
+context 'when manager is called with valid params' do
   let(:params) do
     {
       id: hiring.id,

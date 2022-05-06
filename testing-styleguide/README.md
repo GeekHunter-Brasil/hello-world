@@ -174,7 +174,13 @@ Note we apply a whitebox approach to this test as we opt to verify the inner int
 A point about `Rspec.allow_any_instance_of`: when dealing with legacy code, the instance of the manager might not be injected during the test. So `allow_any_instance_of` comes in handy to allow us to verify that any instance of a manager was properly called. However, if you do have access to an instance of your manager (by injection) then you use `Rspec.allow` instead.
 
 Finally, a point about exception handling: in the 'happy path' context, your code might not be supposed to rescue any exception. In those cases, it's very useful to mock your Exception Handling Service, using `Rspec.and_raise`, to raise a test exception in case it's ever called. This will make sure you surface exceptions caught in the process and also have the whole error stack on your test output.
+Just a "pretend" example:
 
+```ruby
+it 'raises error when email is invalid' do
+  params[:email] = 'invalidemail'
+  expect { update_user(params) }.to raise_error(UserInvalidEmailException)
+end
 #### 🎛️ Manager Layer
 
 This layer is the source of truth when talking about business rules. The manager is responsible to call all services that are required to complete a specific task.

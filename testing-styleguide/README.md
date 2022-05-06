@@ -175,7 +175,7 @@ A point about `Rspec.allow_any_instance_of`: when dealing with legacy code, the 
 
 Finally, a point about exception handling: in the 'happy path' context, your code might not be supposed to rescue any exception. In those cases, it's very useful to mock your Exception Handling Service, using `Rspec.and_raise`, to raise a test exception in case it's ever called. This will make sure you surface exceptions caught in the process and also have the whole error stack on your test output.
 
-#### 🎛️ Manager Layer
+### 🎛️ Manager Layer
 
 This layer is the source of truth when talking about business rules. The manager is responsible to call all services that are required to complete a specific task.
 
@@ -254,7 +254,7 @@ end
 
 A point about performance: sometimes we want to use Factories to faster, and more reliably, build our data. Whenever possible, use stubbed methods such as `FactoryBot.build_stubbed`. Methods like `FactoryBot.create` update the test database, which is very useful in integration tests but is also a very expensive operation; in scale, hitting the database in manager layer considerably slows down the test pipeline. If the manager is not supposed to directly access an ActiveRecord, avoid using create methods.
 
-#### 🛠️ Service layer
+### 🛠️ Service layer
 
 Using the same logic as in the Manager layer, we mock the dependencies and test if they are called appropriately.
 
@@ -305,13 +305,12 @@ end
 ```
 
 Here, the same performance consideration applies: prefer `FactoryBot.build_stubbed` over `FactoryBot.create` whenever possible.
-
-#### 🚫 Validator layer
+### 🚫 Validator layer
 
 The validator layer is responsible to check the data that is been passed to the database.
-Here we want to assert if the validator is setting the errors properly according to the parameters validation rules.
+Here we want to assert whether the validator is setting the errors properly according to the parameters validation rules.
 
-Always cover all edge cases for possible types as this can avoid a lot of validation problems, which won't be necessarily tested in outer players.
+Always cover all edge cases for possible types as this can avoid a lot of validation problems, which won't be necessarily tested in outer layers.
 
 ```ruby
 module Validators
@@ -425,7 +424,7 @@ describe Validators::Candidate::CandidateUpdateValidator, type: :validator do
   end
 end
 ```
-#### 💾 Repository Layer
+### 💾 Repository Layer
 
 Last but not least we have the Repository Layer, responsible for communicating with the database.
 

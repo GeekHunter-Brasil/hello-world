@@ -192,7 +192,7 @@ Following our example, let's say the manager needs to do two operations: update 
 ❌ Bad
 
 ```ruby
-context 'when manager is called valid params' do
+context 'when manager is called with valid params' do
   it 'should update the hiring' do
     # ... code asserting hiring is updated
     # !! The service that updates hirings already tests this

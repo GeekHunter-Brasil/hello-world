@@ -215,7 +215,7 @@ let(:job_updater) { instance_double ::Services::Job::Update::JobUpdater }
 # Use FactoryBot.build_stubbed to generate your data
 let(:hiring) { build_stubbed(:hiring) }
 
-context 'when manager is called valid params' do
+context 'when manager is called with valid params' do
   let(:params) do
     {
       id: hiring.id,

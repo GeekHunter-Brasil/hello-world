@@ -142,7 +142,7 @@ It is a great idea to read the documents below, since we use them as a base:
 
 ### 👉 When possible, write JSDocs 📃
 
-JSDocs are amazing! While they make a big difference on obvious components (e.g. `Button`), they are amazing to clarify and document utility functions, hooks, complex components and such.
+JSDocs are amazing! While they don't make a big difference on obvious components (e.g. `Button`), they are amazing to clarify and document utility functions, hooks, complex components and such.
 
 Check out these guides:
 
@@ -219,34 +219,27 @@ Values that are defined in our theme come from our Design System. We should use 
 
 <br />
 
-### 👉 Avoid adding `geek` or `{projectName}` prefix
+### 👉 Avoid redundant names
 
-When naming variables, it's a common practice to add `geek` or any other prefix related to the company or project to make that variable unique.
+When naming variables, it's a common practice to overexmplain variables in their names.
 
-It's a great idea to avoid doing this, since everything inside a `geek` repo belongs to `geek` - so it's redundant.
+Try to keep it simple and do not explain things that are already obvious from context or typing. 
 
 ❌ Bad
 
 ```tsx
-export const colors: ThemeColors = {
-  geekPrimary: {
-    50: "#ffffff",
-    100: "#F0F0FF",
-    // ...
-  },
-};
+const frameworkList = ["React", "Angular", "Vue"]
+const inputElement = Document.querySelector("#input")
+const [filterState, setFilterState] = useState()
 ```
 
 ✅ Good
 
+
 ```tsx
-export const colors: ThemeColors = {
-  primary: {
-    50: "#ffffff",
-    100: "#F0F0FF",
-    // ...
-  },
-};
+const frameworks = ["React", "Angular", "Vue"]
+const input = Document.querySelector("#input")
+const [filter, setFilter] = useState()
 ```
 
 <br />

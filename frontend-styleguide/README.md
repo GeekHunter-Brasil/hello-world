@@ -570,6 +570,39 @@ it("Correctly formats the name", () => {
 
 [Back to top ⬆️](#pushpin-summary)
 
+### 👉 Avoid using `data-testid` to query elements
+
+It's a common practice to define an attribute called `data-testid` and usieit to query elements in component tests. Because `data-testid` is an arbitrary attribute, it says nothing about the element nor about its context. 
+
+It's a great idea to query elements with more semantic functions, following the priority list defined on [React Testing Library documentation](https://testing-library.com/docs/queries/about/#priority).
+
+❌ Bad
+
+```tsx
+const Input = getByTestId("submit-button")
+const Input = getByTestId("candidates-heading")
+const Input = getByTestId("login-link")
+
+const Input = getByTestId("cpf-input")
+const Input = getByTestId("name-input")
+const Input = getByTestId("blog-paragraph")
+```
+
+✅ Good
+
+```tsx
+const Input = getByRole("button", { name: /enviar/i })
+const Input = getByRole("heading", { name: /candidatos disponíveis/i })
+const Input = getByRole("link", { name: /login/i })
+
+const Input = getByLabelText(/cpf/i)
+const Input = getByPlaceholderText(/ex: josé de araújo/i)
+const Input = getByText(/loren ipsun loren ipsun loren ipsun/i)
+
+```
+
+<br />
+
 ## Translate
 
 ### 👉 Use I18n to translate

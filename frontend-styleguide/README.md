@@ -225,32 +225,6 @@ It's a great idea to use ternary operators instead. For further reference, you c
 
 <br />
 
-### 👉 Avoid the unnecessary use of `lodash`
-
-It's a common practice to use `lodash` functions along with regular javascript.
-
-`lodash` relies heavier computations than regular javascript, and the library use makes the total size of our application bundle much heavier.
-
-If possible, replace `lodash` functions with regular Javascript.
-
-❌ Bad
-
-```tsx
-<Box>
-  {errorMessage && <Text>{errorMessage}</Text>}
-</Box>
-```
-
-✅ Good
-
-```tsx
-<Box>
-  {errorMessage ? <Text>{errorMessage}</Text> : null}
-</Box>
-```
-
-<br />
-
 ### 👉 Do not use values not present in the theme
 
 Values that are defined in our theme come from our Design System. We should use these values, and should not input manual values in our components.
@@ -626,7 +600,7 @@ it("Correctly formats the name", () => {
 
 ### 👉 Avoid using `data-testid` to query elements
 
-It's a common practice to define an attribute called `data-testid` and usieit to query elements in component tests. Because `data-testid` is an arbitrary attribute, it says nothing about the element nor about its context. 
+It's a common practice to define an attribute called `data-testid` and use it to query elements in component tests. Because `data-testid` is an arbitrary attribute, it says nothing about the element nor about its context. 
 
 It's a great idea to query elements with more semantic functions, following the priority list defined on [React Testing Library documentation](https://testing-library.com/docs/queries/about/#priority).
 

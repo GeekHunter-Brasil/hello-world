@@ -225,6 +225,32 @@ It's a great idea to use ternary operators instead. For further reference, you c
 
 <br />
 
+### 👉 Avoid the unnecessary use of `lodash`
+
+It's a common practice to use `lodash` functions along with regular javascript.
+
+`lodash` relies heavier computations than regular javascript, and the library use makes the total size of our application bundle much heavier.
+
+If possible, replace `lodash` functions with regular Javascript.
+
+❌ Bad
+
+```tsx
+<Box>
+  {errorMessage && <Text>{errorMessage}</Text>}
+</Box>
+```
+
+✅ Good
+
+```tsx
+<Box>
+  {errorMessage ? <Text>{errorMessage}</Text> : null}
+</Box>
+```
+
+<br />
+
 ### 👉 Do not use values not present in the theme
 
 Values that are defined in our theme come from our Design System. We should use these values, and should not input manual values in our components.
@@ -505,6 +531,34 @@ export const MyComponent = (): React.ReactElement => {
 ```
 
 <br />
+
+### 👉 Use array syntax to handle responsive style props
+
+Array syntax is the [recommended method for responsive style props in chakra-ui](https://chakra-ui.com/docs/styled-system/features/responsive-styles#the-array-syntax)
+
+❌ Bad
+
+```tsx
+export const MyComponent = (): React.ReactElement => {
+  return (
+    <Box mb={{ sm: "1rem", md: "2rem", lg: "3rem"}}>
+      <Heading fontSize={{ sm: "sm", md: "md", lg: "lg" }}>Title</Heading>
+    </Box>
+  );
+};
+```
+
+✅ Good
+
+```tsx
+export const MyComponent = (): React.ReactElement => {
+  return (
+    <Box mb={["1rem", "2rem", "3rem"]}>
+      <Heading fontSize={["sm", "md", "lg"]}>Title</Heading>
+    </Box>
+  );
+};
+
 
 ### 👉 Static assets should be referenced by using `import`
 

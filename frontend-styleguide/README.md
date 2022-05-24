@@ -201,6 +201,30 @@ const Button = (props: PropsWithChildren<ButtonProps>): React.ReactElement => {
 
 <br />
 
+### 👉 Avoid using `&&` on conditional renders
+
+It's a common practice to use `&&` to conditionally renders things inside React components. The inadverted use of this pattern can lead to some unexpected errors [already caught in our application](https://github.com/GeekHunter-Brasil/geekhunter-frontend/pull/752#discussion_r874185216). 
+
+It's a great idea to use ternary operators instead. For further reference, you can check [this article by Kent C. Dodds](https://kentcdodds.com/blog/use-ternaries-rather-than-and-and-in-jsx)
+
+❌ Bad
+
+```tsx
+<Box>
+  {errorMessage && <Text>{errorMessage}</Text>}
+</Box>
+```
+
+✅ Good
+
+```tsx
+<Box>
+  {errorMessage ? <Text>{errorMessage}</Text> : null}
+</Box>
+```
+
+<br />
+
 ### 👉 Do not use values not present in the theme
 
 Values that are defined in our theme come from our Design System. We should use these values, and should not input manual values in our components.

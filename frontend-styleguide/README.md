@@ -245,7 +245,7 @@ Values that are defined in our theme come from our Design System. We should use 
 
 ### 👉 Avoid redundant names
 
-When naming variables, it's a common practice to overexmplain variables in their names.
+When naming variables, it's a common practice to overexplain variables in their names.
 
 Try to keep it simple and do not explain things that are already obvious from context or typing. 
 

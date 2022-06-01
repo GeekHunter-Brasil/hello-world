@@ -621,4 +621,10 @@ export const Page = (): React.ReactElement => {
   In the previous example, show example instead of Hello World.
 ```
 
+To be able to load the translations it is necessary to compile the translations using the following command:
+
+```
+  yarn formatter-generator
+```
+
 [Back to top ⬆️](#pushpin-summary)

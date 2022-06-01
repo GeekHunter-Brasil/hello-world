@@ -581,25 +581,29 @@ When organizing locale files you must insert each file into the translation fold
 ```
 📁 locales/
 └──📁 pt-BR/
-   └──📝 page_1.yaml
-   └──📝 page_2.yaml
+   └──📝 page_1.json
+   └──📝 page_2.json
 └──📁 en/
-   └──📝 page_1.yaml
-   └──📝 page_2.yaml
+   └──📝 page_1.json
+   └──📝 page_2.json
 ```
 
 Each file inside contains its keys at the same level, there is no need to chain keys.
 
-ex: `locales/pt-BR/page_1.yaml`.
+ex: `locales/pt-BR/page_1.json`.
 
-```yml
-example: Olá mundo
+```json
+{
+  "example": "Olá mundo"
+}
 ```
 
 ex: `locales/en/page_1.yaml`.
 
-```yml
-example: Hello world
+```json
+{
+  "example": "Hello world"
+}
 ```
 
 ### 👉 Translate page
@@ -614,6 +618,38 @@ export const Page = (): React.ReactElement => {
 
   return <div>{t("example")}</div>;
 };
+```
+
+```
+  ⚠️ If the key is not found, next-translate prints the key`s names instead of the content.
+  In the previous example, show example instead of Hello World.
+```
+
+### 👉 Translate test
+
+Use the translations on the page:
+
+```tsx
+import { render, cleanup } from 'lib/utils/testUtils';
+
+import global from '../../../locales/pt-BR/global.json';
+import { BidStatusTag } from './index';
+
+const TestBidStatusTag = ({ bidStatus }: { bidStatus: BidStatusEnum }) => (
+  <I18nProvider lang='pt-BR' namespaces={{ global }}>
+    <BidStatusTag bidStatus={bidStatus} />
+  </I18nProvider>
+);
+
+describe('when bidStatus is waiting', () => {
+  it('should render the component with expected properties', () => {
+    const { getByTestId } = render(
+      <TestBidStatusTag bidStatus={BidStatusEnum.Waiting} />
+    );
+
+    expect(getByTestId('text-tag-text')).toHaveTextContent(global.);
+  });
+});
 ```
 
 ```

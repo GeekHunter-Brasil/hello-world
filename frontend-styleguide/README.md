@@ -203,7 +203,7 @@ const Button = (props: PropsWithChildren<ButtonProps>): React.ReactElement => {
 
 ### 👉 Avoid using `&&` on conditional renders
 
-It's a common practice to use `&&` to conditionally renders things inside React components. The inadverted use of this pattern can lead to some unexpected errors [already caught in our application](https://github.com/GeekHunter-Brasil/geekhunter-frontend/pull/752#discussion_r874185216). 
+It's a common practice to use `&&` to conditionally renders elements inside React components. The inadverted use of this pattern can lead to some unexpected errors.
 
 It's a great idea to use ternary operators instead. For further reference, you can check [this article by Kent C. Dodds](https://kentcdodds.com/blog/use-ternaries-rather-than-and-and-in-jsx)
 

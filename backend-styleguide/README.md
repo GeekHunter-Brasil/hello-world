@@ -313,6 +313,26 @@ enumerize :gender, in: %w[
 ], scope: true
 ```
 
+An exception to this rule is if the data we are enumerating have some sort of order or level, for example:
+
+```ruby
+  enumerize :experience_level, in: {
+    level_0: 0, # 0-1 ano
+    level_1: 1, # 1-2 anos
+    level_2: 2, # 2-3 anos
+    level_3: 3, # 3-4 anos
+    level_4: 4, # 4-5 anos
+    level_5: 5, # 5-6 anos
+    level_6: 6, # 6-7 anos
+    level_7: 7, # 7-8 anos
+    level_8: 8, # 8-9 anos
+    level_9: 9, # 9-10 anos
+    level_10: 10, # 10-11 anos
+    level_11: 11, # 11-12 anos
+    level_12: 12 # 12 ou mais anos
+  }, predicates: true, scope: true
+```
+
 ### 👉 Declaring GraphQL enums with enumerize
 
 We use the [enumerize](https://github.com/brainspec/enumerize) gem to handle creating enums in our models and databases.

@@ -598,13 +598,13 @@ end
 ```
 
 Notice that when we use the Rspec DSL for testing (`describe, context, it`) we want to tell a story:
-- (describe) 'MyClass';
-- (describe) '#my_instance_method';
-- (context) 'when called with no params';
-- (it) 'raises a validation exception';
-- (describe) '.my_class_method';
-- (context) 'when called with float';
-- (it) 'raises a must provide Decimal exception';
+- (describe) `MyClass`;
+- (describe) `'#my_instance_method'`;
+- (context) `when 'called with no params'`;
+- (it) `'raises a validation exception'`;
+- (describe) `'.my_class_method'`;
+- (context) `'when called with float'`;
+- (it) `'raises a must provide Decimal exception'`;
 
 By convention instance methods have the `#` prefix, and class methods the `.` prefix. This makes it easy to learn about the code while reading the tests.
 You can dig this up on the `rspec-core` documentation: https://rubydoc.info/gems/rspec-core

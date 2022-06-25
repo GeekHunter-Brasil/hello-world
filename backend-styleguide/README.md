@@ -609,6 +609,10 @@ Notice that when we use the Rspec DSL for testing (`describe, context, it`) we w
 By convention instance methods have the `#` prefix, and class methods the `.` prefix. This makes it easy to learn about the code while reading the tests.
 You can dig this up on the `rspec-core` documentation: https://rubydoc.info/gems/rspec-core
 
+Notice that we don't use `it 'should do something'`, but `it 'does something'`.
+
+![Do or do not, there is no should.](https://i.imgflip.com/6kupo6.jpg)
+
 #### 🎛️ Manager Layer
 
 This layer it's our source of truth when talking about business rules. The manager is responsible to call all the services required (included other managers) to complete the a specific task.

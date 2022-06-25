@@ -427,7 +427,6 @@ end
 Tests are a **really, really important** part of our development. Internally, **we use TDD** and **tests are an implicit requirement for every single task**.
 
 > TDD it's not about just changing the order of write-code vs write-test, it about changing how we code. It works by forcing us to think "how are we gonna test this?" before thinking "how are we gonna make this work?". So writing the test JUST after you wrote the code it's not a little difference, it's a big difference and it's not even close to doing TDD. TDD is not always the best way to develop something, sometimes you just want to write an experiment to discover or research something, and this is fine. Just don't lie to yourself that you are doing TDD when you're obviously not.
-
 We can have a heated discussion about it here: https://twitter.com/nevemartins/status/1540721717718286338
 
 Here's some good resources to understand tests / TDD:

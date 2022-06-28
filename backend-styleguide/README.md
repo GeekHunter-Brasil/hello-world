@@ -12,12 +12,12 @@ The goal of this guide is to help our team to understand and follow our code sty
 
 # :pushpin: Summary
 
-* [Introduction](#introduction)
-* [Organization](#organization)
-* [Application Layers](#application-layers)
-* [Code Style](#code-style)
-* [Tests](#tests)
-* [Translate](#translate)
+- [Introduction](#introduction)
+- [Organization](#organization)
+- [Application Layers](#application-layers)
+- [Code Style](#code-style)
+- [Tests](#tests)
+- [Translate](#translate)
 
 ## Introduction
 
@@ -59,6 +59,25 @@ We usually break down our application between multiple layers. Here are some gre
 
 - [Clean Architecture - A Little Introduction](https://medium.com/swlh/clean-architecture-a-little-introduction-be3eac94c5d1)
 - [DDD for Rails Developers. Part 1: Layered Architecture](https://www.sitepoint.com/ddd-for-rails-developers-part-1-layered-architecture/)
+
+To keep our code organized and also domain-driven, we have created a folder structure based on artifacts and domains.
+
+We have today four main domains `Company`, `Candidate`, `Bid`, `Hiring` and some artifacts such as `Services`, `Validators`, `Repositories`.
+
+```
+📁 project/
+└──📁 app/
+   └──📁 services/ -> artifact
+      └──📁 companies/ -> domain
+         └──📁 candidates/ -> object
+            └──📁 search/ -> behavior/action
+                └──📝 company_candidates_search_manager.rb
+      └──📁 candidates/ -> domain
+         └──📁 jobs/ -> object
+            └──📁 search/ -> behavior/action
+                └──📝 candidates_jobs_search_manager.rb
+
+```
 
 [Back to top ⬆️](#pushpin-summary)
 
@@ -371,6 +390,7 @@ module Types
   end
 end
 ```
+
 ### 👉 Use comments to define tables and fields
 
 We use comments to define tables and fields. This is a good approach to help newcomers and other Geeks.
@@ -400,6 +420,7 @@ end
 ```
 
 ✅ Good
+
 ```ruby
 # frozen_string_literal: true
 
@@ -775,6 +796,7 @@ module Validators
   end
 end
 ```
+
 ❌ Bad
 
 ```ruby
@@ -945,6 +967,7 @@ end
 When writing your programs avoid using hard coded strings that will be displayed to users, this allows support for multiple languages. The path with translated keys is `<REP>/config/locales/<locale>`
 
 ❌ Bad
+
 ```ruby
   render json: {
     message: 'Lorem Ipsum at message'
@@ -952,6 +975,7 @@ When writing your programs avoid using hard coded strings that will be displayed
 ```
 
 ✅ Good
+
 ```ruby
   render json: {
     message: I18n.t('<path_key_message>')
@@ -979,6 +1003,7 @@ to declare the yml, you must use the same name as the parent directory 'e.g. dir
 ```
 
 file `pt-BR.yml` contains constants and common terms application.
+
 ```yml
 pt-BR:
   cancel: Cancelar
@@ -986,12 +1011,13 @@ pt-BR:
 ```
 
 file `directory.yml` respect folder structure.
+
 ```yml
 pt-BR:
   views:
     pages:
       directory:
-        message: 'Massum Ipsum Lorem'
+        message: "Massum Ipsum Lorem"
 ```
 
 ### 👉 Translate view
@@ -999,6 +1025,7 @@ pt-BR:
 We use definition "Lazy" Lookup to translate views. For more information [Lazy Lookup](https://guides.rubyonrails.org/i18n.html#lazy-lookup)
 
 example the `pages.index.title` values inside `app/views/pages/index.html.erb`
+
 ```
 <%= t('.title') %>
 ```
@@ -1009,21 +1036,24 @@ Structe in yml file:
 pt-BR:
   pages:
     index:
-      title: 'Boas-vindas'
+      title: "Boas-vindas"
 ```
 
 In some cases, we may have phrases that repeat themselves. Thus, a standard structure can be created
+
 ```
 <%= t('pages.default.title') %>
 ```
+
 Structe in yml file:
 
 ```yml
 pt-BR:
   pages:
     default:
-      title: 'Boas-vindas'
+      title: "Boas-vindas"
 ```
+
 If necessary to use a param in view, use:
 
 ```
@@ -1031,6 +1061,7 @@ If necessary to use a param in view, use:
 ```
 
 yml file:
+
 ```
 title: 'Boas-vindas %{username}'
 ```

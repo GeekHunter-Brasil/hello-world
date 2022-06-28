@@ -1017,7 +1017,7 @@ pt-BR:
   views:
     pages:
       directory:
-        message: "Massum Ipsum Lorem"
+        message: "Mussum Ipsum Lorem"
 ```
 
 ### 👉 Translate view

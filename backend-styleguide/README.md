@@ -447,6 +447,9 @@ end
 
 Tests are a **really, really important** part of our development. Internally, **we use TDD** and **tests are an implicit requirement for every single task**.
 
+> TDD it's not about just changing the order of write-code vs write-test, it about changing how we code. It works by forcing us to think "how are we gonna test this?" before thinking "how are we gonna make this work?". So writing the test JUST after you wrote the code it's not a little difference, it's a big difference and it's not even close to doing TDD. TDD is not always the best way to develop something, sometimes you just want to write an experiment to discover or research something, and this is fine. Just don't lie to yourself that you are doing TDD when you're obviously not.
+We can have a heated discussion about it here: https://twitter.com/nevemartins/status/1540721717718286338
+
 Here's some good resources to understand tests / TDD:
 
 - [The 3 Types of Unit Test in TDD](https://www.youtube.com/watch?v=W40mpZP9xQQ)
@@ -593,7 +596,7 @@ context 'with valid params' do
       update_hiring
     end
 
-    it "should call the hiring manager updater with appropriate arguments the right number of times" do
+    it "calls the hiring manager updater with appropriate arguments the right number of times" do
       expect_any_instance_of(::Services::Companies::Hirings::HiringManagerUpdate).to receive(:update).with(expected_params).exactly(1).times
     end
   end
@@ -604,16 +607,32 @@ context 'with valid params' do
       hiring.reload
     end
 
-    it 'should return 200 as status code' do
+    it 'returns 200 as status code' do
       expect(response).to have_http_status(200)
     end
 
-    it 'should update the hiring status' do
+    it 'updates the hiring status' do
       expect(hiring.status).to eq Hiring.status.approved.value
     end
   end
 end
 ```
+
+Notice that when we use the Rspec DSL for testing (`describe, context, it`) we want to tell a story:
+- (describe) `MyClass`;
+- (describe) `'#my_instance_method'`;
+- (context) `when 'called with no params'`;
+- (it) `'raises a validation exception'`;
+- (describe) `'.my_class_method'`;
+- (context) `'when called with float'`;
+- (it) `'raises a must provide Decimal exception'`;
+
+By convention instance methods have the `#` prefix, and class methods the `.` prefix. This makes it easy to learn about the code while reading the tests.
+You can dig this up on the `rspec-core` documentation: https://rubydoc.info/gems/rspec-core
+
+Notice that we don't use `it 'should do something'`, instead we use `it 'does something'`.
+
+![Do or do not, there is no should.](https://i.imgflip.com/6kupo6.jpg)
 
 #### 🎛️ Manager Layer
 
@@ -690,11 +709,11 @@ context 'with valid params' do
     subject.update(params)
   end
 
-  it "should call the hiring updater with appropriate arguments the right number of times" do
+  it "calls the hiring updater with appropriate arguments the right number of times" do
     expect(hiring_updater).to have_received(:update).with(expected_params).exactly(1).times
   end
 
-  it "should call the job updater with appropriate arguments" do
+  it "calls the job updater with appropriate arguments" do
     expect(job_updater).to have_received(:update).with(expected_params).exactly(1).times
   end
 end
@@ -765,7 +784,7 @@ context 'with valid params' do
     subject.update(params)
   end
 
-  it "should call the hiring repository with appropriate arguments the right number of times" do
+  it "calls the hiring repository with appropriate arguments the right number of times" do
     expect(provide_hiring_repo).to have_received(:update).with(expected_params).exactly(1).times
   end
 end
@@ -817,7 +836,7 @@ describe Validators::Candidate::CandidateUpdateValidator, type: :validator do
     context 'when params are invalid' do
       let(:params) { {} }
 
-      it 'should add :inclusion to available' do
+      it 'adds :inclusion to available' do
         expect(errors.added?(:available, :inclusion)).to be_truthy
       end
     end
@@ -825,7 +844,7 @@ describe Validators::Candidate::CandidateUpdateValidator, type: :validator do
     context 'when params are valid' do
       let(:params) { { available: true } }
 
-      it 'should not add :inclusion to available' do
+      it 'does not add :inclusion to available' do
         expect(errors.added?(:available, :inclusion)).to be_falsey
       end
     end
@@ -853,11 +872,11 @@ describe Validators::Candidate::CandidateUpdateValidator, type: :validator do
     context 'when params are invalid' do
       let(:params) { {} }
 
-      it 'should add :blank to name' do
+      it 'adds :blank to name' do
         expect(errors.added?(:name, :blank)).to be_truthy
       end
 
-      it 'should add :inclusion to available' do
+      it 'adds :inclusion to available' do
         expect(errors.added?(:available, :inclusion)).to be_truthy
       end
     end
@@ -866,23 +885,23 @@ describe Validators::Candidate::CandidateUpdateValidator, type: :validator do
       context 'name' do
         let(:params) { { name: 'Test Name' } }
 
-        it 'should not add :blank to name' do
+        it 'does not add :blank to name' do
           expect(errors.added?(:name, :blank)).to be_falsey
         end
       end
 
-      context 'available' do
-        context "when has 'true' value" do
+      context 'when available' do
+        context "is 'true'" do
           let(:params) { { available: true } }
 
-          it 'should not add :inclusion to available' do
+          it 'does not add :inclusion to available' do
             expect(errors.added?(:available, :inclusion)).to be_falsey
           end
         end
-        context "when has 'false' value" do
+        context "is 'false'" do
           let(:params) { { available: false } }
 
-          it 'should not add :inclusion to available' do
+          it 'does not add :inclusion to available' do
             expect(errors.added?(:available, :inclusion)).to be_falsey
           end
         end
@@ -933,7 +952,7 @@ context 'when exists hirings with given job_id' do
     allow(subject).to receive(:find_all_by_job_id).and_return [first_hiring, second_hiring]
   end
 
-  it 'should return the expected hirings' do
+  it 'returns the expected hirings' do
     result = subject.find_all_by_job_id(job.id)
     expect(result).to [first_hiring, second_hiring]
   end
@@ -945,7 +964,7 @@ end
 ```ruby
 subject { Repositories::Hirings::Finder.new Bid }
 
-context 'when exists hirings with given job_id' do
+context 'when a job has hirings' do
   let(:job) { create(:job) }
   let(:other_job) { create(:job) }
 
@@ -953,7 +972,7 @@ context 'when exists hirings with given job_id' do
   let(:second_hiring) { create(:hiring, job: job) }
   let(:other_hiring) { create(:hiring), job: other_job }
 
-  it 'should return the expected hirings' do
+  it 'returns only the hirings of the given job' do
     result = subject.find_all_by_job_id(job.id)
     expect(result).to [first_hiring, second_hiring]
   end

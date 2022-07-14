@@ -24,7 +24,7 @@ Welcome to our development style guide!
 - Talking about code, the traceability of the code is important to us, we need to be able to easily understand the reasons why a piece of code is there. See this reference about [Semantic Commits](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716).
 - When dealing with a legacy codebase you may feel in need to refactor it or you may also feel in need to improve the codebase to make it more maintainable, 
 and therefore, you will need to apply [Agile](https://blog.trello.com/microproductivity-break-tasks-into-smaller-steps) and [Solid](https://en.wikipedia.org/wiki/Single-responsibility_principle) principles to do so. 
-- Squash and Merge your pull requests into the master branch. There's no need to add every single commit made inside a feature branches to the main/master history: it's much clearer and easy to understand a linear history. If your PRs are well scoped, you won't lose useful information by squashing your commits into a single one before merging.
+- Squash and Merge your pull requests into the master branch. There's no need to add every single commit made inside a feature branches to the main/master history: it's much clearer and easy to understand a streamlined Git history. If your PRs are well scoped, you won't lose useful information by squashing your commits into a single one before merging.
 
 [Back to top ⬆️](#pushpin-summary)
 

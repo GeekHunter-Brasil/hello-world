@@ -23,7 +23,8 @@ Welcome to our development style guide!
 - We also feel the need to establish a common language to share our knowledge and experience in the development process as much as a common way to report issues, bugs, performance issues, and improvements proposals in architecture or infrastructure. That language is [English](https://en.wikipedia.org/wiki/English_language).
 - Talking about code, the traceability of the code is important to us, we need to be able to easily understand the reasons why a piece of code is there. See this reference about [Semantic Commits](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716).
 - When dealing with a legacy codebase you may feel in need to refactor it or you may also feel in need to improve the codebase to make it more maintainable, 
-and therefore, you will need to apply [Agile](https://blog.trello.com/microproductivity-break-tasks-into-smaller-steps) and [Solid](https://en.wikipedia.org/wiki/Single-responsibility_principle) principles to do so. 
+and therefore, you will need to apply [Agile](https://blog.trello.com/microproductivity-break-tasks-into-smaller-steps) and [Solid](https://en.wikipedia.org/wiki/Single-responsibility_principle) principles to do so.
+
 
 [Back to top ⬆️](#pushpin-summary)
 
@@ -56,3 +57,10 @@ and therefore, you will need to apply [Agile](https://blog.trello.com/microprodu
 - Read [this article](https://essenceofcode.com/2019/10/29/the-art-of-small-pull-requests/) for more info about the art of small pull requests
 
 [Back to top ⬆️](#pushpin-summary)
+
+
+## Git Workflow
+
+- In order to introduce changes to the codebase, create a working branch from master, and, once finished, merge your work back into master.
+- Squash and Merge your pull requests into the master branch. There's no need to add every single commit made inside a working branch to the main/master history: it's much clearer and easy to understand a streamlined Git history. If your PRs are well scoped, you won't lose useful information by squashing your commits into a single one before merging.
+- When you ready to deploy the udpated codebase to production and or staging, use option Merge Pull Request. In this case, if you Squash the master commits into those brances, divergences may arise. So, in order to keep the delivery flow smooth, we use Merge Pull Request option when performing those operations. For an interesting discussion on this, read [here](https://github.com/orgs/github-community/discussions/10809).

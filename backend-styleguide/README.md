@@ -1101,7 +1101,7 @@ Example: for the password recovery e-mail templates:
 - `en__empresa-reset-password`
 
 
-Then in the `monolith` we have a two helper functions to generate the template name based on the user language or a given language:
+Then in the `monolith` we have two helper functions to generate the template name based on the user language or a given language:
 - `MailersHelper.build_prefix_for_record(record, context_name)` - this function gets the `language` from the `record` and concatenates the `language` with the `context_name`, where `record` is the logged-in user object and `context_name` is the base template name
 - `MailersHelper.build_prefix_for_language(language, context_name)` - this function concatenates the `language` with the `context_name`
 

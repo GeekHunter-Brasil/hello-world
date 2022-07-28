@@ -1085,4 +1085,50 @@ yml file:
 title: 'Boas-vindas %{username}'
 ```
 
+### 👉 Translate e-mails
+
+We use SendGrid for sending e-mails. SendGrid works with e-mail templates that need to be created in their platform, then we make an API call passing the template name and its parameters.
+
+For a given e-mail we will have a different template for each language.
+
+We use the following template nomenclature:
+- `template_name` for `pt_br` template
+- `en__template_name` for `en` template
+
+
+Example: for the password recovery e-mail templates:
+- `empresa-reset-password`
+- `en__empresa-reset-password`
+
+
+Then in the `monolith` we have two helper functions to generate the template name based on the user language or a given language:
+- `MailersHelper.build_prefix_for_record(record, context_name)` - this function gets the `language` from the `record` and concatenates the `language` with the `context_name`, where `record` is the logged-in user object and `context_name` is the base template name
+- `MailersHelper.build_prefix_for_language(language, context_name)` - this function concatenates the `language` with the `context_name`
+
+
+Finally we send the e-mail, example:
+
+```ruby
+template = CustomDeviseMailer.build_prefix_for_record(record, template)
+notification_params = {
+  model_id: record.id,
+  context: {
+    name: template
+  },
+  messages: [{
+    recipient: {
+      user_id: record.id,
+      user_type: DarwinHelper.get_user_type_by_instance(record),
+      phone: record.try(:phone_number) || record.try(:phone),
+      email: record.try(:email)
+    },
+    variables: {
+      USER_NAME: record.is_a?(AdminUser) ? record.email : record.name,
+      RESET_LINK: reset_link
+    }
+  }]
+}
+Workers::Darwin::Api.perform_async(notification_params)
+```
+
 [Back to top ⬆️](#pushpin-summary)

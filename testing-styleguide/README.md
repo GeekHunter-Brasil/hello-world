@@ -96,99 +96,59 @@ Therefore, do not refactor code unless tested; otherwise you risk introducing bu
 
 ## In practice: Rails
 
-Our Rails application is structured in a layered architecture: we start at the entrypoints (controllers, mutations, etc), passing by managers (where business rules are defined), then services, validators and up to a respository layer. This approach makes our application more manageable with well defined responsabilities to each abstraction. Besides, and not by chance, this simplifies the task of writing tests in different granularities.
+Sometimes we find ourselves dealing with some complex domain logic (such as hiring a candidate). To make our life easier, in these scenarios, we tend to split our problem in some layers:
+
+1. Entrypoint: controllers, mutatitons, workers, etc
+2. Manager: the point of truth, where we handle all the business rule
+3. Service: code that we think that is a good idea to concentrate in one place
+4. Validator: where we validate the input data
+5. Repository: where we communicate with the database
+
+With this approach, we make our application more manageable with well defined responsabilities to each abstraction. Besides, and not by chance, this simplifies the task of writing tests in different granularities.
 
 We show here a guideline for writing tests in each one of those layers.
 
 ### 📨 Entrypoint Layer
 
-Here is where our Controllers, Mutations, Workers, Rakes and so on, are defined. For this layer, we want an integration test going all the way to the database and external APIs. In each integration test, we find useful to test side effects, internal transformations, and the response itself. With that in mind, three main things are asserted in an entrypoint test:
+Here is where our Controllers, Mutations, Workers, Rakes and so on, are defined. For this layer, we want an integration test going all the way to the database and external APIs. In each integration test, we find useful to test side effect and the response itself. With that in mind, two main things are asserted in an entrypoint test:
 
-- That the inner layer (manager) is called correctly, with the expected set of parameters
 - That the input is correctly handled (e.g. that an ActiveRecord attribute is correctly updated at the database level)
 - That the response is the expected (e.g. response.body, response.status, etc)
 
-Note here we usually hit a testing database with a set of transactions, and assert changes in the ActiveRecord itself. In addition to that, external APIs can be mocked with their expect behavior for a given scenario.
+Here we want to hit a testing database with a set of transactions, and assert changes in the ActiveRecord itself. In addition to that, external APIs can be mocked with their expect behavior for a given scenario (we use [VCR](https://github.com/vcr/vcr) to handle this cases)
 
-Let's use a Controller that handles a Hiring update as example. It gets a hash with the updated hiring values and let's imagine we are interested in the response status code being 200 if all goes well with the updated hiring hash in a json format. We also expect our controller to call a manager in order to perform the task in hand: here we name it `HiringManagerUpdater.update`.
-
-❌ Bad
+Let's use a Controller that handles a Hiring creation as example and go with the happy path, expecting that the hiring was created and the response status is 201.
 
 ```ruby
-# !! Do not replace the manager with a fake implementation
-let(:hiring_manager_updater) { instance_double ::Services::Companies::Hirings::HiringManagerUpdater }
-
-context 'when controller is called with valid params' do
-  before do
-    put 'companies/hiring', params: params
-  end
-
-  it "should call the hiring manager updater with appropriate arguments" do
-    # !! Do not assert interactions with the stubbed manager
-    expect(hiring_manager_updater).to have_received(:update).with(expected_params)
-  end
-end
-```
-
-✅ Good
-
-```ruby
-context 'when controller is called with valid params' do
-  # Use FactoryBot.create to create an instance of your data object and persist it to the testing database
-  let(:hiring) { create(:hiring, status: Hiring.status.waiting) }
-  let(:params) do
-    {
-      hiring: {
-        id: hiring.id,
-        status: Hiring.status.approved
+describe HiringsController, type: :request do
+  context 'when hiring a candidate' do
+    # Use FactoryBot.create to create an instance of your data object and persist it to the testing database
+    let(:candidate_to_hire) { create(:candidate) }
+    let(:job_to_hire_for) { create(:job) }
+    let(:params) do
+      {
+        candidate_id: candidate_to_hire.id,
+        job_id: job_to_hire_for.id
       }
-    }
-  end
-  # Describe the expected set of (transformed) parameters your manager needs to properly work
-  let(:manager_params) do
-    ActionController::Parameters.new( params.map { |k,v| [k, v.to_s] }.to_h )
-      .require(:hiring).permit(:id, :status)
-  end
-  let(:update_hiring) do
-    put 'companies/hiring', params: params
-  end
+    end
+    let(:hire_a_candidate) do
+      post 'hiring', params: params
+    end
 
-  before do
-    # Only allow calls to HiringManagerUpdater.create that happen with the expected set of parameters
-    allow_any_instance_of(::Services::Companies::Hirings::HiringManagerUpdater).to receive(:update).with(manager_params).and_call_original
-    # If you don't expect exceptions to be rescued in this context, add this line
-    allow(::Services::Logger::ExceptionLoggerService).to receive(:call).and_raise('Oups. No exception should have been seen!')
-    update_hiring
-    # Reload your ActiveRecord object to reflect changes performed by the subject under test
-    hiring.reload
-  end
+    it 'creates a new hiring' do
+      # Assert if the hiring was created
+      expect { hire_a_candidate }.to change(Hiring, :count).from(0).to(1)
+    end
 
-  it 'should update the hiring status' do
-    # Assert status has changed
-    expect(hiring.status).to eq Hiring.status.approved.value
-  end
-  it 'should return a response with status code 200 and content_type application/json' do
-    # Assert response code is 200
-    expect(response).to have_http_status(200)
-    # Assert response content type is 'application/json'
-    expect(response.content_type).to be == 'application/json'
+    it 'returns status code 201' do
+      hire_a_candidate
+
+      # Assert response code is 201
+      expect(response).to have_http_status(201)
+    end
   end
 end
 ```
-
-Note we apply a whitebox approach to this test as we opt to verify the inner integration with the manager. This means we should know what the manager needs in order to perform its job, so slighly compromising in the classic TDD approach of not taking the controller implementation into account. In the following layers, we will be conducting Unit Tests and mocking inner calls in order to isolate our subjects under tests. In all these tests, keep in mind we are using a more mocking approach to TDD where we take into account implementation details (i.e. we know who is going to be called and how) instead of a more classic black-box testing. Both are good, but we feel using a mocking approach help us to faster implement and test our Domain, which historically is the place we tend to apply more changes given the nature of our product.
-
-A point about `Rspec.allow_any_instance_of`: when dealing with legacy code, the instance of the manager might not be injected during the test. So `allow_any_instance_of` comes in handy to allow us to verify that any instance of a manager was properly called. However, if you do have access to an instance of your manager (by injection) then you use `Rspec.allow` instead.
-
-Finally, a point about exception handling: in the 'happy path' context, your code might not be supposed to rescue any exception. In those cases, it's very useful to mock your Exception Handling Service, using `Rspec.and_raise`, to raise a test exception in case it's ever called. This will make sure you surface exceptions caught in the process and also have the whole error stack on your test output.
-
-Just a "pretend" example:
-
-```ruby
-it 'raises error when email is invalid' do
-  params[:email] = 'invalidemail'
-  expect { update_user(params) }.to raise_error(UserInvalidEmailException)
-end
 
 #### 🎛️ Manager Layer
 

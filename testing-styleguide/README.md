@@ -1,6 +1,6 @@
 <!--
  Copyright (c) 2022 Joao Mello (joao.mello@geekhunter.com.br)
- 
+
  This software is released under the MIT License.
  https://opensource.org/licenses/MIT
 -->
@@ -35,13 +35,15 @@ There're many arguments on why to test software. We highlight a few:
 - good test strategies are KEY to increase codebase quality overtime; and a high-quality codebase is KEY to a high-quality product
 - a good set of practises DECREASES cognitive effort in write/review phases; and less effort in write/review BUYS us time and energy to focus on delivering value to customers
 - test is cheaper than bugfix; and SCALES better
-- meaningful testing ENCOURAGES us to think about useful design patterns 
+- meaningful testing ENCOURAGES us to think about useful design patterns
 
 [Back to top ⬆️](#pushpin-summary)
 
 ## Concepts
 
 We have a few concepts with which we should be familiar. Things like test pyramid, test doubles, black-box vs white-box testing, and so on. We highly recommend you carefully read this [introductory article](https://martinfowler.com/articles/practical-test-pyramid.html) before moving on. It talks about different types of tests and how they fit in the analogy of the test pyramid.
+
+
 
 [Back to top ⬆️](#pushpin-summary)
 
@@ -58,6 +60,11 @@ Quoting the Geek Manifest:
 We can even say Test Driven Development is more than just a requirement: it is a way of thinking our software. On the more granular level of black-box testing, we first write our specification file that describes how a piece of code should behave, i.e the functionality we expect from it. Then, we move to the next phase of writing the code to implement it. It requires a good understanding of our design patterns, our dependency chain, the programming paradigm we are using (OOP for most part), and specificities of the frameworks we adopt. All of that beforehand. Besides, we always have choices to make when it comes to whether or not we mock dependencies. On the pratical sections, we will see examples of how to do it in our stack and what kind of choices made sense for us. Those choices translated to a guideline that we at Geek follow when writing our tests.
 
 Also, it's worth noting that doing TDD helps building the basis of our test pyramid: if for every piece of code we write we have an underlying test to support it, the basis of the pyramid will increase effortlessly.
+
+If you want to learn more about TDD, we strongly recommend you to take a look in these two books:
+
+- [Test Driven Development: By Example](https://www.amazon.com.br/dp/B095SQ9WP4/?coliid=I3VU9HPFYLWNXJ&colid=U42P2DJ549XI&psc=0&ref_=lv_ov_lig_dp_it), from Kent Beck (aka the Father of TDD) where he builds from sketch a Money API showing all the steps and paths that you take by doing TDD the right way.
+-  [Effective Testing with Rspec 3: Build Ruby Apps with Confidence](https://www.amazon.com.br/Effective-Testing-RSpec-Myron-Marston/dp/1680501984/ref=sr_1_1?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3QGCORSGDQ4OV&keywords=effective+testing+with+rspec+3&qid=1662209082&sprefix=effective+testing+with+rspec+3%2Caps%2C182&sr=8-1&ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9) from Myron Marston and Ian Dees. In this book you will learn how to use the power of rspec combined with TDD to create tests that truly reflects your app behavior.
 
 ### BDD
 
@@ -157,7 +164,7 @@ context 'when controller is called with valid params' do
   end
 
   it 'should update the hiring status' do
-    # Assert status has changed 
+    # Assert status has changed
     expect(hiring.status).to eq Hiring.status.approved.value
   end
   it 'should return a response with status code 200 and content_type application/json' do

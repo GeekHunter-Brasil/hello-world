@@ -61,6 +61,13 @@ We can even say Test Driven Development is more than just a requirement: it is a
 
 Also, it's worth noting that doing TDD helps building the basis of our test pyramid: if for every piece of code we write we have an underlying test to support it, the basis of the pyramid will increase effortlessly.
 
+Next we will list some practices that we believe that are good to follow while writing tests using TDD:
+
+- Test Isolation: one test should never affect other test. If I have one test broken, I have one problem. If I have two tests broken, I have two problems. This also implies that the tests are order independent.
+- Assert First: start writing the tests with assertions that will pass when it is done. Always try to answer these two questions: "What is the right answer?" and "How am I going to check for the right answer?"
+- Evident Data: How do you represent the intent of the data? Include expected and actual results in the text itself, and try to make their relationship apparent. You are writing tests for a reader, not just for the computer.
+- Break: What do you do when you feel tired or stuck? Take a break. And if you still feel this way after the break, than raise HelpException, or, in other words, call for help 😉.
+
 If you want to learn more about TDD, we strongly recommend you to take a look in these two books:
 
 - [Test Driven Development: By Example](https://www.amazon.com.br/dp/B095SQ9WP4/?coliid=I3VU9HPFYLWNXJ&colid=U42P2DJ549XI&psc=0&ref_=lv_ov_lig_dp_it), from Kent Beck (aka the Father of TDD) where he builds from sketch a Money API showing all the steps and paths that you take by doing TDD the right way.

@@ -19,11 +19,11 @@ The goal of this guide is to help our team to think about tests, write them, and
 
 # :pushpin: Summary
 
-* [Introduction](#introduction)
-* [Concepts](#concepts)
-* [Strategies](#strategies)
-* [In practice: Rails](#in-practice-rails)
-* [In practice: React](#in-practice-react)
+- [Introduction](#introduction)
+- [Concepts](#concepts)
+- [Strategies](#strategies)
+- [In practice: Rails](#in-practice-rails)
+- [In practice: React](#in-practice-react)
 
 ## Introduction
 
@@ -43,8 +43,6 @@ There're many arguments on why to test software. We highlight a few:
 
 We have a few concepts with which we should be familiar. Things like test pyramid, test doubles, black-box vs white-box testing, and so on. We highly recommend you carefully read this [introductory article](https://martinfowler.com/articles/practical-test-pyramid.html) before moving on. It talks about different types of tests and how they fit in the analogy of the test pyramid.
 
-
-
 [Back to top ⬆️](#pushpin-summary)
 
 ## Strategies
@@ -57,7 +55,7 @@ Quoting the Geek Manifest:
 
 `"TDD is an implicit requirement of any code intervention"`
 
-We can even say Test Driven Development is more than just a requirement: it is a way of thinking our software. On the more granular level of black-box testing, we first write our specification file that describes how a piece of code should behave, i.e the functionality we expect from it. Then, we move to the next phase of writing the code to implement it. It requires a good understanding of our design patterns, our dependency chain, the programming paradigm we are using (OOP for most part), and specificities of the frameworks we adopt. All of that beforehand. Besides, we always have choices to make when it comes to whether or not we mock dependencies. On the pratical sections, we will see examples of how to do it in our stack and what kind of choices made sense for us. Those choices translated to a guideline that we at Geek follow when writing our tests.
+We can even say Test Driven Development is more than just a requirement: it is a way of thinking our software. On the more granular level of black-box testing, we first write our specification file that describes how a piece of code should behave, i.e the functionality we expect from it. Then, we move to the next phase of writing the code to implement it. It requires a good understanding of our design patterns, our dependency chain, the programming paradigm we are using (OOP for most part), and specificities of the frameworks we adopt. All of that beforehand. Besides, we always have choices to make when it comes to whether or not we mock dependencies. On the practical sections, we will see examples of how to do it in our stack and what kind of choices made sense for us. Those choices translated to a guideline that we at Geek follow when writing our tests.
 
 Also, it's worth noting that doing TDD helps building the basis of our test pyramid: if for every piece of code we write we have an underlying test to support it, the basis of the pyramid will increase effortlessly.
 
@@ -71,7 +69,7 @@ Next we will list some practices that we believe that are good to follow while w
 If you want to learn more about TDD, we strongly recommend you to take a look in these two books:
 
 - [Test Driven Development: By Example](https://www.amazon.com.br/dp/B095SQ9WP4/?coliid=I3VU9HPFYLWNXJ&colid=U42P2DJ549XI&psc=0&ref_=lv_ov_lig_dp_it), from Kent Beck (aka the Father of TDD) where he builds from sketch a Money API showing all the steps and paths that you take by doing TDD the right way.
--  [Effective Testing with Rspec 3: Build Ruby Apps with Confidence](https://www.amazon.com.br/Effective-Testing-RSpec-Myron-Marston/dp/1680501984/ref=sr_1_1?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3QGCORSGDQ4OV&keywords=effective+testing+with+rspec+3&qid=1662209082&sprefix=effective+testing+with+rspec+3%2Caps%2C182&sr=8-1&ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9) from Myron Marston and Ian Dees. In this book you will learn how to use the power of rspec combined with TDD to create tests that truly reflects your app behavior.
+- [Effective Testing with Rspec 3: Build Ruby Apps with Confidence](https://www.amazon.com.br/Effective-Testing-RSpec-Myron-Marston/dp/1680501984/ref=sr_1_1?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3QGCORSGDQ4OV&keywords=effective+testing+with+rspec+3&qid=1662209082&sprefix=effective+testing+with+rspec+3%2Caps%2C182&sr=8-1&ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9) from Myron Marston and Ian Dees. In this book you will learn how to use the power of rspec combined with TDD to create tests that truly reflects your app behavior.
 
 ### BDD
 
@@ -81,7 +79,7 @@ On the practical sections, we will see examples of implementing BDD for a sample
 
 ### Do not reimplement logic
 
-When writting black-box testing, make sure not to reimplement logic. If we are doing classic TDD, the chances of reimplementing logic are dramatically reduced since we start first with the specification and then we move to the implementation.
+When writing black-box testing, make sure not to reimplement logic. If we are doing classic TDD, the chances of reimplementing logic are dramatically reduced since we start first with the specification and then we move to the implementation.
 
 However, we often have to cope with legacy code that is not tested. In those cases, pay attention to write your test without mimicking the logic itself. Another situation where we can be tempted to reimplement logic is when we decide to mock our dependencies. While writing our test doubles, we are necessarily thinking on the implementation already. In those cases, make sure not to test the doubles themselves.
 
@@ -89,7 +87,7 @@ Take a look [at this video](https://www.youtube.com/watch?v=W40mpZP9xQQ&t=918s) 
 
 ### Non-decreasing Code Coverage
 
-In order to increase code quality overtime, it's very useful to enforce a non-decreasing policy in our CI/CD pipelines. With that in mind, we don't allow code to be merged in the main branches if the overall code coverage decreases. Additionaly, we look at the branches coverage as the criteria taken into account as it helps us focus on non trivial code we want to test instead of enforcing a 100% line coverage. Therefore, make sure you cover all possible code paths in your specification file.
+In order to increase code quality overtime, it's very useful to enforce a non-decreasing policy in our CI/CD pipelines. With that in mind, we don't allow code to be merged in the main branches if the overall code coverage decreases. Additionally, we look at the branches coverage as the criteria taken into account as it helps us focus on non trivial code we want to test instead of enforcing a 100% line coverage. Therefore, make sure you cover all possible code paths in your specification file.
 
 It's worth noting that too many code paths to cover may indicate a method that can be simplified and broken down. Take a look at [this definition](https://docs.codeclimate.com/docs/cyclomatic-complexity) to help guide on that regard and at [this introduction](https://www.atlassian.com/continuous-delivery/software-testing/code-coverage) to code coverage as well.
 
@@ -105,15 +103,19 @@ Therefore, do not refactor code unless tested; otherwise you risk introducing bu
 
 Sometimes we find ourselves dealing with some complex domain logic (such as hiring a candidate). To make our life easier, in these scenarios, we tend to split our problem in some layers:
 
-1. Entrypoint: controllers, mutatitons, workers, etc
+1. Entrypoint: controllers, mutations, workers, etc
 2. Manager: the point of truth, where we handle all the business rule
 3. Service: code that we think that is a good idea to concentrate in one place
 4. Validator: where we validate the input data
 5. Repository: where we communicate with the database
 
-With this approach, we make our application more manageable with well defined responsabilities to each abstraction. Besides, and not by chance, this simplifies the task of writing tests in different granularities.
+With this approach, we make our application more manageable with well defined responsibilities to each abstraction. Besides, and not by chance, this simplifies the task of writing tests in different granularity.
 
-We show here a guideline for writing tests in each one of those layers.
+> **A very important note here is that we don't always structure our code in these five layers, because when we are doing TDD the right way, we don't mind how we are going to implement some feature, but how we are going to TEST it. We end up, for example, writing and implementing the feature directly in the Controller.**
+>
+> **Finished the tests, we are able to refactor it and decide how we want to do it. Sometimes we want to split the feature in all these five layers, sometimes we don't feel the need to create a manager, and so on. There is not right or wrong, the most important thing is to write code that are covered by tests and easy to refactor it**
+
+With that said, we can go with the guideline for how we usually write the tests in each one of those layers.
 
 ### 📨 Entrypoint Layer
 
@@ -164,24 +166,6 @@ This layer is the source of truth when talking about business rules. The manager
 Here we want unit tests to help us quickly and reliably test more scenarios and edge cases than we do at an entrypoint layer. So we don't necessarily test everything, and assuming other parts of the application are also tested (they should be!), it becomes much easier to simply mock the dependencies and assert their calls.
 
 Following our example, let's say the manager needs to do two operations: update the Hiring status and, as a side effect, update the underlying Job. So we know it has to call at least two methods in two different services, named `HiringUpdater.update` and `JobUpdater.update`. `HiringUpdater.update` receives a hash with a hiring key, the attributes to update and returns the updated Hiring; `JobUpdater.update` receives the `job_id` related to the Hiring. Let's also not forget that we expect our manager to return the updated Hiring, as we see in the Controller layer.
-
-❌ Bad
-
-```ruby
-context 'when manager is called with valid params' do
-  it 'should update the hiring' do
-    # ... code asserting hiring is updated
-    # !! The service that updates hirings already tests this
-  end
-
-  it 'should update the job' do
-    # ... code asserting job properties have changed
-    # !! The service that updates jobs already tests this
-  end
-end
-```
-
-✅ Good
 
 ```ruby
 # Use Rspec.instance_double to be able to mock the dependencies
@@ -242,19 +226,6 @@ Using the same logic as in the Manager layer, we mock the dependencies and test 
 
 Let's follow the example of the `HiringUpdater`. In order to update the ActiveRecord records, it needs to first validate the parameters received from the manager via a `HiringUpdateValidator`. Then it either raises an Exception if parameters are invalid or proceeds to call a `DelegateRepository` in order to effectively persist the updates to the database. After updating, it returns the updated Hiring.
 
-❌ Bad
-
-```ruby
-context 'when service is called with valid params' do
-  it 'updates the hiring' do
-    # ... code asserting if hiring is updated
-    # !! The repository that updates jobs already tests this
-  end
-end
-```
-
-✅ Good
-
 ```ruby
 let(:provide_hiring_repo) { instance_double Repositories::Hirings::DelegateRepository }
 let(:hiring_update_validator) { instance_double Validators::Hiring::HiringUpdateValidator }
@@ -287,6 +258,7 @@ end
 ```
 
 Here, the same performance consideration applies: prefer `FactoryBot.build_stubbed` over `FactoryBot.create` whenever possible.
+
 ### 🚫 Validator layer
 
 The validator layer is responsible to check the data that is been passed to the database.
@@ -295,30 +267,6 @@ Here we want to assert whether the validator is setting the errors properly acco
 Always cover all edge cases for possible types as this can avoid a lot of validation problems, which won't be necessarily tested in outer layers.
 
 ```ruby
-module Validators
-  module Candidate
-    class CandidateUpdateValidator < Validator
-      def initialize(attrs = {}, scope = :update)
-        super attrs, scope
-      end
-
-      private
-
-      attr_reader :available, :name
-
-      validates :available, inclusion: [true, false], if: -> { scope == :update }
-      validates :name, presence: true, allow_blank: false, if: -> { scope == :update }
-    end
-  end
-end
-```
-❌ Bad
-
-```ruby
-# frozen_string_literal: true
-
-require 'rails_helper'
-
 describe Validators::Candidate::CandidateUpdateValidator, type: :validator do
   let(:errors) { subject.errors }
 
@@ -332,80 +280,45 @@ describe Validators::Candidate::CandidateUpdateValidator, type: :validator do
     context 'when params are invalid' do
       let(:params) { {} }
 
-      it 'should add :inclusion to available' do
-        expect(errors.added?(:available, :inclusion)).to be_truthy
+      it 'adds :blank error to all missing required fields' do
+        expect(errors).to be_added :name, :blank
+        expect(errors).to be_added :email, :blank
+      end
+
+      it 'adds :inclusion error to available field' do
+        expect(errors).to be_added :available, :inclusion
       end
     end
 
     context 'when params are valid' do
-      let(:params) { { available: true } }
+      let(:params) do
+        {
+          name: 'John Doe',
+          email: 'john@doe.com',
+          available: available
+        }
+      end
 
-      it 'should not add :inclusion to available' do
-        expect(errors.added?(:available, :inclusion)).to be_falsey
+      context 'and available has "true" value' do
+        let(:available) { true }
+
+        it 'has no errors' do
+          expect(errors).to be_empty
+        end
+      end
+
+      context 'and available has "false" value' do
+        let(:available) { false }
+
+        it 'has no errors' do
+          expect(errors).to be_empty
+        end
       end
     end
   end
 end
 ```
 
-✅ Good
-
-```ruby
-# frozen_string_literal: true
-
-require 'rails_helper'
-
-describe Validators::Candidate::CandidateUpdateValidator, type: :validator do
-  let(:errors) { subject.errors }
-
-  subject { Validators::Candidate::CandidateUpdateValidator.new params, :update }
-
-  describe 'validates presence' do
-    before do
-      subject.valid?
-    end
-
-    context 'when params are invalid' do
-      let(:params) { {} }
-
-      it 'should add :blank to name' do
-        expect(errors.added?(:name, :blank)).to be_truthy
-      end
-
-      it 'should add :inclusion to available' do
-        expect(errors.added?(:available, :inclusion)).to be_truthy
-      end
-    end
-
-    context 'when params are valid' do
-      context 'name' do
-        let(:params) { { name: 'Test Name' } }
-
-        it 'should not add :blank to name' do
-          expect(errors.added?(:name, :blank)).to be_falsey
-        end
-      end
-
-      context 'available' do
-        context "when has 'true' value" do
-          let(:params) { { available: true } }
-
-          it 'should not add :inclusion to available' do
-            expect(errors.added?(:available, :inclusion)).to be_falsey
-          end
-        end
-        context "when has 'false' value" do
-          let(:params) { { available: false } }
-
-          it 'should not add :inclusion to available' do
-            expect(errors.added?(:available, :inclusion)).to be_falsey
-          end
-        end
-      end
-    end
-  end
-end
-```
 ### 💾 Repository Layer
 
 Last but not least we have the Repository Layer, responsible for communicating with the database.
@@ -415,61 +328,32 @@ In this layer we are looking for integration tests such as in the Entrypoint lay
 Let's assume that we want to update the status of all the hirings that came from a specify job. To do that first we need to find all the hirings that we want to update.
 
 ```ruby
-module Repositories
-  module Hirings
-    class Finder
-      include Searchable
+describe Repositories::Hirings::Finder, '#find_all_by_job_id', type: %i[repository hiring] do
+  subject { described_class.new Hiring }
 
-      def find_all_by_job_id(job_id)
-        @repository.where(
-          job_id: job_id,
-        )
-      end
-    end
-  end
-end
-```
-
-❌ Bad
-
-```ruby
-subject { Repositories::Hirings::Finder.new Bid }
-
-context 'when exists hirings with given job_id' do
-  let(:job) { double(:job, id: 1) }
-  let(:other_job) { double(:job, id: 1) }
-
-  let(:first_hiring) { double(:hiring, job_id: job.id) }
-  let(:second_hiring) { double(:hiring, job_id: job.id) }
-  let(:other_hiring) { double(:hiring), job_id: other_job.id }
-
-  before do
-    allow(subject).to receive(:find_all_by_job_id).and_return [first_hiring, second_hiring]
-  end
-
-  it 'should return the expected hirings' do
-    result = subject.find_all_by_job_id(job.id)
-    expect(result).to [first_hiring, second_hiring]
-  end
-end
-```
-
-✅ Good
-
-```ruby
-subject { Repositories::Hirings::Finder.new Bid }
-
-context 'when exists hirings with given job_id' do
-  let(:job) { create(:job) }
+  let(:job_to_find_hirings) { create(:job) }
   let(:other_job) { create(:job) }
 
-  let(:first_hiring) { create(:hiring, job: job) }
-  let(:second_hiring) { create(:hiring, job: job) }
-  let(:other_hiring) { create(:hiring), job: other_job }
+  context 'when exist hirings for given job' do
+    let!(:hiring_to_return_1) { create(:hiring, job: job_to_find_hirings) }
+    let!(:hiring_to_return_2) { create(:hiring, job: job_to_find_hirings) }
+    let!(:hiring_not_to_return) { create(:hiring, job: other_job) }
 
-  it 'should return the expected hirings' do
-    result = subject.find_all_by_job_id(job.id)
-    expect(result).to [first_hiring, second_hiring]
+    it 'returns an array containing all the hirings for the given job' do
+      result = subject.find_all_by_job_id(job_to_find_hirings.id)
+
+      expect(result).to contain_exactly(hiring_to_return_1, hiring_to_return_2)
+    end
+  end
+
+  context 'when does not exist hirings for given job' do
+    let!(:hiring_not_to_return) { create(:hiring, job: other_job) }
+
+    it 'returns empty' do
+      result = subject.find_all_by_job_id(job_to_find_hirings.id)
+
+      expect(result).to be_empty
+    end
   end
 end
 ```

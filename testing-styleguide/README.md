@@ -111,7 +111,7 @@ Sometimes we find ourselves dealing with some complex domain logic (such as hiri
 
 With this approach, we make our application more manageable with well defined responsibilities to each abstraction. Besides, and not by chance, this simplifies the task of writing tests in different granularity.
 
-> **A very important note here is that we don't always structure our code in these five layers, because when we are doing TDD the right way, we don't mind how we are going to implement some feature, but how we are going to TEST it. We end up, for example, writing and implementing the feature directly in the Controller.**
+> **A very important note here: we don't always structure our code in these five layers, because, when we are doing TDD the right way, we don't mind how we are going to implement some feature, but how we are going to TEST it. We end up, for example, writing and implementing the feature directly in the Controller.**
 >
 > **Finished the tests, we are able to refactor it and decide how we want to do it. Sometimes we want to split the feature in all these five layers, sometimes we don't feel the need to create a manager, and so on. There is not right or wrong, the most important thing is to write code that are covered by tests and easy to refactor it**
 
@@ -163,9 +163,15 @@ end
 
 This layer is the source of truth when talking about business rules. The manager is responsible to call all services that are required to complete a specific task.
 
-Here we want unit tests to help us quickly and reliably test more scenarios and edge cases than we do at an entrypoint layer. So we don't necessarily test everything, and assuming other parts of the application are also tested (they should be!), it becomes much easier to simply mock the dependencies and assert their calls.
+Since we only create our managers in the REFACTOR step of TDD, the business rule is already tested, so we DO NOT ALWAYS create tests for managers itself. Usually, if we feel the need to create tests specific for a manager (for example, the manager has some `prepared_params` method that has a high cyclomatic complexity) we tend to use unit tests to help us quickly and reliably test more scenarios and edge cases than we do at an entrypoint layer.
 
-Following our example, let's say the manager needs to do two operations: update the Hiring status and, as a side effect, update the underlying Job. So we know it has to call at least two methods in two different services, named `HiringUpdater.update` and `JobUpdater.update`. `HiringUpdater.update` receives a hash with a hiring key, the attributes to update and returns the updated Hiring; `JobUpdater.update` receives the `job_id` related to the Hiring. Let's also not forget that we expect our manager to return the updated Hiring, as we see in the Controller layer.
+So we don't necessarily test everything, and assuming other parts of the application are also tested (they should be!), it becomes much easier to simply spy the dependencies and assert how the manager is communicating with them (mock roles, not objects).
+
+Following our example, let's say the manager needs to do two operations: create the hiring, as a side effect, send an email to the candidate hired, ie. So we know it has to call at least two methods in two different services (ie, dependencies), named `HiringCreator.create` and `CandidateMailer.send_hiring_mail`.
+
+`HiringCreator.create` receives a hash with the attributes to create and returns the created hiring;
+
+`CandidateMailer.send_hiring_mail` receives the `email` related to the candidate that is been hired.
 
 ```ruby
 # Use Rspec.instance_double to be able to mock the dependencies

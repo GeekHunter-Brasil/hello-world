@@ -33,7 +33,7 @@ Software testing is a very important aspect of our daily job at Geek: it's funda
 There're many arguments on why to test software. We highlight a few:
 
 - good test strategies are KEY to increase codebase quality overtime; and a high-quality codebase is KEY to a high-quality product
-- a good set of practises DECREASES cognitive effort in write/review phases; and less effort in write/review BUYS us time and energy to focus on delivering value to customers
+- a good set of practices DECREASES cognitive effort in write/review phases; and less effort in write/review BUYS us time and energy to focus on delivering value to customers
 - test is cheaper than bugfix; and SCALES better
 - meaningful testing ENCOURAGES us to think about useful design patterns
 
@@ -59,12 +59,12 @@ We can even say Test Driven Development is more than just a requirement: it is a
 
 Also, it's worth noting that doing TDD helps building the basis of our test pyramid: if for every piece of code we write we have an underlying test to support it, the basis of the pyramid will increase effortlessly.
 
-Next we will list some practices that we believe that are good to follow while writing tests using TDD:
+Next are some practices we believe are good to follow while writing tests with TDD:
 
-- Test Isolation: one test should never affect other test. If I have one test broken, I have one problem. If I have two tests broken, I have two problems. This also implies that the tests are order independent.
-- Assert First: start writing the tests with assertions that will pass when it is done. Always try to answer these two questions: "What is the right answer?" and "How am I going to check for the right answer?"
-- Evident Data: How do you represent the intent of the data? Include expected and actual results in the text itself, and try to make their relationship apparent. You are writing tests for a reader, not just for the computer.
-- Break: What do you do when you feel tired or stuck? Take a break. And if you still feel this way after the break, than raise HelpException, or, in other words, call for help 😉.
+- **Test Isolation:** one test should never affect other test. If I have one test broken, I have one problem. If I have two tests broken, I have two problems. This also implies that the tests are order independent.
+- **Assert First:** start writing the tests with assertions that will pass when it is done. Always try to answer these two questions: "What is the right answer?" and "How am I going to check for the right answer?"
+- **Evident Data:** How do you represent the intent of the data? Include expected and actual results in the text itself, and try to make their relationship apparent. You are writing tests for a reader, not just for the computer.
+- **Take a Break:** What do you do when you feel tired or stuck? Take a break. And if you still feel this way after the break, than raise HelpException, or, in other words, call for help 😉.
 
 If you want to learn more about TDD, we strongly recommend you to take a look in these two books:
 
@@ -73,7 +73,7 @@ If you want to learn more about TDD, we strongly recommend you to take a look in
 
 ### BDD
 
-Behavior Driven Design fills the void we sometimes have between the acceptance criteria of a given task and the expectations we write for our code. In BDD, when building the specifications, we use a user-driven language (usually supported by a DSL) that connects the test scenarios with the product need. Therefore, doing BDD requires we think about tests from the very beggining, i.e from the refinement phase of a user story.
+Behavior Driven Design fills the void we sometimes have between the acceptance criteria of a given task and the expectations we write for our code. In BDD, when building the specifications, we use a user-driven language (usually supported by a DSL) that connects the test scenarios with the product need. Therefore, doing BDD requires we think about tests from the very beginning, i.e from the refinement phase of a user story.
 
 On the practical sections, we will see examples of implementing BDD for a sample task. Check out [this post](https://blog.geekhunter.com.br/a-juncao-do-behavior-driven-development-e-metodologia-agil/#:~:text=BDD%20%C3%A9%20uma%20metodologia%20de,e%20%E2%80%9Ccrit%C3%A9rios%20de%20aceita%C3%A7%C3%A3o%E2%80%9D) in our blog for a very good article on the role of BDD in Agile Culture.
 
@@ -159,111 +159,181 @@ describe HiringsController, type: :request do
 end
 ```
 
-#### 🎛️ Manager Layer
+#### 🎛️ Manager & Service Layers
 
-This layer is the source of truth when talking about business rules. The manager is responsible to call all services that are required to complete a specific task.
+The Manager layer is the source of truth when talking about business rules, being responsible to concentrate all the code required to complete a certain action or behavior (e.g. hire a candidate). Usually, the Manager is called at the Entrypoint Layer, but sometimes, one manager needs to call another one, and that's totally fine.
 
-Since we only create our managers in the REFACTOR step of TDD, the business rule is already tested, so we DO NOT ALWAYS create tests for managers itself. Usually, if we feel the need to create tests specific for a manager (for example, the manager has some `prepared_params` method that has a high cyclomatic complexity) we tend to use unit tests to help us quickly and reliably test more scenarios and edge cases than we do at an entrypoint layer.
+On the other hand, Services are like Managers, but much simpler. They follow the Single Responsibility rule. Typically the create a new Service in two scenarios: the code regarding some responsibility it's too big that we extract to a different class or the code could be shared and used in other places of the application. Such as Managers, Services can call other Services.
 
-So we don't necessarily test everything, and assuming other parts of the application are also tested (they should be!), it becomes much easier to simply spy the dependencies and assert how the manager is communicating with them (mock roles, not objects).
+Since we only create these files in the REFACTOR step of TDD, the business rule is already tested, so we DO NOT ALWAYS create tests for them. Usually, if we feel the need to create tests specific for a manager or service (for example, the manager has some `prepared_params` method that has a high cyclomatic complexity) we tend to use unit tests to help us quickly and reliably test more scenarios and edge cases than we do at an entrypoint layer.
 
-Following our example, let's say the manager needs to do two operations: create the hiring, as a side effect, send an email to the candidate hired, ie. So we know it has to call at least two methods in two different services (ie, dependencies), named `HiringCreator.create` and `CandidateMailer.send_hiring_mail`.
+So we don't necessarily test everything, and assuming other parts of the application are also tested (they should be!), it becomes much easier to simply spy the dependencies and assert how the code is communicating with them (mock roles, not objects).
 
-`HiringCreator.create` receives a hash with the attributes to create and returns the created hiring;
+Following our example, let's assume the manager responsible for hire a candidate has two dependencies: `hiring_repo` and `candidate_mailer`. Also, the `prepared_params` method has some different paths that the code could follow and the result from it is passed to the `hiring_repo`.
 
-`CandidateMailer.send_hiring_mail` receives the `email` related to the candidate that is been hired.
+Therefore, we want to assert how the manager is communicating with their dependencies.
+
+`services/companies/hiring_manager_creator.rb`
 
 ```ruby
-# Use Rspec.instance_double to be able to mock the dependencies
-let(:hiring_updater) { instance_double ::Services::Hiring::Update::HiringUpdater }
-let(:job_updater) { instance_double ::Services::Job::Update::JobUpdater }
+module Services
+  module Companies
+    module Hirings
+      class HiringManagerCreator
 
-# Use FactoryBot.build_stubbed to generate your data
-let(:hiring) { build_stubbed(:hiring) }
+        attr_reader :hiring_repo, :candidate_mailer
 
-context 'when manager is called with valid params' do
-  let(:params) do
-    {
-      id: hiring.id,
-      status: Hiring.status.approved
-    }
+        def initialize(hiring_repo:, candidate_mailer:)
+          @hiring_repo = hiring_repo
+          @candidate_mailer = candidate_mailer
+        end
+
+        def create(params, company)
+          prepared_params = prepare_params(params, company)
+
+          created_hiring = @hiring_repo.create(prepared_params)
+
+          ...
+          ...
+          ...
+
+          @candidate_mailer.send_hired_mail(prepared_params(:candidate_email)) if company.automatic_approve_hiring
+
+          ...
+          ...
+          ...
+
+          created_hiring
+        end
+
+        private
+
+        def prepare_params(params, company)
+          if company.automatic_approve_hiring
+            params[:status] = Hiring.status.approved
+            params[:approve_source] = Hiring.approve_source.auto
+          else
+            params[:status] = Hiring.status.waiting_approval
+          end
+
+          params[:should_discount_from_package] = company.company_package.type != CompanyPackage.type.unlimited
+
+          ...
+          ...
+          ...
+
+          params
+        end
+      end
+    end
   end
-  let(:updated_hiring) do
-    hiring.update(status: Hiring.status.approved)
-    hiring
-  end
-
-  before do
-    # Replace HiringUpdater and JobUpdater in the subject under test
-    allow(subject).to receive(:hiring_updater).and_return hiring_updater
-    allow(subject).to receive(:job_updater).and_return job_updater
-
-    # Only allow calls to update that happen with the expected set of parameters
-    allow(hiring_updater).to receive(:update).with(params).and_return updated_hiring
-    allow(job_updater).to receive(:update).with(updated_hiring.job_id)
-
-    @result = subject.update(params)
-  end
-
-  it "should call the hiring updater with appropriate arguments the right number of times" do
-    # Assert that HiringUpdater.update has been called once
-    expect(hiring_updater).to have_received(:update).once
-  end
-
-  it "should call the job updater with appropriate arguments the right number of times" do
-    # Assert that JobUpdater.update has been called once
-    expect(job_updater).to have_received(:update).once
-  end
-
-  it "should return the updated Hiring" do
-    # Assert the return is the expected
-    expect(@result.status).to eq(Hiring.status.approved)
-  end
-
-  # ... remaining test scenarios
 end
 ```
 
-A point about performance: sometimes we want to use Factories to faster, and more reliably, build our data. Whenever possible, use stubbed methods such as `FactoryBot.build_stubbed`. Methods like `FactoryBot.create` update the test database, which is very useful in integration tests but is also a very expensive operation; in scale, hitting the database in manager layer considerably slows down the test pipeline. If the manager is not supposed to directly access an ActiveRecord, avoid using create methods.
-
-### 🛠️ Service layer
-
-Using the same logic as in the Manager layer, we mock the dependencies and test if they are called appropriately.
-
-Let's follow the example of the `HiringUpdater`. In order to update the ActiveRecord records, it needs to first validate the parameters received from the manager via a `HiringUpdateValidator`. Then it either raises an Exception if parameters are invalid or proceeds to call a `DelegateRepository` in order to effectively persist the updates to the database. After updating, it returns the updated Hiring.
+`spec/services/companies/hirings/hiring_manager_creator_spec.rb`
 
 ```ruby
-let(:provide_hiring_repo) { instance_double Repositories::Hirings::DelegateRepository }
-let(:hiring_update_validator) { instance_double Validators::Hiring::HiringUpdateValidator }
-
-let(:hiring) { build_stubbed(:hiring) }
-
-context 'when service is called with valid params' do
+describe Services::Companies::HiringManagerCreator, type: :service do
+  # Use FactoryBot.build_stubbed to generate your data
+  let(:candidate) { build_stubbed(:candidate) }
+  let(:job) { build_stubbed(:job) }
   let(:params) do
     {
-      id: hiring.id,
-      status: Hiring.status.approved
+      candidate_id: candidate.id,
+      job_id: job.id,
+      candidate_email: candidate.email
     }
   end
 
-  before do
-    allow(subject).to receive(:provide_hiring_repo).and_return provide_hiring_repo
-    allow(Validators::Hiring::HiringUpdateValidator).to receive(:new).with(kind_of(Hash), kind_of(Symbol)).and_return hiring_update_validator
+  let(:hiring_repo_spy) { spy Repositories::Hiring }
+  let(:candidate_mailer_spy) { spy Mailers::CandidateMailer }
 
-    allow(hiring_update_validator).to receive(:valid?).and_return true
-    allow(provide_hiring_repo).to receive(:update).with(kind_of(Hash))
-
-    subject.update(params)
+  let(:subject) do
+    described_class.new(
+      hiring_repo_spy: hiring_repo_spy,
+      candidate_mailer: candidate_mailer_spy,
+    )
   end
 
-  it "should call the hiring repository with appropriate arguments the right number of times" do
-    expect(provide_hiring_repo).to have_received(:update).with(expected_params).exactly(1).times
+  context 'when company has automatic approve hiring' do
+    let(:company) { build_stubbed(:company, automatic_approve_hiring: true) }
+    let(:company_package) { build_stubbed(:company_package, type: CompanyPackage.type.monthly) }
+
+    it 'calls the hiring repository with correct params only once' do
+      subject.create(params, company)
+
+      expected_hiring_repo_params = params.clone
+      expected_hiring_repo_params.merge!({
+        status: Hiring.status.approved,
+        approve_source: Hiring.approve_source.auto,
+        should_discount_from_package: false
+      })
+      # Assert if the hiring repository was called correctly
+      expect(hiring_repo_spy).to have_received(:create).with(expected_hiring_repo_params).once
+    end
+
+    it 'sends an email to the hired candidate only once' do
+      subject.create(params, company)
+
+      expect(candidate_mailer).to have_received(:send_hired_mail).with(candidate.email).once
+    end
   end
 
+  context 'when company does not have automatic approve hiring' do
+    let(:company) { build_stubbed(:company, automatic_approve_hiring: false) }
+    let(:company_package) { build_stubbed(:company_package, type: CompanyPackage.type.monthly) }
+
+    it 'calls the hiring repository with correct params only once' do
+      subject.create(params, company)
+
+      expected_hiring_repo_params = params.clone
+      expected_hiring_repo_params.merge!({
+        status: Hiring.status.waiting,
+        should_discount_from_package: false
+      })
+
+      expect(hiring_repo_spy).to have_received(:create).with(expected_hiring_repo_params).once
+    end
+
+    it 'does not send an email to the hired candidate' do
+      subject.create(params, company)
+
+      expect(candidate_mailer).not_to have_received(:send_hired_mail)
+    end
+  end
+
+  context 'when company has an unlimited company package' do
+    let(:company) { build_stubbed(:company, automatic_approve_hiring: false) }
+    let(:company_package) { build_stubbed(:company_package, type: CompanyPackage.type.unlimited) }
+
+    it 'calls the hiring repository with correct params only once' do
+      subject.create(params, company)
+
+      expected_hiring_repo_params = params.clone
+      expected_hiring_repo_params.merge!({
+        status: Hiring.status.waiting,
+        should_discount_from_package: true
+      })
+
+      expect(hiring_repo_spy).to have_received(:create).with(expected_hiring_repo_params).once
+    end
+
+    it 'does not send an email to the hired candidate' do
+      subject.create(params, company)
+
+      expect(candidate_mailer).not_to have_received(:send_hired_mail)
+    end
+  end
 end
 ```
 
-Here, the same performance consideration applies: prefer `FactoryBot.build_stubbed` over `FactoryBot.create` whenever possible.
+> Rspec allows you can use any test double (or partial double) as a spy, but the double must be setup to spy on the messages you care about. Spies automatically spy on all messages. With spies we don't break the Arrange Act Assert pattern that sometimes we don't follow with RSspec. You can read more about RSpec spies [here](https://relishapp.com/rspec/rspec-mocks/docs/basics/spies).
+>
+> In addition, we are using Dependency Injection to be able to inject the spies and assert on them.
+>
+> If your manager/service needs the return of some dependency, you can stub the return value of a spy just like this: `hiring_repo_spy.stub(:find_hired_candidates_ids) { [123, 321] }`
+
+A point about performance: sometimes we want to use Factories to faster, and more reliably, build our data. Whenever possible, use stubbed methods such as `FactoryBot.build_stubbed`. Methods like `FactoryBot.create` update the test database, which is very useful in integration tests but is also a very expensive operation; in scale, hitting the database in manager layer considerably slows down the test pipeline. If the manager or service is not supposed to directly access an ActiveRecord, avoid using create methods.
 
 ### 🚫 Validator layer
 

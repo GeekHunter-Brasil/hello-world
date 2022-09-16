@@ -115,7 +115,7 @@ With this approach, we make our application more manageable with well defined re
 >
 > **Finished the tests, we are able to refactor it and decide how we want to do it. Sometimes we want to split the feature in all these five layers, sometimes we don't feel the need to create a manager, and so on. There is not right or wrong, the most important thing is to write code that are covered by tests and easy to refactor it**
 
-With that said, we can go with the guideline for how we usually write the tests in each one of those layers.
+With that been said, we can go with the guideline for how we usually write the tests in each one of those layers.
 
 ### 📨 Entrypoint Layer
 
@@ -329,9 +329,9 @@ end
 
 > Rspec allows you can use any test double (or partial double) as a spy, but the double must be setup to spy on the messages you care about. Spies automatically spy on all messages. With spies we don't break the Arrange Act Assert pattern that sometimes we don't follow with RSspec. You can read more about RSpec spies [here](https://relishapp.com/rspec/rspec-mocks/docs/basics/spies).
 >
-> In addition, we are using Dependency Injection to be able to inject the spies and assert on them.
->
 > If your manager/service needs the return of some dependency, you can stub the return value of a spy just like this: `hiring_repo_spy.stub(:find_hired_candidates_ids) { [123, 321] }`
+>
+> In addition, we are using Dependency Injection to be able to inject the spies and assert on them easily.
 
 A point about performance: sometimes we want to use Factories to faster, and more reliably, build our data. Whenever possible, use stubbed methods such as `FactoryBot.build_stubbed`. Methods like `FactoryBot.create` update the test database, which is very useful in integration tests but is also a very expensive operation; in scale, hitting the database in manager layer considerably slows down the test pipeline. If the manager or service is not supposed to directly access an ActiveRecord, avoid using create methods.
 
@@ -425,7 +425,7 @@ describe Repositories::Hirings::Finder, '#find_all_by_job_id', type: %i[reposito
   context 'when does not exist hirings for given job' do
     let!(:hiring_not_to_return) { create(:hiring, job: other_job) }
 
-    it 'returns empty' do
+    it 'returns an empty array' do
       result = subject.find_all_by_job_id(job_to_find_hirings.id)
 
       expect(result).to be_empty

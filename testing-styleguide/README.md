@@ -169,6 +169,8 @@ Since we only create these files in the REFACTOR step of TDD, the business rule 
 
 So we don't necessarily test everything, and assuming other parts of the application are also tested (they should be!), it becomes much easier to simply spy the dependencies and assert how the code is communicating with them (mock roles, not objects).
 
+> Write tests until the fear is transformed into boredom
+
 Following our example, let's assume the manager responsible for hire a candidate has two dependencies: `hiring_repo` and `candidate_mailer`. Also, the `prepared_params` method has some different paths that the code could follow and the result from it is passed to the `hiring_repo`.
 
 Therefore, we want to assert how the manager is communicating with their dependencies.

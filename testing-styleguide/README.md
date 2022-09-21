@@ -24,7 +24,7 @@ The goal of this guide is to help our team to think about tests, write them, and
 - [Strategies](#strategies)
 - [In practice: Rails](#in-practice-rails)
 - [In practice: React](#in-practice-react)
-- [Source and useful links](#source-and-useful-links)
+- [Source and Useful links](#source-and-useful-links)
 
 ## Introduction
 

@@ -24,6 +24,7 @@ The goal of this guide is to help our team to think about tests, write them, and
 - [Strategies](#strategies)
 - [In practice: Rails](#in-practice-rails)
 - [In practice: React](#in-practice-react)
+- [Source and useful links](#source-and-useful-links)
 
 ## Introduction
 
@@ -620,9 +621,9 @@ fireEvent.focus(field);
 expect(field).toHaveValue('https://www.linkedin.com/in/');
 
 fireEvent.change(field, {
-  target: { value: 'https://www.linkedin.com/in/paulohenriquepm' },
+  target: { value: 'https://www.linkedin.com/in/johndoe' },
 });
-expect(field).toHaveValue('https://www.linkedin.com/in/paulohenriquepm');
+expect(field).toHaveValue('https://www.linkedin.com/in/johndoe');
 
 fireEvent.emptied(field);
 expect(field).toHaveValue('https://www.linkedin.com/in/');
@@ -639,3 +640,117 @@ Yes, we can apply all that we learn from TDD at Rails environment while testing 
 That's awesome, isn't it? 🔥
 
 ### 🧫 Organism
+
+For organisms we decided to keep using snapshots, because we saw in snapshots an easier way to get any layout break.
+Doing only integration tests we won't cover the cases when a style prop like margin or padding, passed down to a child component, has changed.
+
+**Snapshots**
+
+We are keeping the snapshots, but we can't always use shallow snapshots here.
+If we need a mocked provider or if we have to mock a mutation from Apollo for our form submit, for instance, the shallow render will break. In this case we will use a standard render, like this:
+
+```typescript
+const { container } = render(<RegisterStepLinkedin />);
+expect(container).toMatchSnapshot();
+```
+
+The rule of thumb is always goes for a shallow render in organisms snapshots, if you can't do it, then use the standard way.
+
+> Yes, if we are using standard render, when a child component snapshot breaks, it will also break the organism snapshot. This is a drawback we are fine with.
+
+**Integration**
+
+If the organism doesn't have a form to submit, then we do the same way as we did with the molecules integration tests, but to be able to do the integration tests using React Testing Library and React Hook Form, we needed to make some changes:
+
+1. We needed a `form` tag, so we updated our `FormContainer` component to a form
+
+```typescript
+export const FormContainer = ({
+  children,
+  ...props
+}: PropsWithChildren): ReactElement => (
+  <Box
+    as='form'
+    bgColor='background.700'
+...
+```
+
+2. We needed the FormContainer to have the `onSubmit` function, for instance:
+   `<FormContainer onSubmit={methods.handleSubmit(onSubmit)}>`
+
+3. We needed the form submit button to have a `type='submit'`
+4. In order to find the inputs using the react testing library we needed to add an `aria-label` to them. For the inputs the value of the `aria-label` should be the same as the input label and for the buttons it should be the same as the button text. Doing it this way we keep the aria-label accessibility purpose too.
+
+With all of this checked we can create our integration tests.
+
+> It's worth to remember that we should test every scenario in the form: warnings messages, errors message, field validation (we already have yup validation to tell us the cases we need to test!!)
+
+### Best practices for integration tests with React Hook Form
+
+- Use `userEvent` to simulate user typing, clicks and etc
+- To find the inputs use `screen.getByRole`
+- To find other elements in the DOM (like errors messages) use `screen.getByText`
+- To test the errors messages that should be displayed, if it's always the same message we can use `findAllByRole('alert')` e validate the number of errors expected, but if there are multiple error messages (different yup validations) for a field we should create a test for each one and validate de error text using `screen.getByText`.
+
+```typescript
+const alert = await screen.findAllByRole("alert");
+expect(alert).toHaveLength(2);
+
+const error = screen.getByText(/Invalid URL/i);
+expect(error).toBeInTheDocument();
+```
+
+In the example above we should have 2 alerts in the DOM one is a warning message with always the same text and the other one is the linkedin validation error for a invalid URL.
+We could also have another validation error message when the linkedin field is empty, which we should check for in another test.
+
+To test the form submit we should use `toHaveBeenCalledWith` with the values we filled the inputs with.
+
+```typescript
+waitFor(() => {
+  expect(mockMutate).toHaveBeenCalledWith({
+    variables: {
+      searchStatus: "searching_for_a_job_right_now",
+      linkedInUrl: "https://www.linkedin.com/in/johndoe",
+      acceptLinkedinImport: undefined,
+    },
+  });
+});
+```
+
+### Utils, hooks, shared...
+
+We have no secrets around here, do we? Hooks, utils, or shared functions are usually simple functions with one or a few input values and one or a few output values, and all you need to do is unit test to see if the internal processing of that data is working as it should
+
+In theory, hooks, utils, and shared functions are fractions of code that we extract and separate so they can be reused in other parts of the application without code redundancy, like this simple sum function:
+
+```typescript
+function sum(a, b) {
+  return a + b;
+}
+```
+
+Which can be tested like this:
+
+```typescript
+const result = sum(1, 2);
+expect(result).to.equal(3);
+```
+
+Regardless of the complexity of the tests, the idea will always be the same, passing the expected values on the input should test the expected value on the output.
+
+[Back to top ⬆️](#pushpin-summary)
+
+## Source and Useful links
+
+Down here we are listing some links that either we took as a source for many things said or we thing that in a way could be useful to check out.
+
+- [Test Driven Development: By Example](https://www.amazon.com.br/dp/B095SQ9WP4/?coliid=I3VU9HPFYLWNXJ&colid=U42P2DJ549XI&psc=0&ref_=lv_ov_lig_dp_it)
+- [Effective Testing with Rspec 3: Build Ruby Apps with Confidence](https://www.amazon.com.br/Effective-Testing-RSpec-Myron-Marston/dp/1680501984/ref=sr_1_1?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3QGCORSGDQ4OV&keywords=effective+testing+with+rspec+3&qid=1662209082&sprefix=effective+testing+with+rspec+3%2Caps%2C182&sr=8-1&ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9)
+- [The 3 Types of Unit Test in TDD](https://www.youtube.com/watch?v=W40mpZP9xQQ)
+- [TDD, Where Did It All Go Wrong (Ian Cooper)](https://www.youtube.com/watch?v=EZ05e7EMOLM&ab_channel=DevTernityConference)
+- [The Most Common Test Driven Development Mistakes](https://www.youtube.com/watch?v=SQUI9Ixb790&ab_channel=ContinuousDelivery)
+- [Testing React Hook Form With React Testing Library](https://claritydev.net/blog/testing-react-hook-form-with-react-testing-library/)
+- [React Hook Form - Testing Form](https://react-hook-form.com/advanced-usage#TestingForm)
+- [Common Mistakes With React Testing Library](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)
+- [Jest - Snapshot Testing](https://jest-bot.github.io/jest/docs/snapshot-testing.html)
+- [How to Write Snapshot Tests for React Components with Jest](https://www.digitalocean.com/community/tutorials/how-to-write-snapshot-tests-for-react-components-with-jest)

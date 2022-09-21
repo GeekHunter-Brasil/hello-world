@@ -12,12 +12,12 @@ The goal of this guide is to help our team to understand and follow our code sty
 
 # :pushpin: Summary
 
-* [Introduction](#introduction)
-* [Organization](#organization)
-* [Application Layers](#application-layers)
-* [Code Style](#code-style)
-* [Tests](#tests)
-* [Translate](#translate)
+- [Introduction](#introduction)
+- [Organization](#organization)
+- [Application Layers](#application-layers)
+- [Code Style](#code-style)
+- [Tests](#tests)
+- [Translate](#translate)
 
 ## Introduction
 
@@ -59,6 +59,25 @@ We usually break down our application between multiple layers. Here are some gre
 
 - [Clean Architecture - A Little Introduction](https://medium.com/swlh/clean-architecture-a-little-introduction-be3eac94c5d1)
 - [DDD for Rails Developers. Part 1: Layered Architecture](https://www.sitepoint.com/ddd-for-rails-developers-part-1-layered-architecture/)
+
+To keep our code organized and also domain-driven, we have created a folder structure based on artifacts and domains.
+
+We have today four main domains `Company`, `Candidate`, `Bid`, `Hiring` and some artifacts such as `Services`, `Validators`, `Repositories`.
+
+```
+📁 project/
+└──📁 app/
+   └──📁 services/ -> artifact
+      └──📁 companies/ -> domain
+         └──📁 candidates/ -> object
+            └──📁 search/ -> behavior/action
+                └──📝 company_candidates_search_manager.rb
+      └──📁 candidates/ -> domain
+         └──📁 jobs/ -> object
+            └──📁 search/ -> behavior/action
+                └──📝 candidates_jobs_search_manager.rb
+
+```
 
 [Back to top ⬆️](#pushpin-summary)
 
@@ -313,6 +332,26 @@ enumerize :gender, in: %w[
 ], scope: true
 ```
 
+An exception to this rule is if the data we are enumerating have some sort of order or level, for example:
+
+```ruby
+  enumerize :experience_level, in: {
+    level_0: 0, # 0-1 ano
+    level_1: 1, # 1-2 anos
+    level_2: 2, # 2-3 anos
+    level_3: 3, # 3-4 anos
+    level_4: 4, # 4-5 anos
+    level_5: 5, # 5-6 anos
+    level_6: 6, # 6-7 anos
+    level_7: 7, # 7-8 anos
+    level_8: 8, # 8-9 anos
+    level_9: 9, # 9-10 anos
+    level_10: 10, # 10-11 anos
+    level_11: 11, # 11-12 anos
+    level_12: 12 # 12 ou mais anos
+  }, predicates: true, scope: true
+```
+
 ### 👉 Declaring GraphQL enums with enumerize
 
 We use the [enumerize](https://github.com/brainspec/enumerize) gem to handle creating enums in our models and databases.
@@ -351,6 +390,7 @@ module Types
   end
 end
 ```
+
 ### 👉 Use comments to define tables and fields
 
 We use comments to define tables and fields. This is a good approach to help newcomers and other Geeks.
@@ -380,6 +420,7 @@ end
 ```
 
 ✅ Good
+
 ```ruby
 # frozen_string_literal: true
 
@@ -405,6 +446,9 @@ end
 <img alt="no-test-no-beer" src="/docs/no-test-no-beer.jpg" width="200">
 
 Tests are a **really, really important** part of our development. Internally, **we use TDD** and **tests are an implicit requirement for every single task**.
+
+> TDD it's not about just changing the order of write-code vs write-test, it about changing how we code. It works by forcing us to think "how are we gonna test this?" before thinking "how are we gonna make this work?". So writing the test JUST after you wrote the code it's not a little difference, it's a big difference and it's not even close to doing TDD. TDD is not always the best way to develop something, sometimes you just want to write an experiment to discover or research something, and this is fine. Just don't lie to yourself that you are doing TDD when you're obviously not.
+We can have a heated discussion about it here: https://twitter.com/nevemartins/status/1540721717718286338
 
 Here's some good resources to understand tests / TDD:
 
@@ -552,7 +596,7 @@ context 'with valid params' do
       update_hiring
     end
 
-    it "should call the hiring manager updater with appropriate arguments the right number of times" do
+    it "calls the hiring manager updater with appropriate arguments the right number of times" do
       expect_any_instance_of(::Services::Companies::Hirings::HiringManagerUpdate).to receive(:update).with(expected_params).exactly(1).times
     end
   end
@@ -563,16 +607,32 @@ context 'with valid params' do
       hiring.reload
     end
 
-    it 'should return 200 as status code' do
+    it 'returns 200 as status code' do
       expect(response).to have_http_status(200)
     end
 
-    it 'should update the hiring status' do
+    it 'updates the hiring status' do
       expect(hiring.status).to eq Hiring.status.approved.value
     end
   end
 end
 ```
+
+Notice that when we use the Rspec DSL for testing (`describe, context, it`) we want to tell a story:
+- (describe) `MyClass`;
+- (describe) `'#my_instance_method'`;
+- (context) `when 'called with no params'`;
+- (it) `'raises a validation exception'`;
+- (describe) `'.my_class_method'`;
+- (context) `'when called with float'`;
+- (it) `'raises a must provide Decimal exception'`;
+
+By convention instance methods have the `#` prefix, and class methods the `.` prefix. This makes it easy to learn about the code while reading the tests.
+You can dig this up on the `rspec-core` documentation: https://rubydoc.info/gems/rspec-core
+
+Notice that we don't use `it 'should do something'`, instead we use `it 'does something'`.
+
+![Do or do not, there is no should.](https://i.imgflip.com/6kupo6.jpg)
 
 #### 🎛️ Manager Layer
 
@@ -649,11 +709,11 @@ context 'with valid params' do
     subject.update(params)
   end
 
-  it "should call the hiring updater with appropriate arguments the right number of times" do
+  it "calls the hiring updater with appropriate arguments the right number of times" do
     expect(hiring_updater).to have_received(:update).with(expected_params).exactly(1).times
   end
 
-  it "should call the job updater with appropriate arguments" do
+  it "calls the job updater with appropriate arguments" do
     expect(job_updater).to have_received(:update).with(expected_params).exactly(1).times
   end
 end
@@ -724,7 +784,7 @@ context 'with valid params' do
     subject.update(params)
   end
 
-  it "should call the hiring repository with appropriate arguments the right number of times" do
+  it "calls the hiring repository with appropriate arguments the right number of times" do
     expect(provide_hiring_repo).to have_received(:update).with(expected_params).exactly(1).times
   end
 end
@@ -755,6 +815,7 @@ module Validators
   end
 end
 ```
+
 ❌ Bad
 
 ```ruby
@@ -775,7 +836,7 @@ describe Validators::Candidate::CandidateUpdateValidator, type: :validator do
     context 'when params are invalid' do
       let(:params) { {} }
 
-      it 'should add :inclusion to available' do
+      it 'adds :inclusion to available' do
         expect(errors.added?(:available, :inclusion)).to be_truthy
       end
     end
@@ -783,7 +844,7 @@ describe Validators::Candidate::CandidateUpdateValidator, type: :validator do
     context 'when params are valid' do
       let(:params) { { available: true } }
 
-      it 'should not add :inclusion to available' do
+      it 'does not add :inclusion to available' do
         expect(errors.added?(:available, :inclusion)).to be_falsey
       end
     end
@@ -811,11 +872,11 @@ describe Validators::Candidate::CandidateUpdateValidator, type: :validator do
     context 'when params are invalid' do
       let(:params) { {} }
 
-      it 'should add :blank to name' do
+      it 'adds :blank to name' do
         expect(errors.added?(:name, :blank)).to be_truthy
       end
 
-      it 'should add :inclusion to available' do
+      it 'adds :inclusion to available' do
         expect(errors.added?(:available, :inclusion)).to be_truthy
       end
     end
@@ -824,23 +885,23 @@ describe Validators::Candidate::CandidateUpdateValidator, type: :validator do
       context 'name' do
         let(:params) { { name: 'Test Name' } }
 
-        it 'should not add :blank to name' do
+        it 'does not add :blank to name' do
           expect(errors.added?(:name, :blank)).to be_falsey
         end
       end
 
-      context 'available' do
-        context "when has 'true' value" do
+      context 'when available' do
+        context "is 'true'" do
           let(:params) { { available: true } }
 
-          it 'should not add :inclusion to available' do
+          it 'does not add :inclusion to available' do
             expect(errors.added?(:available, :inclusion)).to be_falsey
           end
         end
-        context "when has 'false' value" do
+        context "is 'false'" do
           let(:params) { { available: false } }
 
-          it 'should not add :inclusion to available' do
+          it 'does not add :inclusion to available' do
             expect(errors.added?(:available, :inclusion)).to be_falsey
           end
         end
@@ -891,7 +952,7 @@ context 'when exists hirings with given job_id' do
     allow(subject).to receive(:find_all_by_job_id).and_return [first_hiring, second_hiring]
   end
 
-  it 'should return the expected hirings' do
+  it 'returns the expected hirings' do
     result = subject.find_all_by_job_id(job.id)
     expect(result).to [first_hiring, second_hiring]
   end
@@ -903,7 +964,7 @@ end
 ```ruby
 subject { Repositories::Hirings::Finder.new Bid }
 
-context 'when exists hirings with given job_id' do
+context 'when a job has hirings' do
   let(:job) { create(:job) }
   let(:other_job) { create(:job) }
 
@@ -911,7 +972,7 @@ context 'when exists hirings with given job_id' do
   let(:second_hiring) { create(:hiring, job: job) }
   let(:other_hiring) { create(:hiring), job: other_job }
 
-  it 'should return the expected hirings' do
+  it 'returns only the hirings of the given job' do
     result = subject.find_all_by_job_id(job.id)
     expect(result).to [first_hiring, second_hiring]
   end
@@ -925,6 +986,7 @@ end
 When writing your programs avoid using hard coded strings that will be displayed to users, this allows support for multiple languages. The path with translated keys is `<REP>/config/locales/<locale>`
 
 ❌ Bad
+
 ```ruby
   render json: {
     message: 'Lorem Ipsum at message'
@@ -932,6 +994,7 @@ When writing your programs avoid using hard coded strings that will be displayed
 ```
 
 ✅ Good
+
 ```ruby
   render json: {
     message: I18n.t('<path_key_message>')
@@ -959,6 +1022,7 @@ to declare the yml, you must use the same name as the parent directory 'e.g. dir
 ```
 
 file `pt-BR.yml` contains constants and common terms application.
+
 ```yml
 pt-BR:
   cancel: Cancelar
@@ -966,12 +1030,13 @@ pt-BR:
 ```
 
 file `directory.yml` respect folder structure.
+
 ```yml
 pt-BR:
   views:
     pages:
       directory:
-        message: 'Massum Ipsum Lorem'
+        message: "Mussum Ipsum Lorem"
 ```
 
 ### 👉 Translate view
@@ -979,6 +1044,7 @@ pt-BR:
 We use definition "Lazy" Lookup to translate views. For more information [Lazy Lookup](https://guides.rubyonrails.org/i18n.html#lazy-lookup)
 
 example the `pages.index.title` values inside `app/views/pages/index.html.erb`
+
 ```
 <%= t('.title') %>
 ```
@@ -989,21 +1055,24 @@ Structe in yml file:
 pt-BR:
   pages:
     index:
-      title: 'Boas-vindas'
+      title: "Boas-vindas"
 ```
 
 In some cases, we may have phrases that repeat themselves. Thus, a standard structure can be created
+
 ```
 <%= t('pages.default.title') %>
 ```
+
 Structe in yml file:
 
 ```yml
 pt-BR:
   pages:
     default:
-      title: 'Boas-vindas'
+      title: "Boas-vindas"
 ```
+
 If necessary to use a param in view, use:
 
 ```
@@ -1011,8 +1080,55 @@ If necessary to use a param in view, use:
 ```
 
 yml file:
+
 ```
 title: 'Boas-vindas %{username}'
+```
+
+### 👉 Translate e-mails
+
+We use SendGrid for sending e-mails. SendGrid works with e-mail templates that need to be created in their platform, then we make an API call passing the template name and its parameters.
+
+For a given e-mail we will have a different template for each language.
+
+We use the following template nomenclature:
+- `template_name` for `pt_br` template
+- `en__template_name` for `en` template
+
+
+Example: for the password recovery e-mail templates:
+- `empresa-reset-password`
+- `en__empresa-reset-password`
+
+
+Then in the `monolith` we have two helper functions to generate the template name based on the user language or a given language:
+- `MailersHelper.build_prefix_for_record(record, context_name)` - this function gets the `language` from the `record` and concatenates the `language` with the `context_name`, where `record` is the logged-in user object and `context_name` is the base template name
+- `MailersHelper.build_prefix_for_language(language, context_name)` - this function concatenates the `language` with the `context_name`
+
+
+Finally we send the e-mail, example:
+
+```ruby
+template = CustomDeviseMailer.build_prefix_for_record(record, template)
+notification_params = {
+  model_id: record.id,
+  context: {
+    name: template
+  },
+  messages: [{
+    recipient: {
+      user_id: record.id,
+      user_type: DarwinHelper.get_user_type_by_instance(record),
+      phone: record.try(:phone_number) || record.try(:phone),
+      email: record.try(:email)
+    },
+    variables: {
+      USER_NAME: record.is_a?(AdminUser) ? record.email : record.name,
+      RESET_LINK: reset_link
+    }
+  }]
+}
+Workers::Darwin::Api.perform_async(notification_params)
 ```
 
 [Back to top ⬆️](#pushpin-summary)

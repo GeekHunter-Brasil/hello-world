@@ -142,7 +142,7 @@ It is a great idea to read the documents below, since we use them as a base:
 
 ### 👉 When possible, write JSDocs 📃
 
-JSDocs are amazing! While they make a big difference on obvious components (e.g. `Button`), they are amazing to clarify and document utility functions, hooks, complex components and such.
+JSDocs are amazing! While they don't make a big difference on obvious components (e.g. `Button`), they are amazing to clarify and document utility functions, hooks, complex components and such.
 
 Check out these guides:
 
@@ -201,6 +201,30 @@ const Button = (props: PropsWithChildren<ButtonProps>): React.ReactElement => {
 
 <br />
 
+### 👉 Avoid using `&&` on conditional renders
+
+It's a common practice to use `&&` to conditionally renders elements inside React components. The inadverted use of this pattern can lead to some unexpected errors.
+
+It's a great idea to use ternary operators instead. For further reference, you can check [this article by Kent C. Dodds](https://kentcdodds.com/blog/use-ternaries-rather-than-and-and-in-jsx)
+
+❌ Bad
+
+```tsx
+<Box>
+  {errorMessage && <Text>{errorMessage}</Text>}
+</Box>
+```
+
+✅ Good
+
+```tsx
+<Box>
+  {errorMessage ? <Text>{errorMessage}</Text> : null}
+</Box>
+```
+
+<br />
+
 ### 👉 Do not use values not present in the theme
 
 Values that are defined in our theme come from our Design System. We should use these values, and should not input manual values in our components.
@@ -219,34 +243,27 @@ Values that are defined in our theme come from our Design System. We should use 
 
 <br />
 
-### 👉 Avoid adding `geek` or `{projectName}` prefix
+### 👉 Avoid redundant names
 
-When naming variables, it's a common practice to add `geek` or any other prefix related to the company or project to make that variable unique.
+When naming variables, it's a common practice to overexplain variables in their names.
 
-It's a great idea to avoid doing this, since everything inside a `geek` repo belongs to `geek` - so it's redundant.
+Try to keep it simple and do not explain things that are already obvious from context or typing. 
 
 ❌ Bad
 
 ```tsx
-export const colors: ThemeColors = {
-  geekPrimary: {
-    50: "#ffffff",
-    100: "#F0F0FF",
-    // ...
-  },
-};
+const frameworkList = ["React", "Angular", "Vue"]
+const inputElement = Document.querySelector("#input")
+const [filterState, setFilterState] = useState()
 ```
 
 ✅ Good
 
+
 ```tsx
-export const colors: ThemeColors = {
-  primary: {
-    50: "#ffffff",
-    100: "#F0F0FF",
-    // ...
-  },
-};
+const frameworks = ["React", "Angular", "Vue"]
+const input = Document.querySelector("#input")
+const [filter, setFilter] = useState()
 ```
 
 <br />
@@ -489,6 +506,34 @@ export const MyComponent = (): React.ReactElement => {
 
 <br />
 
+### 👉 Use array syntax to handle responsive style props
+
+Array syntax is the [recommended method for responsive style props in chakra-ui](https://chakra-ui.com/docs/styled-system/features/responsive-styles#the-array-syntax)
+
+❌ Bad
+
+```tsx
+export const MyComponent = (): React.ReactElement => {
+  return (
+    <Box mb={{ sm: "1rem", md: "2rem", lg: "3rem"}}>
+      <Heading fontSize={{ sm: "sm", md: "md", lg: "lg" }}>Title</Heading>
+    </Box>
+  );
+};
+```
+
+✅ Good
+
+```tsx
+export const MyComponent = (): React.ReactElement => {
+  return (
+    <Box mb={["1rem", "2rem", "3rem"]}>
+      <Heading fontSize={["sm", "md", "lg"]}>Title</Heading>
+    </Box>
+  );
+};
+
+
 ### 👉 Static assets should be referenced by using `import`
 
 When using static assets it should be referenced in the code by using `import` instead of reference by `string`.
@@ -552,6 +597,39 @@ it("Correctly formats the name", () => {
 ```
 
 [Back to top ⬆️](#pushpin-summary)
+
+### 👉 Avoid using `data-testid` to query elements
+
+It's a common practice to define an attribute called `data-testid` and use it to query elements in component tests. Because `data-testid` is an arbitrary attribute, it says nothing about the element nor about its context. 
+
+It's a great idea to query elements with more semantic functions, following the priority list defined on [React Testing Library documentation](https://testing-library.com/docs/queries/about/#priority).
+
+❌ Bad
+
+```tsx
+const Input = getByTestId("submit-button")
+const Input = getByTestId("candidates-heading")
+const Input = getByTestId("login-link")
+
+const Input = getByTestId("cpf-input")
+const Input = getByTestId("name-input")
+const Input = getByTestId("blog-paragraph")
+```
+
+✅ Good
+
+```tsx
+const Input = getByRole("button", { name: /enviar/i })
+const Input = getByRole("heading", { name: /candidatos disponíveis/i })
+const Input = getByRole("link", { name: /login/i })
+
+const Input = getByLabelText(/cpf/i)
+const Input = getByPlaceholderText(/ex: josé de araújo/i)
+const Input = getByText(/loren ipsun loren ipsun loren ipsun/i)
+
+```
+
+<br />
 
 ## Translate
 
@@ -619,6 +697,12 @@ export const Page = (): React.ReactElement => {
 ```
   ⚠️ If the key is not found, next-translate prints the key`s names instead of the content.
   In the previous example, show example instead of Hello World.
+```
+
+To be able to load the translations it is necessary to compile the translations using the following command:
+
+```
+  yarn formatter-generator
 ```
 
 [Back to top ⬆️](#pushpin-summary)

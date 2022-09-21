@@ -10,13 +10,15 @@ Here we document our workflows, styleguides and patterns.
 
 # :pushpin: Technical Documentation
 
-* [Frontend Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/frontend-styleguide)
-* [Backend Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/backend-styleguide)
-* [Development Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/development-styleguide)
-* [Testing Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/testing-styleguide)
+- [Frontend Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/frontend-styleguide)
+- [Backend Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/backend-styleguide)
+- [Development Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/development-styleguide)
+- [Testing Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/testing-styleguide)
+
 # :pushpin: Career Documentation
 
-* [Your Career at GeekHunter](https://github.com/GeekHunter-Brasil/hello-world/tree/master/career)
+- [Your Career at GeekHunter](https://github.com/GeekHunter-Brasil/hello-world/tree/master/career)
+
 # The Geek Manifest
 
 - No code is better than no code (if I didn't know how to program, how would I solve it?);

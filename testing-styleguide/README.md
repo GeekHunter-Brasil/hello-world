@@ -59,6 +59,8 @@ We can even say Test Driven Development is more than just a requirement: it is a
 
 Also, it's worth noting that doing TDD helps building the basis of our test pyramid: if for every piece of code we write we have an underlying test to support it, the basis of the pyramid will increase effortlessly.
 
+> TDD it's not about just changing the order of write-code vs write-test, it about changing how we code. It works by forcing us to think "how are we gonna test this?" before thinking "how are we gonna make this work?". So writing the test JUST after you wrote the code it's not a little difference, it's a big difference and it's not even close to doing TDD. TDD is not always the best way to develop something, sometimes you just want to write an experiment to discover or research something, and this is fine. Just don't lie to yourself that you are doing TDD when you're obviously not.
+
 Next are some practices we believe are good to follow while writing tests with TDD:
 
 - **Test Isolation:** one test should never affect other test. If I have one test broken, I have one problem. If I have two tests broken, I have two problems. This also implies that the tests are order independent.
@@ -437,3 +439,203 @@ end
 ```
 
 [Back to top ⬆️](#pushpin-summary)
+
+## In practice: React
+
+First of all, everything that was said about the concepts and strategies also apply in the front-end. The only difference it's the library that we will used to a do it.
+
+We use [jest](https://jestjs.io/) and [testing-library](https://testing-library.com/) to help us with the testing.
+
+### Atomic Design
+
+Here at GeekHunter we use the Atomic Design to structure our components. In a nutshell, Atomic Design it's composed by 5 layers:
+
+- Atom: blocks that comprise all our user interfaces, such as labels, inputs, buttons and so on. Prefer, an atom does not have any logic inside, but in some cases, we can add a little of logic (e.g. button variants depending on param passed)
+- Molecule: relatively simple groups of UI elements functioning together as a unit. For example, a form label, search input, and button can join together to create a search form molecule.
+- Organism: complex UI components composed of groups of molecules and/or atoms and/or other organisms, for example, a header.
+- Template: page-level objects that place components into a layout and articulate the design’s underlying content structure.
+- Page: specific instances of templates that show what a UI looks like with real representative content in place.
+
+> If you want to learn more about Atomic Design we encourage to check out this
+> [article](https://atomicdesign.bradfrost.com/chapter-2/)
+
+Such as Atomic Design split the components and have different approaches for each one, we tend to do the same when talking about tests.
+
+### ⚛️ Atoms
+
+Since an atom should be a stylized html tag and just that, the smallest part of an organism without any kind of logic. In other words, we need to validate that it is just rendering the content and styles correctly.
+
+For that propose, the Snapshot tests comes in handy. They are a very useful tool whenever you want to make sure your UI does not change unexpectedly.
+
+For example, how can we test a button atom that has different styles (variants)?.
+
+Without Snapshot, it would go something like this:
+
+```typescript
+it("renders correctly button props as solid", () => {
+  const { getByTestId } = render(<Button variant="outline">Test</Button>);
+
+  expect(getByTestId("button")).toBeInTheDocument();
+  expect(getByTestId("button")).toHaveStyle("background-color: transparent");
+});
+```
+
+Not so much elegant, right?
+
+With Snapshot testing, we can test all the content and styles rendering with just two lines of code:
+
+```typescript
+it("renders correctly button props as solid", () => {
+  const tree = renderer.create(<Button variant="solid">Test</Button>).toJSON();
+
+  expect(tree).toMatchSnapshot();
+});
+```
+
+With Snapshot we are testing all passed properties, and if any property changes, the test will inform us. Since we use a third-party library (Chakra ui) there is no need to test property rendering, as all components are already tested before they are released.
+
+### ⚛️⛓️ Molecules
+
+When talking about molecules we tend to go with two different kinds of tests: Snapshots and Integration ones
+
+**Testing Snapshots? Again? Yes, but different.**
+
+It may seem strange to use snapshot tests again on molecules if the molecules are made of atoms already tested with this tool, but the purpose here is different.
+
+On the atoms we want to test if the style of the components, classes and attributes are
+correct.
+
+On molecules, made up exclusively of atoms, we don't need to revalidate the styles, classes and attributes, we just need to know if the molecule is correctly calling its atoms, and if one is changed by removing or adding a new atom, the snapshot will indicate this change, this is why we use shallow rendering (or as we call it, mock snapshot)
+
+Here we have the two types of Snapshot tests
+
+**Normal rendering**
+
+```typescript
+exports[`renders correctly button props as outline 1`] = `
+<button
+  className="chakra-button css-7u2sko"
+  data-testid="button"
+  type="button"
+>
+  Test
+</button>
+`;
+```
+
+**Shallow rendering**
+
+```typescript
+exports[`MaskedField molecule renders correctly outline field props 1`] = `
+<FormControl
+  position="relative"
+  width="100%"
+>
+  <FieldTitle
+    isRequired={true}
+    label="What is your LinkedIn URL?"
+  />
+  <InputGroup
+    flexDirection="column"
+  >
+    <InputLeftElement
+      cursor="default"
+      height="40px"
+    >
+      <Icon
+        as={[Function]}
+        color="text.100"
+        h={5}
+        mx={4}
+        w={5}
+      />
+    </InputLeftElement>
+    <Input
+      _focus={
+        Object {
+          "bgColor": "secondary.50",
+          "borderColor": "secondary.50",
+          "boxShadow": "none",
+        }
+      }
+      _hover={
+        Object {
+          "borderColor": "secondary.50",
+        }
+      }
+      as={[Function]}
+      beforeMaskedValueChange={[Function]}
+      bgColor="background.900"
+      borderColor="background.900"
+      borderRadius={4}
+      color="text.100"
+      data-testid="masked-input"
+      fontSize="14px"
+      fontWeight="400"
+      formatChars={
+        Object {
+          "*": ".",
+          "9": "[0-9]",
+          "x": "[аa-zà-úÀ-ÚüÜA-Z0-9%-]",
+          "z": "[A-Za-zà-úÀ-Ú]",
+        }
+      }
+      height="40px"
+      inputRef={null}
+      mask="https://www.linkedin.com/in/********************************************************************************************"
+      maskChar={null}
+      paddingRight="12px"
+      placeholder="https://www.linkedin.com/in/<your_linkedin>"
+      py={2}
+      type="text"
+      width="100%"
+    />
+  </InputGroup>
+  <FormHelperText
+    color="text.200"
+    data-testid="help-text"
+    fontSize="0.9rem"
+    fontStyle="italic"
+  >
+    Type your LinkedIn URL
+  </FormHelperText>
+</FormControl>
+`;
+```
+
+Notice that in the shallow mode we don't have native html elements, but the components atoms itself. So, as said, if we remove or add a new atom, the snapshot will tell us.
+
+**Now, the Integration Test**
+
+We know that the molecule is unchanged and is calling its atoms correctly, now we need to see if this set of atoms is actually working as we expect, literally to test its integration. With this we test the purpose of that component with jest, for example:
+
+```typescript
+...
+...
+...
+
+const field = getByTestId('masked-input');
+
+fireEvent.focus(field);
+expect(field).toHaveValue('https://www.linkedin.com/in/');
+
+fireEvent.change(field, {
+  target: { value: 'https://www.linkedin.com/in/paulohenriquepm' },
+});
+expect(field).toHaveValue('https://www.linkedin.com/in/paulohenriquepm');
+
+fireEvent.emptied(field);
+expect(field).toHaveValue('https://www.linkedin.com/in/');
+
+...
+...
+...
+```
+
+Testing behavior. Does this remind you of something? 🤔.
+
+Yes, we can apply all that we learn from TDD at Rails environment while testing components in React. We can write the tests asserting the behavior that we expect to have at the end before actually implement it.
+
+That's awesome, it's it? 🔥
+
+### 🧫 Organism

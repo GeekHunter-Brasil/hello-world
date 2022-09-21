@@ -102,6 +102,25 @@ Therefore, do not refactor code unless tested; otherwise you risk introducing bu
 
 [Back to top ⬆️](#pushpin-summary)
 
+### Use and Abuse from RSpec Syntax
+
+Notice that when we use the Rspec DSL for testing (`describe, context, it`) we want to tell a story:
+
+- (describe) `MyClass`;
+- (describe) `'#my_instance_method'`;
+- (context) `when 'called with no params'`;
+- (it) `'raises a validation exception'`;
+- (describe) `'.my_class_method'`;
+- (context) `'when called with float'`;
+- (it) `'raises a must provide Decimal exception'`;
+
+By convention instance methods have the `#` prefix, and class methods the `.` prefix. This makes it easy to learn about the code while reading the tests.
+You can dig this up on the `rspec-core` documentation: https://rubydoc.info/gems/rspec-core
+
+We don't use `it 'should do something'`, instead we use `it 'does something'`.
+
+![Do or do not, there is no should.](https://i.imgflip.com/6kupo6.jpg)
+
 ## In practice: Rails
 
 Sometimes we find ourselves dealing with some complex domain logic (such as hiring a candidate). To make our life easier, in these scenarios, we tend to split our problem in some layers:

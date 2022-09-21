@@ -636,6 +636,6 @@ Testing behavior. Does this remind you of something? 🤔.
 
 Yes, we can apply all that we learn from TDD at Rails environment while testing components in React. We can write the tests asserting the behavior that we expect to have at the end before actually implement it.
 
-That's awesome, it's it? 🔥
+That's awesome, isn't it? 🔥
 
 ### 🧫 Organism

@@ -773,3 +773,5 @@ Down here we are listing some links that either we took as a source for many thi
 - [Common Mistakes With React Testing Library](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)
 - [Jest - Snapshot Testing](https://jest-bot.github.io/jest/docs/snapshot-testing.html)
 - [How to Write Snapshot Tests for React Components with Jest](https://www.digitalocean.com/community/tutorials/how-to-write-snapshot-tests-for-react-components-with-jest)
+
+[Back to top ⬆️](#pushpin-summary)

@@ -522,8 +522,7 @@ When talking about molecules we tend to go with two different kinds of tests: Sn
 
 It may seem strange to use snapshot tests again on molecules if the molecules are made of atoms already tested with this tool, but the purpose here is different.
 
-On the atoms we want to test if the style of the components, classes and attributes are
-correct.
+On the atoms we want to test if the style of the components, classes and attributes are correct.
 
 On molecules, made up exclusively of atoms, we don't need to revalidate the styles, classes and attributes, we just need to know if the molecule is correctly calling its atoms, and if one is changed by removing or adding a new atom, the snapshot will indicate this change, this is why we use shallow rendering (or as we call it, mock snapshot)
 

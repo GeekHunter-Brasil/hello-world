@@ -736,7 +736,7 @@ waitFor(() => {
 });
 ```
 
-### Utils, hooks, shared...
+### 🪄 Utils, hooks, shared...
 
 We have no secrets around here, do we? Hooks, utils, or shared functions are usually simple functions with one or a few input values and one or a few output values, and all you need to do is unit test to see if the internal processing of that data is working as it should
 

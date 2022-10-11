@@ -10,11 +10,10 @@ Here we document our workflows, styleguides and patterns.
 
 # :pushpin: Technical Documentation
 
-> Quick note: take everything here as it should be: <b>a guide</b>, not a law. Our style guides are meant to be <b>constantly updated as we see fit</b>. If you disagree with anything written here, feel free to create an issue or open a PR proposing changes.
-
 - [Frontend Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/frontend-styleguide)
 - [Backend Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/backend-styleguide)
 - [Development Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/development-styleguide)
+- [Testing Styleguide](https://github.com/GeekHunter-Brasil/hello-world/tree/master/testing-styleguide)
 
 # :pushpin: Career Documentation
 

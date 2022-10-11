@@ -438,6 +438,55 @@ class Person < ActiveRecord::Migration[5.0]
 end
 ```
 
+### 👉 Always use symbols in hashs
+
+Ruby is type sensitive when dealing with hash keys, in a way that `hash[:key]` is different than `hash["key"]`.
+But for Rails model validator, it doesn't matters, which can lead to some unexpected behavior.
+Make sure to always use symbols as hash keys.
+
+❌ Bad
+
+```ruby
+person = {
+  'name' => 'John',
+  'age' => 30,
+}
+```
+
+✅ Good
+
+```ruby
+person = {
+  name: 'John',
+  age: 30,
+}
+```
+
+### 👉 Symbolize hashs comming from redis
+
+We use [Redis](https://redis.io/) to handle async tasks and processing.
+When a execution is scheduled in Redis, it's stored as a JSON and deserialized when it's retrieved.
+
+Due that, the hashs will always come with strings as keys.
+When handling the data in a method that will be executed in the future, make sure to symbolize the hash keys.
+
+❌ Bad
+
+```ruby
+def call_async(params)
+  id = params[:id]
+end
+```
+
+✅ Good
+
+```ruby
+def call_async(params)
+  params = params.deep_symbolize_keys # params was stored in redis as a JSON, so we need to symbolize the keys
+  id = params[:id]
+end
+```
+
 [Back to top ⬆️](#pushpin-summary)
 
 ## Translate

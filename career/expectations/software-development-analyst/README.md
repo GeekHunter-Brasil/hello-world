@@ -4,7 +4,7 @@
 
 # 🧑‍💻  Software Development Analyst
 
-A software development analyst has one purpose at GeekHunter: bring value to both Geekers and users by applying their solving problems skills (mostly) through technology.
+A software development analyst has one purpose at GeekHunter: create value to both Geekers and users by applying their solving problems skills (mostly) through technology.
 
 Thus, a software development analyst is usually assigned into a product squad (with a well defined purpose) and is responsible for the value delivery of our product.
 
@@ -22,10 +22,10 @@ What do we expect from a software development analyst at GeekHunter?
 
 ### Experience
 
-- **Usually goes with the current hype.** Always wants to try out new frameworks or languages but doesn't know how to balance this with the daily routine. Usually, this ends up hurting the productivity for himself or the team.
-- Knows at least a bit about software development (a few months to one year of experience), preferably in production environments. Has already worked in new features, bugfixes, etc.
-- Knows at least a bit about agile culture, has a slight idea of key practices such as Scrum or Kanban.
-- Does not review code for other collaborators. Usually finds it difficult to analyze external code and to find problems in it.
+- **Usually goes with the current hype.** Always wants to try out new frameworks or languages but doesn't know how to balance this with the daily routine. Usually, this ends up hurting the productivity for themselves or the team.
+- Knows at least a bit about software development (a few months to one year of experience), preferably in production environment. Has already worked in new features, bugfixes, etc.
+- Knows at least a bit about agile culture. Has a slight idea of key practices such as Scrum or Kanban.
+- Does not review code from other collaborators. Finds it difficult to analyze external code and to find problems in it.
 - Asks for help whenever they are feeling blocked, not productive or doesn't know what to do.
 - Usually codes "by example" (e.g. copying code), and **does not understand how that code works**.
 - Gets blocked often, requiring more attention and support.
@@ -36,7 +36,7 @@ What do we expect from a software development analyst at GeekHunter?
 - **Knows at least a bit of the tech stack that we use** (Ruby on Rails, React, Next.js, TypeScript, Python, GraphQL, etc). Will eventually get blocked and have questions on how to build software using those technologies.
 - Knows at least a bit about automated tests, and at least understands their importance. Is capable of writing a test with the help of another developer.
 - Usually has a difficult time to write code that respects our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world).
-- Usually can't do TDD daily, but knows what it is.
+- Usually can't do TDD on a daily basis, but knows what it is.
 - Knows at least a bit about git, but can't follow processes such as gitflow.
 - Doesn't know much about database technologies, and usually has a hard time writing a SQL query.
 - Knows about Object-Oriented Programming, but has difficulty implementing it daily.

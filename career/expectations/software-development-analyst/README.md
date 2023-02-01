@@ -68,10 +68,10 @@ What do we expect from a software development analyst at GeekHunter?
 - **Is experienced in most of the tech stack that we use** (Ruby on Rails, React, Next.js, TypeScript, Python, GraphQL, etc). May have occasional blocks, but is able to develop efficiently.
 - **Uses TDD on a daily basis, and understands the importance of it**.
 - Writes code according to our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world).
-- Has experience with common database technologies. Knows relational models, tables, views, indices, and other terms. Writes a performant SQL query.
+- Has experience with common database technologies. Knows relational models, tables, views, indices, and other terms. Writes performant SQL queries.
 - Has experience in git, and **is able to resolve merge conflicts**.
-- Is fluent in Object-Oriented Programming, knows the key points to it and writes high-quality OOP code.
-- Knows what Functional Programming is; knows advantages and disadvantages to each paradigm.
+- Is fluent in Object-Oriented Programming. Knows the key points to it and writes high-quality OOP code.
+- Knows what Functional Programming is. Knows advantages and disadvantages to each paradigm.
 - Understands concepts such as data immutability, pure functions, and reactivity.
 - **Understands concepts about software design, and knows how to follow common patterns** such as Clean Architecture, Hexagonal Architecture and others. Knows about their advantages and disadvantages.
 - Understands how to architect applications and is capable of choosing a good architecture according to the complexity and challenge (e.g. monoliths, micro-services, serveless, etc).
@@ -84,7 +84,7 @@ What do we expect from a software development analyst at GeekHunter?
 - Is able to keep their presence in synchronous moments (e.g. squad rituals such as dailies, plannings, reviews; pair programming sessions) and asynchronous ones (e.g. discussions on Slack, JIRA, Basecamp, etc).
 - Is really motivated to learn more and develop their skills.
 - Usually understands their own strengths and weaknesses, and sees something they want to prioritize in their career. The leadership process here is usually easier, since this person is able to develop their skills with some level of autonomy.
-- Has emotional resilience to go through challenging scenarios, receive valuable feedbacks and use them to grow as a professional.
+- Has emotional resilience to go through challenging scenarios and is able to receive valuable feedbacks and use them to improve.
 
 ## 🐓 Senior Software Development Analyst
 

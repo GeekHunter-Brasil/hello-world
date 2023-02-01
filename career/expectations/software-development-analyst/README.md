@@ -90,7 +90,7 @@ What do we expect from a software development analyst at GeekHunter?
 
 ### Experience
 
-- **Multiplies value on the team**. Is capable of delivering their work efficiently, but there is a key difference here: this person looks at the team's productivity, suggesting improvements and using their experience to multiply our overall productivity.
+- **Multiplies value on the team**. Delivers their work efficiently, but there is a key difference here: this person looks at the team's productivity, suggesting improvements and using their experience to multiply our overall productivity.
 - Has a solid experience in software development for a considerable time (e.g. more than five years) in production, preferably having worked with critical software where it's really expensive to be offline.
 - Has experience with Agile Culture. **Has already worked in high-performance agile teams using methodologies such as Scrum, Kanban, ShapeUp or others**.
 - Has experience mentoring other software analysts. Uses this experience in daily routines (e.g. Code Review, Pair Programming, etc) to teach and improve other team member's technical abilities.

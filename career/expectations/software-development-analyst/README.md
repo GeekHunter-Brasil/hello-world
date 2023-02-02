@@ -25,33 +25,26 @@ It is important to note that some of those expectations are very particular to t
 
 ### Experience
 
-- **Usually goes with the current hype.** Always wants to try out new frameworks or languages but doesn't know how to balance this with the daily routine. Usually, this ends up hurting the productivity for themselves or the team.
+- Knows different frameworks and languages, not necessarily having the experience to balance refactorings and rewrites with product demands.
 - Knows at least a bit about software development (a few months to one year of experience), preferably in production environment. Has already worked in new features, bugfixes, etc.
 - Knows at least a bit about agile culture. Has a slight idea of key practices such as Scrum or Kanban.
-- Does not review code from other collaborators. Finds it difficult to analyze external code and to find problems in it.
-- Asks for help whenever they are feeling blocked, not productive or doesn't know what to do.
-- Usually codes "by example" (e.g. copying code), and **does not understand how that code works**.
+- **Asks for help** whenever they are feeling blocked, not productive or doesn't know what to do.
 - Gets blocked often, requiring more attention and support.
-- Is not proactive with new tasks. Usually needs someone else to tell them what to do.
 
 ### Hard Skills
 
-- **Knows at least a bit of the tech stack that we use** (Ruby on Rails, React, Next.js, TypeScript, Python, GraphQL, etc). Will eventually get blocked and have questions on how to build software using those technologies.
-- Knows at least a bit about automated tests, and at least understands their importance. Is capable of writing a test with the help of another developer.
-- Usually has a difficult time to write code that respects our [Styleguide](https://github.com/GeekHunter-Brasil/hello-world).
+- **Knows at least a bit of the tech stack that we use** (Ruby on Rails, React, Next.js, TypeScript, Python, GraphQL, etc). Can eventually get blocked and have questions on how to build software using those technologies.
+- Knows at least a bit about automated tests, and understands their importance. Is capable of writing a test with the help of another developer.
 - Usually can't do TDD on a daily basis, but knows what it is.
-- Knows at least a bit about git, but can't follow processes such as gitflow.
-- Doesn't know much about database technologies, and usually has a hard time writing a SQL query.
-- Knows about Object-Oriented Programming, but has difficulty implementing it daily.
-- Usually **doesn't know much about software design**. Has a hard time following patterns (e.g. clean or hexagonal architecture).
-- Doesn't know how to architect an application according to its needs (a monolith, micro-services, serveless, etc). **Usually tries to implement a complex model where it's not needed and ends up hurting productivity**.
-- **Doesn't know how to debug code**. Usually has a difficult time trying to understand why something doesn't work.
+- Knows at least a bit about git.
+- Doesn't know much about database technologies, but is able to write simple SQL queries.
+- Knows about Object-Oriented Programming.
 
 ### Soft Skills
 
 - Communicates efficiently in synchronous moments (e.g. squad rituals such as dailies, plannings, reviews; pair programming sessions) as well as asynchronous ones (e.g. discussions on Slack, JIRA, Basecamp, etc).
 - Is really motivated to learn more and develop their skills.
-- Usually doesn't understand their own strengths and gaps, or how to advance in their career. Needs an active leadership helping them to progress.
+- Will have dificulties understanding their own strengths and gaps. Needs an active leadership helping them to progress in their career.
 
 ## 🐤 Mid-level Software Development Analyst
 
@@ -94,7 +87,7 @@ It is important to note that some of those expectations are very particular to t
 ### Experience
 
 - **Multiplies value on the team**. Delivers their work efficiently, but there is a key difference here: this person looks at the team's productivity, suggesting improvements and using their experience to multiply our overall productivity.
-- Has a solid experience in software development for a considerable time (e.g. more than five years) in production, preferably having worked with critical software where it's really expensive to be offline.
+- Has a solid experience in software development for a considerable time in production environment, having worked with critical software.
 - Has experience with Agile Culture. **Has already worked in high-performance agile teams using methodologies such as Scrum, Kanban, ShapeUp or others**.
 - Has experience mentoring other software analysts. Uses this experience in daily routines (e.g. Code Review, Pair Programming, etc) to teach and improve other team member's technical abilities.
 - **Has a vision that is naturally oriented to results**. Understands that what matters the most is delivering value to our end customer, and prioritizes their actions to achieve this.

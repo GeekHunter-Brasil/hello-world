@@ -17,7 +17,7 @@ Usually, this person will be working within a squad along with 2 ~ 3 other devel
 
 What do we expect from a software development analyst at GeekHunter? 
 
-In order to create value to Geekers an users through technology, we expect a set of hard and soft skills combined with some level of experience in shipping digital products. And of course the expectations very depending on the seniority level.
+In order to create value to Geekers an users through technology, we expect a set of hard and soft skills combined with some level of experience in shipping digital products. And of course the expectations vary depending on the seniority level.
 
 It is important to note that some of those expectations are very particular to the way we at Geek build product and engineer solutions. Things like having the domain over our specific stack, enjoying to work in a extreme programming culture of pair programming and strong code review, understanding the importance of strong TDD and DevOps cultures, and working in an agile environment can be expectations you won't necessarily find in other contexts. However, things like the ability to add value to them, or even multiply it, to mentor other developers, and to easily and effectively communicate with other people is fundamental regardless of challenge you will find along your career.
 

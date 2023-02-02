@@ -67,7 +67,6 @@ It is important to note that some of those expectations are very particular to t
 - Has experience with common database technologies. Knows relational models, tables, views, indices, and other terms. Writes performant SQL queries.
 - Has experience in git, and **is able to resolve merge conflicts**.
 - Is fluent in Object-Oriented Programming. Knows the key points to it and writes high-quality OOP code.
-- Knows what Functional Programming is. Knows advantages and disadvantages to each paradigm.
 - Understands concepts such as data immutability, pure functions, and reactivity.
 - **Understands concepts about software design, and knows how to follow common patterns** such as Clean Architecture, Hexagonal Architecture and others. Knows about their advantages and disadvantages.
 - Understands how to architect applications and is capable of choosing a good architecture according to the complexity and challenge (e.g. monoliths, micro-services, serveless, etc).
@@ -108,7 +107,6 @@ It is important to note that some of those expectations are very particular to t
 - Has solid experience with other database technologies (e.g. non-relational databases, graph databases, etc). Knows how and when to apply those options in daily tasks.
 - Is fluent in git. Can solve just about any problem that may arise in a repo and is capable of using different strategies to improve the development flow (e.g. use squash and rebase to preserve a linear history)
 - Is fluent in Object-Oriented Programming. Knows the key points to it and writes high-quality OOP code.
-- Has solid experience with Functional Programming. Knows advantages and disadvantages to each paradigm.
 - Has solid experience with concepts such as data immutability, pure functions, reactivity.
 - **Has solid experience in software design**. Is able to implement common patterns in a disorganized repository.
 - Has solid experience in architecting an application and is capable of choosing a good architecture according to the complexity or challenge (e.g. monoliths, micro-services, serveless, etc).

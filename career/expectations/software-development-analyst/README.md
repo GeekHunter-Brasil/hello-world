@@ -46,9 +46,9 @@ What do we expect from a software development analyst at GeekHunter?
 
 ### Soft Skills
 
-- Is able to keep their presence in synchronous moments (e.g. squad rituals such as dailies, plannings, reviews; pair programming sessions) and asynchronous ones (e.g. discussions on Slack, JIRA, Basecamp, etc).
+- Communicates efficiently in synchronous moments (e.g. squad rituals such as dailies, plannings, reviews; pair programming sessions) as well as asynchronous ones (e.g. discussions on Slack, JIRA, Basecamp, etc).
 - Is really motivated to learn more and develop their skills.
-- Usually doesn't understand their own strengths and weaknesses, or how to advance in their career. Needs an active leadership helping them to progress.
+- Usually doesn't understand their own strengths and gaps, or how to advance in their career. Needs an active leadership helping them to progress.
 
 ## 🐤 Mid-level Software Development Analyst
 
@@ -81,9 +81,9 @@ What do we expect from a software development analyst at GeekHunter?
 
 ### Soft Skills
 
-- Is able to keep their presence in synchronous moments (e.g. squad rituals such as dailies, plannings, reviews; pair programming sessions) and asynchronous ones (e.g. discussions on Slack, JIRA, Basecamp, etc).
+- Communicates efficiently in synchronous moments (e.g. squad rituals such as dailies, plannings, reviews; pair programming sessions) as well as asynchronous ones (e.g. discussions on Slack, JIRA, Basecamp, etc).
 - Is really motivated to learn more and develop their skills.
-- Usually understands their own strengths and weaknesses, and sees something they want to prioritize in their career. The leadership process here is usually easier, since this person is able to develop their skills with some level of autonomy.
+- Usually understands their own strengths and gaps, and identifies paths they want to prioritize in their career. The leadership process here is usually easier, since this person is able to develop their skills with some level of autonomy.
 - Has emotional resilience to go through challenging scenarios and is able to receive valuable feedbacks and use them to improve.
 
 ## 🐓 Senior Software Development Analyst
@@ -111,8 +111,8 @@ What do we expect from a software development analyst at GeekHunter?
 - Is fluent in common database technologies. Is capable of solving complex performance and/or modeling problems (e.g. optimizing a slow query by re-implementing it or changing the database structure).
 - Has solid experience with other database technologies (e.g. non-relational databases, graph databases, etc). Knows how and when to apply those options in daily tasks.
 - Is fluent in git. Can solve just about any problem that may arise in a repo and is capable of using different strategies to improve the development flow (e.g. use squash and rebase to preserve a linear history)
-- Is fluent in Object-Oriented Programming; knows the key points to it and writes high-quality OOP code.
-- Has solid experience with Functional Programming; knows advantages and disadvantages to each paradigm.
+- Is fluent in Object-Oriented Programming. Knows the key points to it and writes high-quality OOP code.
+- Has solid experience with Functional Programming. Knows advantages and disadvantages to each paradigm.
 - Has solid experience with concepts such as data immutability, pure functions, reactivity.
 - **Has solid experience in software design**. Is able to implement common patterns in a disorganized repository.
 - Has solid experience in architecting an application and is capable of choosing a good architecture according to the complexity or challenge (e.g. monoliths, micro-services, serveless, etc).
@@ -123,8 +123,8 @@ What do we expect from a software development analyst at GeekHunter?
 
 ### Soft Skills
 
-- Is able to keep their presence in synchronous moments (e.g. squad rituals such as dailies, plannings, reviews; pair programming sessions) and asynchronous ones (e.g. discussions on Slack, JIRA, Basecamp, etc).
+- Communicates efficiently in synchronous moments (e.g. squad rituals such as dailies, plannings, reviews; pair programming sessions) as well as asynchronous ones (e.g. discussions on Slack, JIRA, Basecamp, etc).
 - Is really motivated to learn more and develop their skills.
 - **Has experience in technical leadership positions, mentoring other people** in technical aspects.
-- Understands their own strengths and weaknesses, and sees something they want to prioritize in their career. The leadership process here is usually easier, since **this person is able to develop their skills with a high level of autonomy**.
-- Has emotional resilience to go through challenging scenarios, to receive valuable feedbacks and use it to grow as a professional, not letting it impact their performance.
+- Understands their own strengths and gaps, and identifies paths they want to prioritize in their career. The leadership process here is usually easier, since **this person is able to develop their skills with a high level of autonomy**.
+- Has emotional resilience to go through challenging scenarios, minimizing the impacts in their performance. Receives valuable feedbacks and use them to imporove.

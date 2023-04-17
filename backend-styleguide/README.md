@@ -493,7 +493,7 @@ end
 
 ### 👉 Use I18n to translate
 
-When writing your programs avoid using hard coded strings that will be displayed to users, this allows support for multiple languages. The path with translated keys is `<REP>/config/locales/<locale>`
+Avoid using hard coded strings in texts that are displayed to users. As the product grows to reach audiences in other countries, we need to support multiple languages. The path to keep the translated keys is `<REP>/config/locales/<locale>`.
 
 ❌ Bad
 
@@ -513,9 +513,9 @@ When writing your programs avoid using hard coded strings that will be displayed
 
 ### 👉 Directory Locales structure
 
-For a better organization of the yml files the ideal is to `mirror the folders`, thus not creating too big files, with this structure we obtain a better organization.
+For a better organization of the yml files, `mirror the folders`: it will keep files small and concise.
 
-to declare the yml, you must use the same name as the parent directory 'e.g. directory/directory.yml',
+To declare an yml, you must use the same name as the parent directory 'e.g. directory/directory.yml',
 
 ```
 📁 project/
@@ -531,7 +531,7 @@ to declare the yml, you must use the same name as the parent directory 'e.g. dir
       └──📝 en.yml
 ```
 
-file `pt-BR.yml` contains constants and common terms application.
+`pt-BR.yml`/`en.yml` contains constants and common terms for application, in their respective languagues.
 
 ```yml
 pt-BR:
@@ -539,7 +539,7 @@ pt-BR:
   confirm: Confirmar
 ```
 
-file `directory.yml` respect folder structure.
+ `directory.yml` needs to respect the nested folder structure.
 
 ```yml
 pt-BR:
@@ -559,7 +559,7 @@ example the `pages.index.title` values inside `app/views/pages/index.html.erb`
 <%= t('.title') %>
 ```
 
-Structe in yml file:
+Structure in yml file:
 
 ```yml
 pt-BR:
@@ -568,13 +568,13 @@ pt-BR:
       title: "Boas-vindas"
 ```
 
-In some cases, we may have phrases that repeat themselves. Thus, a standard structure can be created
+In some cases, we may have phrases that repeat themselves. Thus, a default can be created:
 
 ```
 <%= t('pages.default.title') %>
 ```
 
-Structe in yml file:
+Structure in yml file:
 
 ```yml
 pt-BR:
@@ -583,7 +583,7 @@ pt-BR:
       title: "Boas-vindas"
 ```
 
-If necessary to use a param in view, use:
+If you need a placeholder in a view, use:
 
 ```
 <%= t('.title', username: 'People') %>
@@ -599,24 +599,24 @@ title: 'Boas-vindas %{username}'
 
 We use SendGrid for sending e-mails. SendGrid works with e-mail templates that need to be created in their platform, then we make an API call passing the template name and its parameters.
 
-For a given e-mail we will have a different template for each language.
+For a given e-mail, we might have different templates for each language.
 
 We use the following template nomenclature:
 
 - `template_name` for `pt_br` template
 - `en__template_name` for `en` template
 
-Example: for the password recovery e-mail templates:
+Example for the password recovery:
 
 - `empresa-reset-password`
 - `en__empresa-reset-password`
 
-Then in the `monolith` we have two helper functions to generate the template name based on the user language or a given language:
+Then in the `monolith` application, we have two helper functions:
 
-- `MailersHelper.build_prefix_for_record(record, context_name)` - this function gets the `language` from the `record` and concatenates the `language` with the `context_name`, where `record` is the logged-in user object and `context_name` is the base template name
-- `MailersHelper.build_prefix_for_language(language, context_name)` - this function concatenates the `language` with the `context_name`
+- `MailersHelper.build_prefix_for_record(record, context_name)` - this function gets the `language` from the `record` and concatenates the `language` with the `context_name`, where `record` is the logged-in user object and `context_name` is the base template name.
+- `MailersHelper.build_prefix_for_language(language, context_name)` - this function concatenates the `language` with the `context_name`.
 
-Finally we send the e-mail, example:
+Finally we send the e-mail, like this:
 
 ```ruby
 template = CustomDeviseMailer.build_prefix_for_record(record, template)

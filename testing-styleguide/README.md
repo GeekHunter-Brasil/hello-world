@@ -524,7 +524,7 @@ It may seem strange to use snapshot tests again on molecules if the molecules ar
 
 With atoms we want to test if the style of the components, classes and attributes are correct.
 
-With molecules, made up exclusively of atoms, we don't need to revalidate the styles, classes and attributes, we just need to know if the molecule is correctly calling its atoms. If one component is changed when atoms are created/deleted/modified, the snapshot will indicate this change. Therefore, testing this structure alone can be done using shallow rendering.
+With molecules, made up exclusively of atoms, we don't need to revalidate the styles, classes and attributes, we just need to know if the molecule is correctly calling its atoms. If one molecule is changed when its atoms are created/deleted/modified, the snapshot will indicate this change. Therefore, testing this structure alone can be done using shallow rendering.
 
 To exemplify, here we have the two types of snapshots, one generated in full/normal mode and another in shallow mode:
 

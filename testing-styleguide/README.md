@@ -462,28 +462,28 @@ end
 
 ## In practice: React
 
-First of all, everything that was said about the concepts and strategies also apply in the front-end. The only difference it's the library that we will used to a do it.
+First of all, everything that was said about the concepts and strategies also apply in the front-end. The only difference is the library that we will use.
 
 We use [jest](https://jestjs.io/) and [testing-library](https://testing-library.com/) to help us with the testing.
 
 ### Atomic Design
 
-Here at GeekHunter we use the Atomic Design to structure our components. In a nutshell, Atomic Design it's composed by 5 layers:
+Here at GeekHunter we use the Atomic Design pattern to structure our components. In a nutshell, Atomic Design is composed by 5 layers:
 
-- Atom: blocks that comprise all our user interfaces, such as labels, inputs, buttons and so on. Prefer, an atom does not have any logic inside, but in some cases, we can add a little of logic (e.g. button variants depending on param passed)
-- Molecule: relatively simple groups of UI elements functioning together as a unit. For example, a form label, search input, and button can join together to create a search form molecule.
-- Organism: complex UI components composed of groups of molecules and/or atoms and/or other organisms, for example, a header.
-- Template: page-level objects that place components into a layout and articulate the design’s underlying content structure.
-- Page: specific instances of templates that show what a UI looks like with real representative content in place.
+- Pages: specific instances of templates that show what a UI looks like with real representative content in place.
+- Templates: page-level objects that place components into a layout and articulate the design’s underlying content structure.
+- Organisms: complex UI components composed of groups of molecules and/or atoms and/or other organisms, for example, a header.
+- Molecules: relatively simple groups of UI elements functioning together as a unit. For example, a form label, a search input, and a button can be put together in order to create a search form molecule.
+- Atoms: blocks that implement all our user interfaces, such as labels, inputs, buttons and so on. Preferably an atom does not have any logic inside, but in some cases, we can add a little bit of logic (e.g. button variants depending on the input propos)
 
-> If you want to learn more about Atomic Design we encourage to check out this
+> If you want to learn more about Atomic Design we encourage you to check out this
 > [article](https://atomicdesign.bradfrost.com/chapter-2/)
 
-Such as Atomic Design split the components and have different approaches for each one, we tend to do the same when talking about tests.
+Just as Atomic Design splits components and have different approaches for each one, we tend to do the same when talking about tests.
 
 ### ⚛️ Atoms
 
-Since an atom should be a stylized html tag and just that, the smallest part of an organism without any kind of logic. In other words, we need to validate that it is just rendering the content and styles correctly.
+An atom should be a stylized html tag and just that; the smallest part of an organism without any kind of logic. In other words, we need to validate that it is just rendering the content and styles correctly.
 
 For that propose, the Snapshot tests comes in handy. They are a very useful tool whenever you want to make sure your UI does not change unexpectedly.
 
@@ -512,7 +512,7 @@ it("renders correctly button props as solid", () => {
 });
 ```
 
-With Snapshot we are testing all passed properties, and if any property changes, the test will inform us. Since we use a third-party library (Chakra ui) there is no need to test property rendering, as all components are already tested before they are released.
+With Snapshot we are testing all passed properties, and if any property changes, the test will inform us. Since we use a third-party component library (Chakra UI), there is no need to test property rendering, as all components are already tested before they are released.
 
 ### ⚛️⛓️ Molecules
 

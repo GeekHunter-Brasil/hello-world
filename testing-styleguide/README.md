@@ -516,113 +516,57 @@ With Snapshot we are testing all passed properties, and if any property changes,
 
 ### ⚛️⛓️ Molecules
 
-When talking about molecules we tend to go with two different kinds of tests: Snapshots and Integration ones
+When talking about molecules we tend to go with two different kinds of tests: Snapshots and Integration ones.
 
 **Testing Snapshots? Again? Yes, but different.**
 
 It may seem strange to use snapshot tests again on molecules if the molecules are made of atoms already tested with this tool, but the purpose here is different.
 
-On the atoms we want to test if the style of the components, classes and attributes are correct.
+With atoms we want to test if the style of the components, classes and attributes are correct.
 
-On molecules, made up exclusively of atoms, we don't need to revalidate the styles, classes and attributes, we just need to know if the molecule is correctly calling its atoms, and if one is changed by removing or adding a new atom, the snapshot will indicate this change, this is why we use shallow rendering (or as we call it, mock snapshot)
+With molecules, made up exclusively of atoms, we don't need to revalidate the styles, classes and attributes, we just need to know if the molecule is correctly calling its atoms. If one component is changed when atoms are created/deleted/modified, the snapshot will indicate this change. Therefore, testing this structure alone can be done using shallow rendering.
 
-Here we have the two types of Snapshot tests
+To exemplify, here we have the two types of snapshots, one generated in full/normal mode and another in shallow mode:
 
-**Normal rendering**
-
-```typescript
-exports[`renders correctly button props as outline 1`] = `
-<button
-  className="chakra-button css-7u2sko"
-  data-testid="button"
-  type="button"
->
-  Test
-</button>
-`;
-```
-
-**Shallow rendering**
+**Normal rendering snapshot**
 
 ```typescript
-exports[`MaskedField molecule renders correctly outline field props 1`] = `
-<FormControl
-  position="relative"
-  width="100%"
->
-  <FieldTitle
-    isRequired={true}
-    label="What is your LinkedIn URL?"
+exports[`When page loads render correctly 1`] = `
+<div>
+  <p
+    class="chakra-text css-okg250"
+    style="display: flex; align-items: center; justify-content: space-between;"
   />
-  <InputGroup
-    flexDirection="column"
-  >
-    <InputLeftElement
-      cursor="default"
-      height="40px"
-    >
-      <Icon
-        as={[Function]}
-        color="text.100"
-        h={5}
-        mx={4}
-        w={5}
-      />
-    </InputLeftElement>
-    <Input
-      _focus={
-        Object {
-          "bgColor": "secondary.50",
-          "borderColor": "secondary.50",
-          "boxShadow": "none",
-        }
-      }
-      _hover={
-        Object {
-          "borderColor": "secondary.50",
-        }
-      }
-      as={[Function]}
-      beforeMaskedValueChange={[Function]}
-      bgColor="background.900"
-      borderColor="background.900"
-      borderRadius={4}
-      color="text.100"
-      data-testid="masked-input"
-      fontSize="14px"
-      fontWeight="400"
-      formatChars={
-        Object {
-          "*": ".",
-          "9": "[0-9]",
-          "x": "[аa-zà-úÀ-ÚüÜA-Z0-9%-]",
-          "z": "[A-Za-zà-úÀ-Ú]",
-        }
-      }
-      height="40px"
-      inputRef={null}
-      mask="https://www.linkedin.com/in/********************************************************************************************"
-      maskChar={null}
-      paddingRight="12px"
-      placeholder="https://www.linkedin.com/in/<your_linkedin>"
-      py={2}
-      type="text"
-      width="100%"
-    />
-  </InputGroup>
-  <FormHelperText
-    color="text.200"
-    data-testid="help-text"
-    fontSize="0.9rem"
-    fontStyle="italic"
-  >
-    Type your LinkedIn URL
-  </FormHelperText>
-</FormControl>
+</div>
 `;
 ```
 
-Notice that in the shallow mode we don't have native html elements, but the components atoms itself. So, as said, if we remove or add a new atom, the snapshot will tell us.
+**Shallow rendering snapshot**
+
+```typescript
+exports[`When page loads render correctly 1`] = `
+<Text
+  cursor="pointer"
+  fontFamily="body"
+  fontSize="xs"
+  height={12}
+  letterSpacing="1.2px"
+  px={8}
+  py={1}
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "justifyContent": "space-between",
+    }
+  }
+/>
+`;
+```
+
+Notice that in the shallow mode we don't have native html elements, but the components atoms itself (in this case a component named Text). So, as said, if we remove or add a new atom, the snapshot will tell us.
+
+You may wonder if this kind of test isn't a little bit redundant as we are also relying on Typescript to catch typing issues statically. In some degree, yes, if an atom changes its signature (a new prop, a different type, etc), the transpilation process to Javascript should fail. In our experience though, we see value to have at least one shallow snapshot in each molecule while also enforcing Typescript and Estlint checks.
 
 **Now, the Integration Test**
 

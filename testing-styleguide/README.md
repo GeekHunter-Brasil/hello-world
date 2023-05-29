@@ -570,7 +570,7 @@ You may wonder if this kind of test isn't a little bit redundant as we are also 
 
 **Now, the Integration Test**
 
-We know that the molecule is unchanged and is calling its atoms correctly, now we need to see if this set of atoms is actually working as we expect, literally to test its integration. With this we test the purpose of that component with jest, for example:
+We know that the molecule is unchanged and is calling its atoms correctly, so now we need to see if this set of atoms is actually working as we expect. With this we test the purpose of that component with jest, for example:
 
 ```typescript
 ...
@@ -595,9 +595,9 @@ expect(field).toHaveValue('https://www.linkedin.com/in/');
 ...
 ```
 
-Testing behavior. Does this remind you of something? 🤔.
+Note how we are testing behavior. Does this remind you of something? 🤔.
 
-Yes, we can apply all that we learn from TDD at Rails environment while testing components in React. We can write the tests asserting the behavior that we expect to have at the end before actually implement it.
+Yes, we can apply all that we learn from TDD at Rails environment while testing components in React. We can write the tests asserting the behavior that we expect to have before actually implementing it.
 
 That's awesome, isn't it? 🔥
 

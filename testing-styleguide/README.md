@@ -603,7 +603,7 @@ That's awesome, isn't it? 🔥
 
 ### 🧫 Organism
 
-For organisms we decided to keep using snapshots, because we saw in snapshots an easier way to get any layout break.
+For organisms we keep using snapshots, because we see in snapshots an easier way to get any layout break.
 Doing only integration tests we won't cover the cases when a style prop like margin or padding, passed down to a child component, has changed.
 
 **Snapshots**
@@ -622,9 +622,9 @@ The rule of thumb is always goes for a shallow render in organisms snapshots, if
 
 **Integration**
 
-If the organism doesn't have a form to submit, then we do the same way as we did with the molecules integration tests, but to be able to do the integration tests using React Testing Library and React Hook Form, we needed to make some changes:
+If the organism doesn't have a form to submit, then we do integration tests the same way as we did with the molecules ones. However, to be able to do the integration tests using React Testing Library and React Hook Form, we need to make some changes:
 
-1. We needed a `form` tag, so we updated our `FormContainer` component to a form
+1. We need a `form` tag, so we update our `FormContainer` component to a form
 
 ```typescript
 export const FormContainer = ({
@@ -637,22 +637,23 @@ export const FormContainer = ({
 ...
 ```
 
-2. We needed the FormContainer to have the `onSubmit` function, for instance:
+2. We need the FormContainer to an `onSubmit` function, for instance:
    `<FormContainer onSubmit={methods.handleSubmit(onSubmit)}>`
 
-3. We needed the form submit button to have a `type='submit'`
-4. In order to find the inputs using the react testing library we needed to add an `aria-label` to them. For the inputs the value of the `aria-label` should be the same as the input label and for the buttons it should be the same as the button text. Doing it this way we keep the aria-label accessibility purpose too.
+3. We need the form submit button to have a `type='submit'`
 
-With all of this checked we can create our integration tests.
+4. In order to find the inputs using the react testing library we need to add an `aria-label` to them. For the inputs, the value of the `aria-label` should be the same as the input label; for the buttons, it should be the same as the button text. Doing it this way we keep the aria-label accessibility purpose too.
+
+With all of this checked, we can finally create our integration tests.
 
 > It's worth to remember that we should test every scenario in the form: warnings messages, errors message, field validation (we already have yup validation to tell us the cases we need to test!!)
 
 ### Best practices for integration tests with React Hook Form
 
-- Use `userEvent` to simulate user typing, clicks and etc
-- To find the inputs use `screen.getByRole`
-- To find other elements in the DOM (like errors messages) use `screen.getByText`
-- To test the errors messages that should be displayed, if it's always the same message we can use `findAllByRole('alert')` e validate the number of errors expected, but if there are multiple error messages (different yup validations) for a field we should create a test for each one and validate de error text using `screen.getByText`.
+- Use `userEvent` to simulate user typing, clicks, etc
+- To find the inputs, use `screen.getByRole`
+- To find other elements in the DOM (like errors messages), use `screen.getByText`
+- To test the errors messages that should be displayed, if it's always the same message we can use `findAllByRole('alert')` and validate the number of errors expected; but if there are multiple error messages (different yup validations) for a field, we should create a test for each one and validate de error text using `screen.getByText`.
 
 ```typescript
 const alert = await screen.findAllByRole("alert");
@@ -662,8 +663,8 @@ const error = screen.getByText(/Invalid URL/i);
 expect(error).toBeInTheDocument();
 ```
 
-In the example above we should have 2 alerts in the DOM one is a warning message with always the same text and the other one is the linkedin validation error for a invalid URL.
-We could also have another validation error message when the linkedin field is empty, which we should check for in another test.
+In the example above we should have 2 alerts in the DOM: one is a warning message with always the same text and the other one is the linkedin validation error for an invalid URL.
+We could also have another validation error message when the linkedin field is empty, which we should account for in another test.
 
 To test the form submit we should use `toHaveBeenCalledWith` with the values we filled the inputs with.
 

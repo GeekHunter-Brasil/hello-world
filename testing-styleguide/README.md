@@ -462,28 +462,28 @@ end
 
 ## In practice: React
 
-First of all, everything that was said about the concepts and strategies also apply in the front-end. The only difference it's the library that we will used to a do it.
+First of all, everything that was said about the concepts and strategies also apply in the front-end. The only difference is the library that we will use.
 
 We use [jest](https://jestjs.io/) and [testing-library](https://testing-library.com/) to help us with the testing.
 
 ### Atomic Design
 
-Here at GeekHunter we use the Atomic Design to structure our components. In a nutshell, Atomic Design it's composed by 5 layers:
+Here at GeekHunter we use the Atomic Design pattern to structure our components. In a nutshell, Atomic Design is composed by 5 layers:
 
-- Atom: blocks that comprise all our user interfaces, such as labels, inputs, buttons and so on. Prefer, an atom does not have any logic inside, but in some cases, we can add a little of logic (e.g. button variants depending on param passed)
-- Molecule: relatively simple groups of UI elements functioning together as a unit. For example, a form label, search input, and button can join together to create a search form molecule.
-- Organism: complex UI components composed of groups of molecules and/or atoms and/or other organisms, for example, a header.
-- Template: page-level objects that place components into a layout and articulate the design’s underlying content structure.
-- Page: specific instances of templates that show what a UI looks like with real representative content in place.
+- Pages: specific instances of templates that show what a UI looks like with real representative content in place.
+- Templates: page-level objects that place components into a layout and articulate the design’s underlying content structure.
+- Organisms: complex UI components composed of groups of molecules and/or atoms and/or other organisms, for example, a header.
+- Molecules: relatively simple groups of UI elements functioning together as a unit. For example, a form label, a search input, and a button can be put together in order to create a search form molecule.
+- Atoms: blocks that implement all our user interfaces, such as labels, inputs, buttons and so on. Preferably an atom does not have any logic inside, but in some cases, we can add a little bit of logic (e.g. button variants depending on the input propos)
 
-> If you want to learn more about Atomic Design we encourage to check out this
+> If you want to learn more about Atomic Design we encourage you to check out this
 > [article](https://atomicdesign.bradfrost.com/chapter-2/)
 
-Such as Atomic Design split the components and have different approaches for each one, we tend to do the same when talking about tests.
+Just as Atomic Design splits components and have different approaches for each one, we tend to do the same when talking about tests.
 
 ### ⚛️ Atoms
 
-Since an atom should be a stylized html tag and just that, the smallest part of an organism without any kind of logic. In other words, we need to validate that it is just rendering the content and styles correctly.
+An atom should be a stylized html tag and just that; the smallest part of an organism without any kind of logic. In other words, we need to validate that it is just rendering the content and styles correctly.
 
 For that propose, the Snapshot tests comes in handy. They are a very useful tool whenever you want to make sure your UI does not change unexpectedly.
 
@@ -512,121 +512,65 @@ it("renders correctly button props as solid", () => {
 });
 ```
 
-With Snapshot we are testing all passed properties, and if any property changes, the test will inform us. Since we use a third-party library (Chakra ui) there is no need to test property rendering, as all components are already tested before they are released.
+With Snapshot we are testing all passed properties, and if any property changes, the test will inform us. Since we use a third-party component library (Chakra UI), there is no need to test property rendering, as all components are already tested before they are released.
 
 ### ⚛️⛓️ Molecules
 
-When talking about molecules we tend to go with two different kinds of tests: Snapshots and Integration ones
+When talking about molecules we tend to go with two different kinds of tests: Snapshots and Integration ones.
 
 **Testing Snapshots? Again? Yes, but different.**
 
 It may seem strange to use snapshot tests again on molecules if the molecules are made of atoms already tested with this tool, but the purpose here is different.
 
-On the atoms we want to test if the style of the components, classes and attributes are correct.
+With atoms we want to test if the style of the components, classes and attributes are correct.
 
-On molecules, made up exclusively of atoms, we don't need to revalidate the styles, classes and attributes, we just need to know if the molecule is correctly calling its atoms, and if one is changed by removing or adding a new atom, the snapshot will indicate this change, this is why we use shallow rendering (or as we call it, mock snapshot)
+With molecules, made up exclusively of atoms, we don't need to revalidate the styles, classes and attributes, we just need to know if the molecule is correctly calling its atoms. If one molecule is changed when its atoms are created/deleted/modified, the snapshot will indicate this change. Therefore, testing this structure alone can be done using shallow rendering.
 
-Here we have the two types of Snapshot tests
+To exemplify, here we have the two types of snapshots, one generated in full/normal mode and another in shallow mode:
 
-**Normal rendering**
-
-```typescript
-exports[`renders correctly button props as outline 1`] = `
-<button
-  className="chakra-button css-7u2sko"
-  data-testid="button"
-  type="button"
->
-  Test
-</button>
-`;
-```
-
-**Shallow rendering**
+**Normal rendering snapshot**
 
 ```typescript
-exports[`MaskedField molecule renders correctly outline field props 1`] = `
-<FormControl
-  position="relative"
-  width="100%"
->
-  <FieldTitle
-    isRequired={true}
-    label="What is your LinkedIn URL?"
+exports[`When page loads render correctly 1`] = `
+<div>
+  <p
+    class="chakra-text css-okg250"
+    style="display: flex; align-items: center; justify-content: space-between;"
   />
-  <InputGroup
-    flexDirection="column"
-  >
-    <InputLeftElement
-      cursor="default"
-      height="40px"
-    >
-      <Icon
-        as={[Function]}
-        color="text.100"
-        h={5}
-        mx={4}
-        w={5}
-      />
-    </InputLeftElement>
-    <Input
-      _focus={
-        Object {
-          "bgColor": "secondary.50",
-          "borderColor": "secondary.50",
-          "boxShadow": "none",
-        }
-      }
-      _hover={
-        Object {
-          "borderColor": "secondary.50",
-        }
-      }
-      as={[Function]}
-      beforeMaskedValueChange={[Function]}
-      bgColor="background.900"
-      borderColor="background.900"
-      borderRadius={4}
-      color="text.100"
-      data-testid="masked-input"
-      fontSize="14px"
-      fontWeight="400"
-      formatChars={
-        Object {
-          "*": ".",
-          "9": "[0-9]",
-          "x": "[аa-zà-úÀ-ÚüÜA-Z0-9%-]",
-          "z": "[A-Za-zà-úÀ-Ú]",
-        }
-      }
-      height="40px"
-      inputRef={null}
-      mask="https://www.linkedin.com/in/********************************************************************************************"
-      maskChar={null}
-      paddingRight="12px"
-      placeholder="https://www.linkedin.com/in/<your_linkedin>"
-      py={2}
-      type="text"
-      width="100%"
-    />
-  </InputGroup>
-  <FormHelperText
-    color="text.200"
-    data-testid="help-text"
-    fontSize="0.9rem"
-    fontStyle="italic"
-  >
-    Type your LinkedIn URL
-  </FormHelperText>
-</FormControl>
+</div>
 `;
 ```
 
-Notice that in the shallow mode we don't have native html elements, but the components atoms itself. So, as said, if we remove or add a new atom, the snapshot will tell us.
+**Shallow rendering snapshot**
+
+```typescript
+exports[`When page loads render correctly 1`] = `
+<Text
+  cursor="pointer"
+  fontFamily="body"
+  fontSize="xs"
+  height={12}
+  letterSpacing="1.2px"
+  px={8}
+  py={1}
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "justifyContent": "space-between",
+    }
+  }
+/>
+`;
+```
+
+Notice that in the shallow mode we don't have native html elements, but the components atoms itself (in this case a component named Text). So, as said, if we remove or add a new atom, the snapshot will tell us.
+
+You may wonder if this kind of test isn't a little bit redundant as we are also relying on Typescript to catch typing issues statically. In some degree, yes, if an atom changes its signature (a new prop, a different type, etc), the transpilation process to Javascript should fail. In our experience though, we see value to have at least one shallow snapshot in each molecule while also enforcing Typescript and Estlint checks.
 
 **Now, the Integration Test**
 
-We know that the molecule is unchanged and is calling its atoms correctly, now we need to see if this set of atoms is actually working as we expect, literally to test its integration. With this we test the purpose of that component with jest, for example:
+We know that the molecule is unchanged and is calling its atoms correctly, so now we need to see if this set of atoms is actually working as we expect. With this we test the purpose of that component with jest, for example:
 
 ```typescript
 ...
@@ -651,15 +595,15 @@ expect(field).toHaveValue('https://www.linkedin.com/in/');
 ...
 ```
 
-Testing behavior. Does this remind you of something? 🤔.
+Note how we are testing behavior. Does this remind you of something? 🤔.
 
-Yes, we can apply all that we learn from TDD at Rails environment while testing components in React. We can write the tests asserting the behavior that we expect to have at the end before actually implement it.
+Yes, we can apply all that we learn from TDD at Rails environment while testing components in React. We can write the tests asserting the behavior that we expect to have before actually implementing it.
 
 That's awesome, isn't it? 🔥
 
 ### 🧫 Organism
 
-For organisms we decided to keep using snapshots, because we saw in snapshots an easier way to get any layout break.
+For organisms we keep using snapshots, because we see in snapshots an easier way to get any layout break.
 Doing only integration tests we won't cover the cases when a style prop like margin or padding, passed down to a child component, has changed.
 
 **Snapshots**
@@ -678,9 +622,9 @@ The rule of thumb is always goes for a shallow render in organisms snapshots, if
 
 **Integration**
 
-If the organism doesn't have a form to submit, then we do the same way as we did with the molecules integration tests, but to be able to do the integration tests using React Testing Library and React Hook Form, we needed to make some changes:
+If the organism doesn't have a form to submit, then we do integration tests the same way as we did with the molecules ones. However, to be able to do the integration tests using React Testing Library and React Hook Form, we need to make some changes:
 
-1. We needed a `form` tag, so we updated our `FormContainer` component to a form
+1. We need a `form` tag, so we update our `FormContainer` component to a form
 
 ```typescript
 export const FormContainer = ({
@@ -693,22 +637,23 @@ export const FormContainer = ({
 ...
 ```
 
-2. We needed the FormContainer to have the `onSubmit` function, for instance:
+2. We need the FormContainer to an `onSubmit` function, for instance:
    `<FormContainer onSubmit={methods.handleSubmit(onSubmit)}>`
 
-3. We needed the form submit button to have a `type='submit'`
-4. In order to find the inputs using the react testing library we needed to add an `aria-label` to them. For the inputs the value of the `aria-label` should be the same as the input label and for the buttons it should be the same as the button text. Doing it this way we keep the aria-label accessibility purpose too.
+3. We need the form submit button to have a `type='submit'`
 
-With all of this checked we can create our integration tests.
+4. In order to find the inputs using the react testing library we need to add an `aria-label` to them. For the inputs, the value of the `aria-label` should be the same as the input label; for the buttons, it should be the same as the button text. Doing it this way we keep the aria-label accessibility purpose too.
+
+With all of this checked, we can finally create our integration tests.
 
 > It's worth to remember that we should test every scenario in the form: warnings messages, errors message, field validation (we already have yup validation to tell us the cases we need to test!!)
 
 ### Best practices for integration tests with React Hook Form
 
-- Use `userEvent` to simulate user typing, clicks and etc
-- To find the inputs use `screen.getByRole`
-- To find other elements in the DOM (like errors messages) use `screen.getByText`
-- To test the errors messages that should be displayed, if it's always the same message we can use `findAllByRole('alert')` e validate the number of errors expected, but if there are multiple error messages (different yup validations) for a field we should create a test for each one and validate de error text using `screen.getByText`.
+- Use `userEvent` to simulate user typing, clicks, etc
+- To find the inputs, use `screen.getByRole`
+- To find other elements in the DOM (like errors messages), use `screen.getByText`
+- To test the errors messages that should be displayed, if it's always the same message we can use `findAllByRole('alert')` and validate the number of errors expected; but if there are multiple error messages (different yup validations) for a field, we should create a test for each one and validate de error text using `screen.getByText`.
 
 ```typescript
 const alert = await screen.findAllByRole("alert");
@@ -718,8 +663,8 @@ const error = screen.getByText(/Invalid URL/i);
 expect(error).toBeInTheDocument();
 ```
 
-In the example above we should have 2 alerts in the DOM one is a warning message with always the same text and the other one is the linkedin validation error for a invalid URL.
-We could also have another validation error message when the linkedin field is empty, which we should check for in another test.
+In the example above we should have 2 alerts in the DOM: one is a warning message with always the same text and the other one is the linkedin validation error for an invalid URL.
+We could also have another validation error message when the linkedin field is empty, which we should account for in another test.
 
 To test the form submit we should use `toHaveBeenCalledWith` with the values we filled the inputs with.
 
